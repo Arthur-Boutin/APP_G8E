@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche Produit - Nutwork</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav>
+      <ul class="menu">
+        <li><a href="./index.html">NUTWORK</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./articles.html">Nos Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li>
+          <form>
+            <input type="text" name="rechercher" class="barre" placeholder="Rechercher..."/>
+          </form>
+        </li>
+        <li><a href="./messagerie.html"><img alt="Nous contacter" src="./assets/images/Mail.png" class="mail"/></a></li>
+        <li><a href="./panier.html"><img src="./assets/images/truc.png" class="truc"></a></li>
+        <li><a href="./login.html"><img src="./assets/images/Profil.png" class="profil"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="product-container">
+    <div class="product-top">
+      <div class="product-image">Image du produit</div>
+      <div class="product-info">
+        <h2>Titre du Produit</h2>
+        <div class="product-price">50 €</div>
+
+        <div class="filter-section">
+          <label>Trier et filtrer</label><br><br>
+          <select>
+            <option>Collection</option>
+            <option>Option 2</option>
+          </select>
+          <select>
+            <option>Prix</option>
+            <option>Option 2</option>
+          </select>
+        </div>
+
+        <button class="btn">En savoir plus</button>
+
+        <div>
+          <label for="desc">Description</label>
+          <textarea id="desc" rows="3" placeholder="Décrire le produit ici"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h3>Derniers avis</h3>
+      <div class="review-cards">
+        <div class="review-card">
+          <h4>Titre de l'avis</h4>
+          <p>Contenu de l'avis</p>
+          <p><strong>Nom de l'auteur</strong><br>Date</p>
+        </div>
+        <div class="review-card">
+          <h4>Titre de l'avis</h4>
+          <p>Contenu de l'avis</p>
+          <p><strong>Nom de l'auteur</strong><br>Date</p>
+        </div>
+        <div class="review-card">
+          <h4>Titre de l'avis</h4>
+          <p>Contenu de l'avis</p>
+          <p><strong>Nom de l'auteur</strong><br>Date</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div>
+      <h4>À propos de Nutwork</h4>
+      <p>À propos de nous</p>
+      <p>Contactez-nous</p>
+      <p>Blog</p>
+      <p>FAQ</p>
+    </div>
+    <div>
+      <h4>Nos secteurs d'activités</h4>
+      <p>Design</p>
+      <p>Prototyping</p>
+      <p>Développement</p>
+    </div>
+    <div>
+      <h4>Aide & Contacts</h4>
+      <p>contact@nutwork.com</p>
+      <p>28 Rue Notre Dame des Champs, Paris</p>
+    </div>
+  </footer>
+</body>
+</html>
