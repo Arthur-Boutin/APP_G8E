@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Inclusion du header -->
+    <div id="header-container"></div>
+
+    <section class="grid">
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+        <div class="card">
+            <div class="image-placeholder"></div>
+            <p>Texte</p>
+            <p><strong>$0</strong></p>
+        </div>
+    </section>
+
+    <section class="pagination">
+        <button>&lt; Previous</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>Next &gt;</button>
+    </section>
+
+    <!-- Inclusion du footer -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Inclusion du header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-container').innerHTML = data);
+
+        // Inclusion du footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer-container').innerHTML = data);
+    </script>
+
+</body>
+</html>

@@ -1,9 +1,10 @@
-/* Footer global styles */
-.site-footer {
-    background-color: #a66a44;
-    color: #fff;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+footer {
+    background-color: #8B5A2B;
+    color: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .footer-columns {
@@ -27,9 +28,9 @@
 }
 
 .footer-column ul li a {
-    color: #fff;
-    text-decoration: none;
+    color: white;
     font-size: 14px;
+    text-decoration: none;
 }
 
 .footer-column ul li a:hover {
@@ -43,7 +44,6 @@
 }
 
 .footer-social a {
-    color: #fff;
+    color: white;
     font-size: 18px;
-    text-decoration: none;
 }
