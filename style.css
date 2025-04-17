@@ -1,3 +1,100 @@
+/* HEADER */
+nav {
+    background-color: #8B5A2B;
+    padding: 15px 50px;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.barre {
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
+    width: 200px;
+}
+
+.mail, .truc, .profil {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #8B5A2B;
+    color: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 5px;
+}
+
+.footer-column ul li a {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-social a {
+    color: white;
+    font-size: 18px;
+}
+
+/* BODY */
 body {
     font-family: Arial, sans-serif;
     margin: 0;

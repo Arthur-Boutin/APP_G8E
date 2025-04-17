@@ -3,84 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Web</title>
+    <title>Nutwork - Articles</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header intégré -->
+    <header class="site-header">
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">NUTWORK</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="articles.html">Nos Articles</a></li>
+                <li><a href="galerie.html">Galerie</a></li>
+                <li>
+                    <form>
+                        <input type="text" name="rechercher" class="barre" placeholder="Rechercher..."/>
+                    </form>
+                </li>
+                <li><a href="nouscontacter.html"><img alt="Nous contacter" src="Mail.png" class="mail"/></a></li>
+                <li><a href="panier.html"><img src="truc.png" class="truc"></a></li>
+                <li><a href="profil.html"><img src="Profil.png" class="profil"></a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Inclusion du header -->
-    <div id="header-container"></div>
+    <main>
+        <!-- Section des articles -->
+        <section class="grid">
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+            <div class="card">
+                <div class="image-placeholder"></div>
+                <p>Texte</p>
+                <p><strong>$0</strong></p>
+            </div>
+        </section>
 
-    <section class="grid">
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-        <div class="card">
-            <div class="image-placeholder"></div>
-            <p>Texte</p>
-            <p><strong>$0</strong></p>
-        </div>
-    </section>
+        <!-- Section pagination -->
+        <section class="pagination">
+            <button>&lt; Previous</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next &gt;</button>
+        </section>
+    </main>
 
-    <section class="pagination">
-        <button>&lt; Previous</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>Next &gt;</button>
-    </section>
-
-    <!-- Inclusion du footer -->
-    <div id="footer-container"></div>
-
-    <script>
-        // Inclusion du header
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header-container').innerHTML = data);
-
-        // Inclusion du footer
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer-container').innerHTML = data);
-    </script>
-
+    <!-- Footer intégré -->
+    <footer class="site-footer">
+        <div>
+            <h4>À propos de Nutwork</h4>
+            <p>À propos de nous</p>
+            <p>Contactez-nous</p>
+            <p>Blog</p>
+            <p>FAQ</p>
+        </div>
+        <div>
+            <h4>Nos secteurs d'activités</h4>
+            <p>Design</p>
+            <p>Prototyping</p>
+            <p>Développement</p>
+        </div>
+        <div>
+            <h4>Aide & Contacts</h4>
+            <p>contact@nutwork.com</p>
+            <p>28 Rue Notre Dame des Champs, Paris</p>
+        </div>
+    </footer>
 </body>
 </html>
