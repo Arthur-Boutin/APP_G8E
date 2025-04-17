@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutwork - Accueil</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="footer.css">
 </head>
 <body>
     <!-- Inclusion du header -->
-    <div id="header-container">
-        <include src="header.html"></include>
-    </div>
+    <div id="header-container"></div>
 
     <main>
         <!-- Section principale -->
@@ -56,24 +52,42 @@
         <!-- Section avis -->
         <section class="reviews">
             <h2>Avis</h2>
-            <div class="review-card">
-                <h3>Review title</h3>
-                <p>Review body</p>
-                <p>Reviewer name</p>
-                <p>Date</p>
-            </div>
-            <div class="review-card">
-                <h3>Review title</h3>
-                <p>Review body</p>
-                <p>Reviewer name</p>
-                <p>Date</p>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <h3>Review title</h3>
+                    <p>Review body</p>
+                    <p>Reviewer name</p>
+                    <p>Date</p>
+                </div>
+                <div class="review-card">
+                    <h3>Review title</h3>
+                    <p>Review body</p>
+                    <p>Reviewer name</p>
+                    <p>Date</p>
+                </div>
+                <div class="review-card">
+                    <h3>Review title</h3>
+                    <p>Review body</p>
+                    <p>Reviewer name</p>
+                    <p>Date</p>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Inclusion du footer -->
-    <div id="footer-container">
-        <include src="footer.html"></include>
-    </div>
+    <div id="footer-container"></div>
+
+    <script>
+        // Inclusion du header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-container').innerHTML = data);
+
+        // Inclusion du footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer-container').innerHTML = data);
+    </script>
 </body>
 </html>
