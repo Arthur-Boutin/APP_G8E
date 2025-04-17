@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mentions légales - Nutwork</title>
+  <style>
+    /* 与 CGV 页类似，省略重复注释；以下只标示与主体结构相关的差异 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F7E3C2;
+      color: #3A2A1B;
+      line-height: 1.4;
+    }
+    .main-header {
+      /* 同上... */
+      background-color: #8C5A2B;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin-right: 30px;
+    }
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 500;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .nav-icons a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .footer {
+      background-color: #8C5A2B;
+      color: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 40px;
+      margin-top: 40px;
+    }
+    .footer-col {
+      flex: 1;
+      margin: 0 10px;
+    }
+    .footer-col h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    .footer-col a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+    .social-links a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* -- 页面主体 -- */
+    .main-container {
+      max-width: 1200px;
+      margin: 30px auto; /* 居中 */
+      padding: 0 20px;
+      text-align: center; /* 文本居中 */
+    }
+    h1 {
+      font-size: 2rem;
+      color: #8C5A2B;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto; /* 文本居中 */
+      margin-right: auto; /* 文本居中 */
+    }
+    .legal-list {
+      background-color: #F0D2A1;
+      border-radius: 6px;
+      padding: 20px;
+      max-width: 800px;
+      margin-left: auto; /* 文本居中 */
+      margin-right: auto; /* 文本居中 */
+    }
+    .legal-item {
+      margin-bottom: 15px;
+      cursor: pointer; /* 若要做折叠展开 */
+    }
+    .legal-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+    .legal-item p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+<!-- 顶部导航 -->
+<header class="main-header">
+  <div class="header-left">
+    <div class="logo">NUTWORK</div>
+    <nav class="nav-menu">
+      <a href="#">Contact</a>
+      <a href="#">Nos Articles</a>
+      <a href="#">Galerie</a>
+    </nav>
+  </div>
+  <div class="header-right">
+    <div class="nav-icons">
+      <a href="#">🔍</a>
+      <a href="#">✉️</a>
+      <a href="#">👤</a>
+    </div>
+  </div>
+</header>
+
+<!-- 主体 -->
+<div class="main-container">
+  <h1>Mentions légales</h1>
+  <p>
+    Tous les sites internet professionnels doivent afficher des mentions obligatoires pour l’information du public. L’absence de ces informations sur le site est sanctionnée.
+  </p>
+  <div class="legal-list">
+    <div class="legal-item">
+      <h3>L’identification des responsables du site</h3>
+      <p>Texte explicatif...</p>
+    </div>
+    <div class="legal-item">
+      <h3>L’activité du professionnel</h3>
+      <p>Texte explicatif...</p>
+    </div>
+    <div class="legal-item">
+      <h3>L’utilisation des cookies</h3>
+      <p>Texte explicatif...</p>
+    </div>
+    <div class="legal-item">
+      <h3>L’utilisation des données personnelles</h3>
+      <p>Texte explicatif...</p>
+    </div>
+  </div>
+</div>
+
+<!-- 底部 -->
+<footer class="footer">
+  <div class="footer-col">
+    <h3>À propos de Nutwork</h3>
+    <a href="#">À propos de nous</a>
+    <a href="#">Contactez-nous</a>
+    <a href="#">Blog</a>
+    <a href="#">FAQ</a>
+    <a href="#">Mention légal</a>
+    <a href="#">CGU</a>
+  </div>
+  <div class="footer-col">
+    <h3>Nos secteurs d’activités</h3>
+    <a href="#">Design</a>
+    <a href="#">Prototyping</a>
+    <a href="#">Development features</a>
+    <a href="#">Design systems</a>
+    <a href="#">Collaboration features</a>
+    <a href="#">Design process</a>
+    <a href="#">FigJam</a>
+  </div>
+  <div class="footer-col">
+    <h3>Aide & Contacts</h3>
+    <p>contact@nutwork.com</p>
+    <p>Best practices</p>
+    <p>28 Rue Notre Dame des Champs, 75006 Paris</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

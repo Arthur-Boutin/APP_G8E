@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CGV - Nutwork</title>
+  <style>
+    /* -- 通用样式、头部、底部等 -- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F7E3C2; /* 米黄色 */
+      color: #3A2A1B;
+      line-height: 1.4;
+    }
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #8C5A2B; /* 深棕 */
+      padding: 10px 20px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin-right: 30px;
+    }
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 500;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .nav-icons a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .footer {
+      background-color: #8C5A2B;
+      color: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 40px;
+      margin-top: 40px;
+    }
+    .footer-col {
+      flex: 1;
+      margin: 0 10px;
+    }
+    .footer-col h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    .footer-col a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+    .footer-col p {
+      margin-bottom: 5px;
+    }
+    .social-links a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* -- 页面主体 -- */
+    .main-container {
+      max-width: 1200px;
+      margin: 30px auto; /* 居中 */
+      padding: 0 20px;
+      text-align: center; /* 文本居中 */
+    }
+    .main-container h1 {
+      font-size: 2rem;
+      color: #8C5A2B;
+      margin-bottom: 20px;
+    }
+    .main-container p {
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto; /* 文本居中 */
+      margin-right: auto; /* 文本居中 */
+    }
+    .faq-list {
+      margin-top: 30px;
+      max-width: 800px;
+      margin-left: auto; /* 文本居中 */
+      margin-right: auto; /* 文本居中 */
+    }
+    .faq-item {
+      margin-bottom: 15px;
+      background-color: #F0D2A1; /* 浅棕 */
+      border-radius: 6px;
+      padding: 15px;
+      cursor: pointer; /* 若要做点击展开，可配合JS */
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+<!-- 顶部导航 -->
+<header class="main-header">
+  <div class="header-left">
+    <div class="logo">NUTWORK</div>
+    <nav class="nav-menu">
+      <a href="#">Contact</a>
+      <a href="#">Nos Articles</a>
+      <a href="#">Galerie</a>
+    </nav>
+  </div>
+  <div class="header-right">
+    <div class="nav-icons">
+      <a href="#">🔍</a>
+      <a href="#">✉️</a>
+      <a href="#">👤</a>
+    </div>
+  </div>
+</header>
+
+<!-- 主体内容 -->
+<div class="main-container">
+  <h1>Conditions générales de vente (CGV)</h1>
+  <p>
+    Les conditions générales de vente (CGV) vous permettent d’informer votre client sur vos conditions de vente d’un produit ou d’une prestation de services. Lorsque votre client est un particulier, vous devez obligatoirement lui transmettre vos CGV. En revanche, si votre client est un professionnel, leur communication est obligatoire lorsque votre client les demande.
+  </p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <h3>À quoi servent les conditions générales de vente ?</h3>
+      <p>Réponse à afficher si on souhaite déployer la section...</p>
+    </div>
+    <div class="faq-item">
+      <h3>Quelles sont les mentions obligatoires ?</h3>
+      <p>Réponse...</p>
+    </div>
+    <div class="faq-item">
+      <h3>Est-il obligatoire de fournir les CGV ?</h3>
+      <p>Réponse...</p>
+    </div>
+    <div class="faq-item">
+      <h3>De quelle manière les CGV doivent-elles être transmises ?</h3>
+      <p>Réponse...</p>
+    </div>
+    <div class="faq-item">
+      <h3>Quelles sont les sanctions en cas de non-respect des CGV ?</h3>
+      <p>Réponse...</p>
+    </div>
+  </div>
+</div>
+
+<!-- 底部 -->
+<footer class="footer">
+  <div class="footer-col">
+    <h3>À propos de Nutwork</h3>
+    <a href="#">À propos de nous</a>
+    <a href="#">Contactez-nous</a>
+    <a href="#">Blog</a>
+    <a href="#">FAQ</a>
+    <a href="#">Mention légal</a>
+    <a href="#">CGU</a>
+  </div>
+  <div class="footer-col">
+    <h3>Nos secteurs d’activités</h3>
+    <a href="#">Design</a>
+    <a href="#">Prototyping</a>
+    <a href="#">Development features</a>
+    <a href="#">Design systems</a>
+    <a href="#">Collaboration features</a>
+    <a href="#">Design process</a>
+    <a href="#">FigJam</a>
+  </div>
+  <div class="footer-col">
+    <h3>Aide & Contacts</h3>
+    <p>contact@nutwork.com</p>
+    <p>Best practices</p>
+    <p>28 Rue Notre Dame des Champs, 75006 Paris</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

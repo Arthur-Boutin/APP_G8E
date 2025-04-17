@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paiement - Nutwork</title>
+  <style>
+    /* ========== 全局重置 & 基础 ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F7E3C2; /* 米黄色 */
+      color: #3A2A1B;
+      line-height: 1.4;
+    }
+
+    /* ========== Header，与其他页面相同 ========== */
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #8C5A2B; /* 深棕 */
+      padding: 10px 20px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin-right: 30px;
+    }
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 500;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    /* 如果需要汉堡菜单，可加 */
+    .menu-toggle {
+      display: none; /* 若暂时不需要，可保持隐藏 */
+      background: none;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+    .nav-icons a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    /* ========== 主要内容：Paiement ========== */
+    .payment-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .payment-title-bar {
+      background-color: #000;
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .payment-form {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .payment-form h3 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .form-group {
+      flex: 1;
+      min-width: 200px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn-pay {
+      background-color: #D7A35F; /* 橙色 */
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* ========== Footer，与其他页面相同 ========== */
+    .footer {
+      background-color: #8C5A2B;
+      color: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 40px;
+      margin-top: 40px;
+    }
+    .footer-col {
+      flex: 1;
+      margin: 0 10px;
+    }
+    .footer-col h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    .footer-col a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+    .social-links a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    /* ========== 响应式(可选) ========== */
+    @media(max-width: 768px) {
+      /* 如果想在移动端显示汉堡菜单，可显示 menu-toggle, 隐藏 nav-menu */
+      .menu-toggle {
+        display: inline-block;
+      }
+      .nav-menu {
+        display: none; /* 需JS来切换显示 */
+      }
+      .form-row {
+        flex-direction: column;
+      }
+      .footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<header class="main-header">
+  <div class="header-left">
+    <button class="menu-toggle">&#9776;</button> <!-- 如果需要汉堡菜单 -->
+    <div class="logo">NUTWORK</div>
+    <nav class="nav-menu">
+      <a href="#">Contact</a>
+      <a href="#">Nos Articles</a>
+      <a href="#">Galerie</a>
+    </nav>
+  </div>
+  <div class="header-right">
+    <div class="nav-icons">
+      <a href="#">🔍</a>
+      <a href="#">✉️</a>
+      <a href="#">👤</a>
+    </div>
+  </div>
+</header>
+
+<!-- 主要内容：Paiement -->
+<div class="payment-container">
+  <div class="payment-title-bar">Paiement</div>
+
+  <div class="payment-form">
+    <h3>Coordonnées de la carte</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="cardnumber">Numéro de carte</label>
+        <input type="text" id="cardnumber" placeholder="XXXX XXXX XXXX XXXX"/>
+      </div>
+      <div class="form-group">
+        <label for="cardname">NOM/MA</label>
+        <input type="text" id="cardname" placeholder="Votre nom"/>
+      </div>
+      <div class="form-group">
+        <label for="cardcvv">CVV</label>
+        <input type="text" id="cardcvv" placeholder="123"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-form">
+    <h3>Adresse de livraison</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fullname">Nom complet</label>
+        <input type="text" id="fullname"/>
+      </div>
+      <div class="form-group">
+        <label for="address">Adresse</label>
+        <input type="text" id="address"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="city">Ville</label>
+        <input type="text" id="city"/>
+      </div>
+      <div class="form-group">
+        <label for="postcode">Code postal</label>
+        <input type="text" id="postcode"/>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-pay">Payer maintenant</button>
+</div>
+
+<!-- 底部 Footer -->
+<footer class="footer">
+  <div class="footer-col">
+    <h3>À propos de Nutwork</h3>
+    <a href="#">À propos de nous</a>
+    <a href="#">Contactez-nous</a>
+    <a href="#">Blog</a>
+    <a href="#">FAQ</a>
+    <a href="#">Mention légal</a>
+    <a href="#">CGU</a>
+  </div>
+  <div class="footer-col">
+    <h3>Nos secteurs d’activités</h3>
+    <a href="#">Design</a>
+    <a href="#">Prototyping</a>
+    <a href="#">Development features</a>
+    <a href="#">Design systems</a>
+    <a href="#">Collaboration features</a>
+    <a href="#">Design process</a>
+    <a href="#">FigJam</a>
+  </div>
+  <div class="footer-col">
+    <h3>Aide & Contacts</h3>
+    <p>contact@nutwork.com</p>
+    <p>Best practices</p>
+    <p>28 Rue Notre Dame des Champs, 75006 Paris</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

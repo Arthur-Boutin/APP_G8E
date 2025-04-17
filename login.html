@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Messagerie - Nutwork</title>
+  <title>Connexion au compte - Nutwork</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -26,36 +26,20 @@
     </nav>
   </header>
 
-  <main>
-    <div class="chat-container">
-      <div class="chat-sidebar">
-        <h2>Conversations</h2>
-        <input type="text" class="search-input" placeholder="Rechercher..."/>
-        <div class="conversation-item">
-          <p class="conversation-name">Jean Dupont</p>
-          <p class="conversation-preview">Salut, ça va ?</p>
-        </div>
-        <div class="conversation-item selected">
-          <p class="conversation-name">Marie Curie</p>
-          <p class="conversation-preview">À demain !</p>
-        </div>
-      </div>
-      <div class="chat-main">
-        <div class="chat-header">Marie Curie</div>
-        <div class="chat-messages">
-          <div class="message left">
-            <p>Salut Marie !</p>
-          </div>
-          <div class="message right">
-            <p>Salut Jean !</p>
-          </div>
-        </div>
-        <div class="chat-input">
-          <textarea rows="2" placeholder="Écrivez un message..."></textarea>
-        </div>
+  <div class="login-container">
+    <h1>Connexion au compte</h1>
+    <div class="login-box">
+      <label>Adresse mail</label>
+      <input type="email" placeholder="Votre adresse email"/>
+      <label>Mot de Passe</label>
+      <input type="password" placeholder="Votre mot de passe"/>
+      <div class="login-buttons">
+        <a href="./profil.html" class="btn">Confirmer</a>
+        <a href="./inscription.html" class="btn">Inscription</a>
+        <a href="./mdpoublie.html" class="btn">Mot de passe oublié ?</a>
       </div>
     </div>
-  </main>
+  </div>
 
   <footer class="site-footer">
     <div>
