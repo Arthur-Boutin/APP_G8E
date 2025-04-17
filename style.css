@@ -1132,6 +1132,22 @@ h2, h3 {
     margin-right: auto;
 }
 
+/* Liste légale */
+.legal-list {
+    background-color: #F5F5F5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.legal-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
 .legal-list {
     background-color: #F0D2A1;
     border-radius: 6px;
@@ -1139,10 +1155,6 @@ h2, h3 {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.legal-item {
-    margin-bottom: 15px;
 }
 
 .legal-item h3 {
@@ -1156,29 +1168,36 @@ h2, h3 {
 }
 
 /* CGV Page */
+/* FAQ */
 .faq-list {
     margin-top: 30px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 20px;
+    background-color: #F0D2A1;
+    border-radius: 8px;
 }
 
 .faq-item {
     margin-bottom: 15px;
-    background-color: #F0D2A1;
-    border-radius: 6px;
     padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
     cursor: pointer;
 }
 
+.faq-item:hover {
+    background-color: #E6CBA8;
+    transition: background-color 0.3s ease;
+}
+
 .faq-item h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 5px;
 }
 
 .faq-item p {
-    font-size: 0.95rem;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 /* Responsive Design */
