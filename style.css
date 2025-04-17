@@ -1111,6 +1111,76 @@ h2, h3 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Mentions légales Page */
+.main-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.main-container h1 {
+    font-size: 2rem;
+    color: #8C5A2B;
+    margin-bottom: 20px;
+}
+
+.main-container p {
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.legal-list {
+    background-color: #F0D2A1;
+    border-radius: 6px;
+    padding: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.legal-item {
+    margin-bottom: 15px;
+}
+
+.legal-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.legal-item p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* CGV Page */
+.faq-list {
+    margin-top: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    background-color: #F0D2A1;
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.faq-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.faq-item p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .profile-section {
