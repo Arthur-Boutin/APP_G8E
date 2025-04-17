@@ -519,6 +519,10 @@ h2, h3 {
     cursor: pointer;
 }
 
+.btn-remove:hover {
+    background-color: #A66A44;
+}
+
 .cart-summary {
     background-color: #fff;
     border-radius: 8px;
@@ -542,6 +546,10 @@ h2, h3 {
     padding: 10px 16px;
     cursor: pointer;
     font-size: 1rem;
+}
+
+.btn-validate:hover {
+    background-color: #45a049;
 }
 
 /* RESPONSIVE */
