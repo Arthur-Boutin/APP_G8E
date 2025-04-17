@@ -556,7 +556,7 @@ h2, h3 {
 .page-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 30px;
+    margin: 30px 0;
     color: #8C5A2B;
 }
 
@@ -564,105 +564,161 @@ h2, h3 {
     display: flex;
     justify-content: space-between;
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #F0D2A1;
-    border-radius: 8px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
 }
 
-.profile-block, .info-block {
-    width: 48%;
+.profile-block,
+.info-block {
+    background-color: #F0D2A1;
+    border-radius: 8px;
+    padding: 20px;
+    width: 45%;
 }
 
 .block-title {
-    font-size: 1.5rem;
+    background-color: #B6935C;
+    color: #fff;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
     margin-bottom: 20px;
-    color: #8C5A2B;
+    font-size: 1.2rem;
+}
+
+.profile-photo {
+    text-align: center;
 }
 
 .profile-photo img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 180px;
+    height: auto;
+    border-radius: 8px;
     margin-bottom: 10px;
 }
 
 .photo-label {
-    font-size: 0.9rem;
-    color: #666;
     margin-bottom: 10px;
-}
-
-.btn-upload {
-    background-color: #8C5A2B;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    cursor: pointer;
+    font-weight: 500;
 }
 
 .info-form label {
     display: block;
-    margin-bottom: 5px;
+    margin: 15px 0 5px;
     font-weight: bold;
 }
 
 .info-form input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .btn-save {
-    background-color: #4caf50;
+    margin-top: 20px;
+    background-color: #8C5A2B;
     color: #fff;
     border: none;
-    border-radius: 4px;
     padding: 10px 16px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
+/* Buttons */
+.btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.btn-upload {
+    background-color: #8C5A2B;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.btn-upload:hover,
+.btn-save:hover,
+.btn-update:hover {
+    opacity: 0.8;
+}
+
+/* Paramètres */
 .param-section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
 }
 
 .param-title {
-    font-size: 1.5rem;
+    background-color: #B6935C;
+    display: inline-block;
+    padding: 6px 12px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 1.2rem;
     margin-bottom: 20px;
-    color: #8C5A2B;
 }
 
-.param-form .param-row {
+.param-form {
+    background-color: #F0D2A1;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.param-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     margin-bottom: 15px;
 }
 
-.param-form label {
-    display: block;
-    margin-bottom: 5px;
+.param-row label {
+    width: 220px;
+    margin-right: 10px;
     font-weight: bold;
 }
 
-.param-form input {
-    width: 100%;
-    padding: 10px;
+.param-row input {
+    flex: 1;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .btn-update {
+    margin-top: 10px;
     background-color: #8C5A2B;
     color: #fff;
-    border: none;
-    border-radius: 4px;
     padding: 10px 16px;
-    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+    }
+
+    .profile-block,
+    .info-block {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .param-row label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .param-row input {
+        width: 100%;
+    }
 }
 
 /* RESPONSIVE */
