@@ -1,0 +1,107 @@
+/* Section Hero */
+.hero {
+    background-color: #f8e8d0;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image {
+    width: 80%;
+    height: 100%;
+    background-color: #e0dcd7;
+    border-radius: 8px;
+}
+
+/* Section Article */
+.article {
+    display: flex;
+    padding: 20px;
+    background-color: #fdf6e3;
+}
+
+.article-image {
+    width: 40%;
+    height: 200px;
+    background-color: #e0dcd7;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.article-content h2 {
+    font-size: 24px;
+    color: #4a2e1b;
+}
+
+.article-content h3 {
+    font-size: 18px;
+    color: #6b4f3f;
+}
+
+.article-content p {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Section Filtre */
+.filter {
+    display: flex;
+    padding: 20px;
+    background-color: #d2a679;
+}
+
+.filter-image {
+    width: 40%;
+    height: 200px;
+    background-color: #e0dcd7;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.filter-options h2 {
+    font-size: 24px;
+    color: #fff;
+}
+
+.filter-options form {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-options select,
+.filter-options button {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+}
+
+/* Section Avis */
+.reviews {
+    background-color: #f8e8d0;
+    padding: 20px;
+}
+
+.reviews h2 {
+    font-size: 24px;
+    color: #4a2e1b;
+}
+
+.review-card {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-card h3 {
+    font-size: 18px;
+    color: #4a2e1b;
+}
+
+.review-card p {
+    font-size: 14px;
+    color: #333;
+}

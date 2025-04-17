@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutwork - Accueil</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+</head>
+<body>
+    <!-- Inclusion du header -->
+    <div id="header-container">
+        <include src="../partials/header.html"></include>
+    </div>
+
+    <main>
+        <!-- Section principale -->
+        <section class="hero">
+            <div class="hero-image"></div>
+        </section>
+
+        <!-- Section article -->
+        <section class="article">
+            <div class="article-image"></div>
+            <div class="article-content">
+                <h2>Heading</h2>
+                <h3>Subheading</h3>
+                <p>
+                    Body text for your whole article or post. We'll put in some lorem ipsum to show how a filled-out page might look:
+                </p>
+                <p>
+                    Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section filtre -->
+        <section class="filter">
+            <div class="filter-image"></div>
+            <div class="filter-options">
+                <h2>Text Heading</h2>
+                <form>
+                    <label for="collection">Trier et filtrer</label>
+                    <select id="collection" name="collection">
+                        <option>Value</option>
+                    </select>
+                    <select id="price" name="price">
+                        <option>Value</option>
+                    </select>
+                    <button type="submit">En savoir plus</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Section avis -->
+        <section class="reviews">
+            <h2>Avis</h2>
+            <div class="review-card">
+                <h3>Review title</h3>
+                <p>Review body</p>
+                <p>Reviewer name</p>
+                <p>Date</p>
+            </div>
+            <div class="review-card">
+                <h3>Review title</h3>
+                <p>Review body</p>
+                <p>Reviewer name</p>
+                <p>Date</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Inclusion du footer -->
+    <div id="footer-container">
+        <include src="../partials/footer.html"></include>
+    </div>
+</body>
+</html>
