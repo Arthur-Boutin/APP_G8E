@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Espace Personnel - Nutwork</title>
+  <!-- 引用外部CSS -->
+  <link rel="stylesheet" href="Nutwork.css">
+</head>
+<body>
+<!-- 顶部导航 -->
+<header class="main-header">
+  <div class="header-left">
+    <div class="logo">NUTWORK</div>
+    <nav class="nav-menu">
+      <a href="#">Contact</a>
+      <a href="#">Nos Articles</a>
+      <a href="#">Galerie</a>
+    </nav>
+  </div>
+  <div class="header-right">
+    <button class="menu-toggle">
+      <!-- 这里可以放一个汉堡菜单图标（SVG或字体图标），暂用Unicode符号代替 -->
+      &#9776;
+    </button>
+    <div class="nav-icons">
+      <a href="#" class="icon-search">🔍</a>
+      <a href="#" class="icon-mail">✉️</a>
+      <a href="#" class="icon-user">👤</a>
+    </div>
+  </div>
+</header>
+
+<!-- 主体内容 -->
+<main>
+  <!-- 大标题 -->
+  <h1 class="page-title">Espace Personnel</h1>
+
+  <section class="profile-section">
+    <!-- 左侧：头像与“PROFIL” -->
+    <div class="profile-block">
+      <h2 class="block-title">PROFIL</h2>
+      <div class="profile-photo">
+        <!-- 请将 squirrel.png 放到 images 文件夹下或者自行更换路径 -->
+        <img src="images/squirrel.png" alt="Photo de profil" />
+        <p class="photo-label">Photo actuelle</p>
+        <button class="btn btn-upload">Changer la photo</button>
+      </div>
+    </div>
+
+    <!-- 右侧：用户信息“INFORMATION” -->
+    <div class="info-block">
+      <h2 class="block-title">INFORMATION</h2>
+      <form class="info-form">
+        <label for="lastname">NOM :</label>
+        <input type="text" id="lastname" name="lastname" placeholder="Entrez votre nom"/>
+
+        <label for="firstname">PRENOM :</label>
+        <input type="text" id="firstname" name="firstname" placeholder="Entrez votre prénom"/>
+
+        <label for="email">EMAIL :</label>
+        <input type="email" id="email" name="email" placeholder="Entrez votre email"/>
+
+        <label for="address">ADRESSE :</label>
+        <input type="text" id="address" name="address" placeholder="Entrez votre adresse"/>
+
+        <!-- 可以加一个提交按钮 -->
+        <button type="submit" class="btn btn-save">Enregistrer</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 设置密码区域“PARAMÈTRE” -->
+  <section class="param-section">
+    <h2 class="param-title">PARAMÈTRE</h2>
+    <form class="param-form">
+      <div class="param-row">
+        <label for="new-password">Définir un mot de passe :</label>
+        <input type="password" id="new-password" />
+      </div>
+      <div class="param-row">
+        <label for="confirm-new-password">Confirmer le mot de passe :</label>
+        <input type="password" id="confirm-new-password" />
+      </div>
+      <div class="param-row">
+        <label for="change-password">Changer le mot de passe :</label>
+        <input type="password" id="change-password" />
+      </div>
+      <div class="param-row">
+        <label for="confirm-change-password">Confirmer le mot de passe :</label>
+        <input type="password" id="confirm-change-password" />
+      </div>
+
+      <button type="submit" class="btn btn-update">Mettre à jour</button>
+    </form>
+  </section>
+</main>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="footer-col">
+    <h3>À propos de Nutwork</h3>
+    <a href="#">À propos de nous</a>
+    <a href="#">Contactez-nous</a>
+    <a href="#">Blog</a>
+    <a href="#">FAQ</a>
+    <a href="#">Mention légal</a>
+    <a href="#">CGU</a>
+  </div>
+
+  <div class="footer-col">
+    <h3>Nos secteurs d’activités</h3>
+    <a href="#">Design</a>
+    <a href="#">Prototyping</a>
+    <a href="#">Development features</a>
+    <a href="#">Design systems</a>
+    <a href="#">Collaboration features</a>
+    <a href="#">Design process</a>
+    <a href="#">FigJam</a>
+  </div>
+
+  <div class="footer-col">
+    <h3>Aide & Contacts</h3>
+    <p>contact@nutwork.com</p>
+    <p>Best practices</p>
+    <p>28 Rue Notre Dame des Champs, 75006 Paris</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

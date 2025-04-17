@@ -346,6 +346,204 @@ h2, h3 {
     opacity: 0.9;
 }
 
+/* Messagerie Page */
+.chat-container {
+    max-width: 1200px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+    display: flex;
+    min-height: 700px;
+}
+
+.chat-sidebar {
+    width: 25%;
+    background-color: #F0D2A1;
+    border-radius: 8px;
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.chat-sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #8C5A2B;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.conversation-item {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.conversation-item:hover {
+    background-color: #f8f4ee;
+}
+
+.conversation-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.conversation-preview {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.conversation-item.selected {
+    border: 2px solid #8C5A2B;
+}
+
+.chat-main {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    background-color: #F0D2A1;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    background-color: #FAF4EC;
+    overflow-y: auto;
+}
+
+.message {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    clear: both;
+}
+
+.message.left {
+    background-color: #D9F1FF;
+    float: left;
+}
+
+.message.right {
+    background-color: #D9FFD9;
+    float: right;
+}
+
+.chat-input {
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background-color: #F0D2A1;
+}
+
+.chat-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: none;
+    font-size: 1rem;
+}
+
+.chat-input textarea:focus {
+    outline: none;
+    border-color: #8C5A2B;
+}
+
+/* Panier Page */
+.cart-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.cart-title-bar {
+    background-color: #000;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.cart-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.cart-item-info {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.cart-item-info h3 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.cart-item-info p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.btn-remove {
+    background-color: #8C5A2B;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.cart-summary {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.cart-summary p {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.btn-validate {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .grid {

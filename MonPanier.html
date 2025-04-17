@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Panier - Nutwork</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav>
+      <ul class="menu">
+        <li><a href="/">NUTWORK</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./articles.html">Nos Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li>
+          <form>
+            <input type="text" name="rechercher" class="barre" placeholder="Rechercher..."/>
+          </form>
+        </li>
+        <li><a href="./nouscontacter.html"><img alt="Nous contacter" src="./assets/images/Mail.png" class="mail"/></a></li>
+        <li><a href="./panier.html"><img src="./assets/images/truc.png" class="truc"></a></li>
+        <li><a href="./profil.html"><img src="./assets/images/Profil.png" class="profil"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="cart-container">
+      <div class="cart-title-bar">Mon Panier</div>
+
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h3>Produit 1</h3>
+          <p>Prix: 30€</p>
+        </div>
+        <button class="btn-remove">Supprimer</button>
+      </div>
+
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h3>Produit 2</h3>
+          <p>Prix: 50€</p>
+        </div>
+        <button class="btn-remove">Supprimer</button>
+      </div>
+
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h3>Produit 3</h3>
+          <p>Prix: 70€</p>
+        </div>
+        <button class="btn-remove">Supprimer</button>
+      </div>
+
+      <div class="cart-summary">
+        <p>Résumé du panier: Total 150€</p>
+        <button class="btn-validate">Valider</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <h4>À propos de Nutwork</h4>
+      <p>À propos de nous</p>
+      <p>Contactez-nous</p>
+      <p>Blog</p>
+      <p>FAQ</p>
+    </div>
+    <div>
+      <h4>Nos secteurs d'activités</h4>
+      <p>Design</p>
+      <p>Prototyping</p>
+      <p>Développement</p>
+    </div>
+    <div>
+      <h4>Aide & Contacts</h4>
+      <p>contact@nutwork.com</p>
+      <p>28 Rue Notre Dame des Champs, Paris</p>
+    </div>
+  </footer>
+</body>
+</html>
