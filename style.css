@@ -166,13 +166,11 @@ nav {
 
 /* Mobile menu */
 .mobile-menu {
-  display: flex !important;
-  background-color: blue !important;
+  display: none !important;
 }
 
 .mobile-menu.active {
-  display: flex; /* Le menu devient visible lorsqu'il a la classe "active" */
-  background-color: red; /* Ajoutez une couleur visible pour tester */
+  display: flex !important;
 }
 
 /* FOOTER */
