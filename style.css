@@ -166,7 +166,7 @@ nav {
 
 /* Mobile menu */
 .mobile-menu {
-  display: none;
+  display: none; /* Le menu est masqué par défaut */
   flex-direction: column;
   background-color: #8C5A2B;
   position: absolute;
@@ -178,7 +178,8 @@ nav {
 }
 
 .mobile-menu.active {
-  display: flex;
+  display: flex; /* Le menu devient visible lorsqu'il a la classe "active" */
+  background-color: red; /* Ajoutez une couleur visible pour tester */
 }
 
 /* FOOTER */
