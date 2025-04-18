@@ -1,4 +1,4 @@
-<script>
+
   document.addEventListener("DOMContentLoaded", () => {
     const hamburger = document.querySelector(".hamburger");
     const mobileMenu = document.querySelector(".mobile-menu");
@@ -13,4 +13,3 @@
       console.error("Éléments hamburger ou mobileMenu introuvables !");
     }
   });
-</script>
