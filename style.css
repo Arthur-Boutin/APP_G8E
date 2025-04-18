@@ -166,11 +166,19 @@ nav {
 
 /* Mobile menu */
 .mobile-menu {
-  display: none !important;
+  display: none !important; /* Le menu est masqué par défaut */
+  flex-direction: column;
+  background-color: #8C5A2B;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  z-index: 1000; /* Priorité pour s'afficher au-dessus des autres éléments */
 }
 
 .mobile-menu.active {
-  display: flex !important;
+  display: flex !important; /* Le menu devient visible lorsqu'il a la classe "active" */
 }
 
 /* FOOTER */
