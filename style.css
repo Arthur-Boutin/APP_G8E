@@ -5,11 +5,22 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%; /* Assure que le body occupe toute la hauteur de la fenêtre */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #F7E3C2;
     color: #3A2A1B;
     line-height: 1.4;
+}
+
+main {
+    flex-grow: 1; /* Permet au contenu principal de prendre tout l'espace disponible */
 }
 
 /* HEADER */
@@ -193,6 +204,13 @@ footer {
 .footer-social a {
     color: white;
     font-size: 18px;
+}
+
+.site-footer {
+    background-color: #8C5A2B;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
 
 /* BODY */
