@@ -194,6 +194,11 @@ nav {
   font-size: 1.2rem;
 }
 
+/* Active state for the mobile menu */
+.mobile-menu.active {
+  display: flex;
+}
+
 /* FOOTER */
 footer {
     background-color: #8B5A2B;
