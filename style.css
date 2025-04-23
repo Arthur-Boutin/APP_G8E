@@ -5,154 +5,98 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%; /* Assure que le body occupe toute la hauteur de la fenêtre */
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #F7E3C2;
-    color: #3A2A1B;
-    line-height: 1.4;
-}
-
-main {
-    flex-grow: 1; /* Permet au contenu principal de prendre tout l'espace disponible */
-}
-
-/* HEADER */
-nav {
-    background-color: #8B5A2B;
-    padding: 15px 50px;
-}
-
-.menu {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
-
-.menu li {
-    display: flex;
+/* En tête partie MENU*/
+.menu{
+    display:flex;
+    padding:20px;
+    background-color:#955D33;
+    font-style: normal;
+    font-family: Arial;
     align-items: center;
 }
-
-.menu a {
-    color: white;
+body{
+    height:1500px;
+}
+.menu li{
+    font-display:center ;
+    list-style-type:none;
+    background-color:#955D33;
+    text-align: center;
+}
+.menu a{
     text-decoration: none;
-    margin-right: 20px;
-    font-size: 16px;
+    text-align: center;
+    background-color:#955D33;
+    font-display: center;
+}
+/* Apparence des icones en haut à droite de la page*/
+.menu a NUTWORK{
+    font-weight: bold;
+    font-size: 25px;
+    color:white;
+    border-style:none;
+    padding-right:80px;
+    padding-left: 20px;
+    background-color:#955D33;
+}
+.menu a Contact{
+    font-size: 17px;
+    color:white;
+    padding-right:118px;
+    background-color:#955D33;
+}
+.menu a NosArticles{
+    font-size: 17px;
+    color:white;
+    padding-right:118px;
+    background-color:#955D33;
+    text-align: center;
+}
+.menu a Galerie{
+    font-size: 17px;
+    color:white;
+    padding-right: 110px;
+    background-color:#955D33;
+}
+.menu form{
+    background-color:#955D33;
+    border-color:#955D33;
+}
+.barre{
+    background-color:white;
+    font-size: 25px;
+    border-radius: 30px;
+    border-style: hidden;
+    font-style: Arial;
+    text-decoration-color:black;
+}
+.loupe{
+    width: 30px;
+    height: 30px;
+}
+.loupe{
+    width: 30px;
+    height: 30px;
+}
+.mail{
+    width: 32px;
+    height: 29px;
+    font-display: center;
+    margin-left: 50px;
+}
+.truc{
+    width: 32px;
+    height: 28px;
+    font-display:center; 
+    margin-left: 50px;
+}
+.profil{
+    width: 32px;
+    height: 29px;
+    font-display: center;
+    margin-left: 50px;
 }
 
-.menu a:hover {
-    text-decoration: underline;
-}
-
-.barre {
-    padding: 5px;
-    border-radius: 15px;
-    border: none;
-    width: 200px;
-}
-
-.mail, .truc, .profil {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    margin-left: 15px;
-}
-
-/* Nouveau header */
-.site-header {
-  background-color: #8C5A2B;
-  color: #fff;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.logo a {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
-
-.nav-menu ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-menu ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.nav-menu ul li a:hover {
-  color: #F0D2A1;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.search-form {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 20px;
-  padding: 5px 10px;
-}
-
-.search-bar {
-  border: none;
-  outline: none;
-  padding: 5px;
-  font-size: 0.9rem;
-  border-radius: 20px;
-}
-
-.search-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #8C5A2B;
-}
-
-.icon-link {
-  display: flex;
-  align-items: center;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.3s ease;
-}
-
-.icon-link:hover .icon {
-  transform: scale(1.1);
-}
 
 /* Hamburger button */
 .hamburger {
