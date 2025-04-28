@@ -1531,3 +1531,51 @@ h2, h3 {
         font-size: 0.9rem;
     }
 }
+
+/* FAQ Gestion spéciale */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 8px 15px;
+    background-color: #B86B1D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #935518;
+}
+
+#faq-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #FFF7E6;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#faq-form input, #faq-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
