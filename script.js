@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-const faqQuestions = document.querySelectorAll('.faq-question');
+const faqQuestions = document.querySelectorAll('.faq-question, .legal-question');
 
 faqQuestions.forEach(question => {
     question.addEventListener('click', () => {
         const faqItem = question.parentElement;
-        const answer = faqItem.querySelector('.faq-answer');
+        const answer = faqItem.querySelector('.faq-answer, .legal-answer');
         const toggleIcon = question.querySelector('.right-icon');
 
         if (answer.style.display === 'block') {
