@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Backoffice</title>
+    <title>Nutwork - Gestion des articles</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -25,29 +25,41 @@
     </header>
 
     <main>
-        <section class="backoffice-home">
-            <h1>Bienvenue dans le Backoffice</h1>
-            <p>Utilisez les options ci-dessous pour gérer le contenu et les utilisateurs de votre site.</p>
-            <div class="backoffice-buttons">
-                <a href="./gestion-faq.html" class="backoffice-button">
-                    <span>Gestion de la FAQ</span>
-                </a>
-                <a href="./creationarticles.html" class="backoffice-button">
-                    <span>Création de nouveaux articles</span>
-                </a>
-                <a href="./gestion-cgu.html" class="backoffice-button">
-                    <span>Gestion des CGU</span>
-                </a>
-                <a href="./gestion-mentions.html" class="backoffice-button">
-                    <span>Gestion des mentions légales</span>
-                </a>
-                <a href="./gestion-utilisateurs.html" class="backoffice-button">
-                    <span>Gestion des utilisateurs et des droits d'accès</span>
-                </a>
-                <a href="./gestion-articles.html" class="backoffice-button">
-                    <span>Gestion des articles</span>
-                </a>
-            </div>
+        <section class="gestion-articles">
+            <h1>Gestion des articles</h1>
+            <table class="articles-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemple d'article -->
+                    <tr>
+                        <td>1</td>
+                        <td>Article 1</td>
+                        <td>Description de l'article 1</td>
+                        <td>
+                            <button class="btn-modify">Modifier</button>
+                            <button class="btn-hide">Cacher</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Article 2</td>
+                        <td>Description de l'article 2</td>
+                        <td>
+                            <button class="btn-modify">Modifier</button>
+                            <button class="btn-hide">Cacher</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
 
