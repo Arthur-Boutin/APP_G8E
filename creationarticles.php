@@ -66,7 +66,7 @@
             // Récupération des artisans pour le menu déroulant
             $artisans = [];
             try {
-                $stmt = $pdo->query("SELECT id, nom FROM artisan"); // Assurez-vous que la table 'artisan' existe
+                $stmt = $pdo->query("SELECT IdArtisan, nom FROM artisan"); // Assurez-vous que la colonne 'IdArtisan' existe
                 $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
@@ -93,11 +93,20 @@
                     <label for="idArtisan">Artisan :</label>
                     <select id="idArtisan" name="idArtisan" required>
                         <option value="" disabled selected>Choisissez un artisan</option>
-                        <?php foreach ($artisans as $artisan): ?>
-                            <option value="<?= htmlspecialchars($artisan['id']) ?>">
-                                <?= htmlspecialchars($artisan['nom']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <?php
+                        // Récupération des artisans avec la colonne IdArtisan
+                        try {
+                            $stmt = $pdo->query("SELECT IdArtisan, nom FROM artisan"); // Assurez-vous que la colonne 'IdArtisan' existe
+                            $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($artisans as $artisan) {
+                                echo '<option value="' . htmlspecialchars($artisan['IdArtisan']) . '">'
+                                    . htmlspecialchars($artisan['nom']) . '</option>';
+                            }
+                        } catch (PDOException $e) {
+                            echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <button type="submit" class="submit-button">Créer le produit</button>
