@@ -62,6 +62,15 @@
 
                 echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
             }
+
+            // Récupération des artisans pour le menu déroulant
+            $artisans = [];
+            try {
+                $stmt = $pdo->query("SELECT id, nom FROM artisan"); // Assurez-vous que la table 'artisan' existe
+                $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
+            }
             ?>
             <form action="" method="POST" class="article-form">
                 <div class="form-group">
@@ -81,8 +90,15 @@
                     <input type="number" id="quantitee" name="quantitee" placeholder="Entrez la quantité" required>
                 </div>
                 <div class="form-group">
-                    <label for="idArtisan">ID de l'artisan :</label>
-                    <input type="number" id="idArtisan" name="idArtisan" placeholder="Entrez l'ID de l'artisan" required>
+                    <label for="idArtisan">Artisan :</label>
+                    <select id="idArtisan" name="idArtisan" required>
+                        <option value="" disabled selected>Choisissez un artisan</option>
+                        <?php foreach ($artisans as $artisan): ?>
+                            <option value="<?= htmlspecialchars($artisan['id']) ?>">
+                                <?= htmlspecialchars($artisan['nom']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <button type="submit" class="submit-button">Créer le produit</button>
             </form>
