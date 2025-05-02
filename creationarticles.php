@@ -9,20 +9,40 @@
 <body>
     <!-- Header intégré -->
     <header class="site-header">
-        <div class="header-container">
-            <div class="logo">
-                <a href="./index.html">NUTWORK</a>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="./index.html">Accueil</a></li>
-                    <li><a href="./articles.php">Articles</a></li>
-                    <li><a href="./galerie.html">Galerie</a></li>
-                    <li><a href="./contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="./index.html">NUTWORK</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="./index.html">Accueil</a></li>
+        <li><a href="./articles.php">Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <form class="search-form">
+        <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+        <button type="submit" class="search-button">🔍</button>
+      </form>
+      <a href="./messagerie.html" class="icon-link">
+        <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+      </a>
+      <a href="./panier.html" class="icon-link">
+        <img src="./assets/images/truc.png" alt="Panier" class="icon">
+      </a>
+      <a href="./login.html" class="icon-link">
+        <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+      </a>
+    </div>
+  </div>
+</header>
 
     <main>
         <section class="backoffice">
@@ -38,6 +58,7 @@
                 $prix = htmlspecialchars($_POST['prix']);
                 $quantitee = htmlspecialchars($_POST['quantitee']);
                 $idArtisan = htmlspecialchars($_POST['idArtisan']);
+                $idCategorie = intval($_POST['idCategorie']);
                 $image = null;
 
                 // Vérifier si une image a été téléchargée
@@ -46,8 +67,8 @@
                 }
 
                 // Insertion dans la base de données
-                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image) 
-                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image)";
+                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image, idCategorie) 
+                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image, :idCategorie)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':nom' => $nom,
@@ -55,7 +76,8 @@
                     ':prix' => $prix,
                     ':quantitee' => $quantitee,
                     ':idArtisan' => $idArtisan,
-                    ':image' => $image
+                    ':image' => $image,
+                    ':idCategorie' => $idCategorie
                 ]);
 
                 echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
@@ -68,6 +90,15 @@
                 $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
+            }
+
+            // Récupération des catégories pour le menu déroulant
+            $categories = [];
+            try {
+                $stmt = $pdo->query("SELECT idCategorie, nom FROM categorie");
+                $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                echo "<p class='error-message'>Erreur lors de la récupération des catégories : " . $e->getMessage() . "</p>";
             }
             ?>
             <div class="create-article-container">
@@ -93,6 +124,16 @@
                         <?php foreach ($artisans as $artisan): ?>
                             <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>">
                                 <?php echo htmlspecialchars($artisan['nom']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <label for="idCategorie">Catégorie</label>
+                    <select id="idCategorie" name="idCategorie" required>
+                        <option value="">Sélectionnez une catégorie</option>
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?php echo htmlspecialchars($categorie['idCategorie']); ?>">
+                                <?php echo htmlspecialchars($categorie['nom']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
