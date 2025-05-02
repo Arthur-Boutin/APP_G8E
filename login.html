@@ -45,6 +45,13 @@
 
   <div class="login-container">
     <h1>Connexion au compte</h1>
+
+    <!-- Boutons de sélection Artisan/Client -->
+    <div class="user-type-selection">
+      <button id="artisan-btn" class="user-type-button active">Artisan</button>
+      <button id="client-btn" class="user-type-button">Client</button>
+    </div>
+
     <div class="login-box">
       <label>Adresse mail</label>
       <input type="email" placeholder="Votre adresse email"/>
@@ -77,6 +84,20 @@
         <p>contact@nutwork.com</p>
         <p>28 Rue Notre Dame des Champs, Paris</p>
     </div>
-</footer>
-</body>
-</html>
+  </footer>
+
+  <script>
+    const artisanBtn = document.getElementById('artisan-btn');
+    const clientBtn = document.getElementById('client-btn');
+
+    artisanBtn.addEventListener('click', () => {
+      artisanBtn.classList.add('active');
+      clientBtn.classList.remove('active');
+    });
+
+    clientBtn.addEventListener('click', () => {
+      clientBtn.classList.add('active');
+      artisanBtn.classList.remove('active');
+}
+
+ </script>

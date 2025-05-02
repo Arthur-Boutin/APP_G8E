@@ -1641,6 +1641,35 @@ h2, h3 {
     transform: scale(1.05);
 }
 
+/* Conteneur pour les boutons Artisan/Client */
+.user-type-selection {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.user-type-button {
+    padding: 10px 20px;
+    border: 1px solid #8C5A2B;
+    background-color: white;
+    color: #8C5A2B;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.user-type-button.active {
+    background-color: #8C5A2B;
+    color: white;
+}
+
+.user-type-button:hover {
+    background-color: #D18A52;
+    color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .profile-section {
