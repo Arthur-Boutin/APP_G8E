@@ -11,7 +11,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = intval($_GET['id']);
 
 // Récupérer les données du produit à modifier
-$query = "SELECT nom, description, prix, quantitee FROM produit WHERE nProduit = :id";
+$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':id' => $id]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -26,15 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $prix = $_POST['prix'];
     $quantitee = $_POST['quantitee'];
+    $image = $produit['image']; // Conserver l'image actuelle par défaut
+
+    // Vérifier si une nouvelle image a été téléchargée
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image = file_get_contents($_FILES['image']['tmp_name']);
+    }
 
     // Mettre à jour le produit dans la base de données
-    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee WHERE nProduit = :id";
+    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image WHERE nProduit = :id";
     $update_stmt = $pdo->prepare($update_query);
     $update_stmt->execute([
         ':nom' => $nom,
         ':description' => $description,
         ':prix' => $prix,
         ':quantitee' => $quantitee,
+        ':image' => $image,
         ':id' => $id
     ]);
 
@@ -72,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <section class="modifier-article">
             <h1>Modifier un produit</h1>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nom">Nom :</label>
                     <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($produit['nom']); ?>" required>
@@ -88,6 +95,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="quantitee">Quantité :</label>
                     <input type="number" id="quantitee" name="quantitee" value="<?php echo htmlspecialchars($produit['quantitee']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image actuelle :</label>
+                    <?php if (!empty($produit['image'])): ?>
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="Image du produit" style="max-width: 200px; max-height: 200px;">
+                    <?php else: ?>
+                        <p>Aucune image disponible</p>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
+                    <label for="image">Nouvelle image (facultatif) :</label>
+                    <input type="file" id="image" name="image" accept="image/png, image/jpeg">
                 </div>
                 <button type="submit" class="btn-submit">Mettre à jour</button>
             </form>

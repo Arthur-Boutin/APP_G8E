@@ -3,27 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Backoffice</title>
+    <title>Nutwork - Créer un produit</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <!-- Header intégré -->
     <header class="site-header">
-        <div class="header-container">
-            <div class="logo">
-                <a href="./index.html">NUTWORK</a>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="./index.html">Accueil</a></li>
-                    <li><a href="./articles.html">Articles</a></li>
-                    <li><a href="./galerie.html">Galerie</a></li>
-                    <li><a href="./contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="./index.html">NUTWORK</a>
+      </div>
 
+      <!-- Navigation -->
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="./index.html">Accueil</a></li>
+          <li><a href="./articles.html">Articles</a></li>
+          <li><a href="./galerie.html">Galerie</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <form class="search-form">
+          <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+          <button type="submit" class="search-button">🔍</button>
+        </form>
+        <a href="./messagerie.html" class="icon-link">
+          <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+        </a>
+        <a href="./panier.html" class="icon-link">
+          <img src="./assets/images/truc.png" alt="Panier" class="icon">
+        </a>
+        <a href="./login.html" class="icon-link">
+          <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+        </a>
+      </div>
+    </div>
+  </header>
+  
     <main>
         <section class="backoffice">
             <h1>Créer un nouveau produit</h1>
@@ -48,16 +68,24 @@
                 $prix = htmlspecialchars($_POST['prix']);
                 $quantitee = htmlspecialchars($_POST['quantitee']);
                 $idArtisan = htmlspecialchars($_POST['idArtisan']);
+                $image = null;
+
+                // Vérifier si une image a été téléchargée
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $image = file_get_contents($_FILES['image']['tmp_name']);
+                }
 
                 // Insertion dans la base de données
-                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan) VALUES (:nom, :description, :prix, :quantitee, :idArtisan)";
+                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image) 
+                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':nom' => $nom,
                     ':description' => $description,
                     ':prix' => $prix,
                     ':quantitee' => $quantitee,
-                    ':idArtisan' => $idArtisan
+                    ':idArtisan' => $idArtisan,
+                    ':image' => $image
                 ]);
 
                 echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
@@ -66,13 +94,13 @@
             // Récupération des artisans pour le menu déroulant
             $artisans = [];
             try {
-                $stmt = $pdo->query("SELECT IdArtisan, nom FROM artisan"); // Assurez-vous que la colonne 'IdArtisan' existe
+                $stmt = $pdo->query("SELECT IdArtisan, nom FROM artisan");
                 $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
                 echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
             }
             ?>
-            <form action="" method="POST" class="article-form">
+            <form action="" method="POST" enctype="multipart/form-data" class="article-form">
                 <div class="form-group">
                     <label for="nom">Nom du produit :</label>
                     <input type="text" id="nom" name="nom" placeholder="Entrez le nom" required>
@@ -93,21 +121,16 @@
                     <label for="idArtisan">Artisan :</label>
                     <select id="idArtisan" name="idArtisan" required>
                         <option value="" disabled selected>Choisissez un artisan</option>
-                        <?php
-                        // Récupération des artisans avec la colonne IdArtisan
-                        try {
-                            $stmt = $pdo->query("SELECT IdArtisan, nom FROM artisan"); // Assurez-vous que la colonne 'IdArtisan' existe
-                            $artisans = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                            foreach ($artisans as $artisan) {
-                                echo '<option value="' . htmlspecialchars($artisan['IdArtisan']) . '">'
-                                    . htmlspecialchars($artisan['nom']) . '</option>';
-                            }
-                        } catch (PDOException $e) {
-                            echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
-                        }
-                        ?>
+                        <?php foreach ($artisans as $artisan): ?>
+                            <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>">
+                                <?php echo htmlspecialchars($artisan['nom']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image du produit :</label>
+                    <input type="file" id="image" name="image" accept="image/png, image/jpeg" required>
                 </div>
                 <button type="submit" class="submit-button">Créer le produit</button>
             </form>
