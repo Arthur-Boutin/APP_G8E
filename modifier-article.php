@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <nav class="nav-menu">
                 <ul>
                     <li><a href="./index.html">Accueil</a></li>
-                    <li><a href="./articles.html">Articles</a></li>
+                    <li><a href="./articles.php">Articles</a></li>
                     <li><a href="./galerie.html">Galerie</a></li>
                     <li><a href="./contact.html">Contact</a></li>
                 </ul>
@@ -77,38 +77,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <main>
-        <section class="modifier-article">
-            <h1>Modifier un produit</h1>
-            <form method="POST" action="" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($produit['nom']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description :</label>
-                    <textarea id="description" name="description" required><?php echo htmlspecialchars($produit['description']); ?></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="prix">Prix :</label>
-                    <input type="number" step="0.01" id="prix" name="prix" value="<?php echo htmlspecialchars($produit['prix']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="quantitee">Quantité :</label>
-                    <input type="number" id="quantitee" name="quantitee" value="<?php echo htmlspecialchars($produit['quantitee']); ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="image">Image actuelle :</label>
-                    <?php if (!empty($produit['image'])): ?>
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="Image du produit" style="max-width: 200px; max-height: 200px;">
-                    <?php else: ?>
-                        <p>Aucune image disponible</p>
-                    <?php endif; ?>
-                </div>
-                <div class="form-group">
-                    <label for="image">Nouvelle image (facultatif) :</label>
-                    <input type="file" id="image" name="image" accept="image/png, image/jpeg">
-                </div>
-                <button type="submit" class="btn-submit">Mettre à jour</button>
+        <section class="create-article-container">
+            <div class="create-article-header">
+                <h1>Modifier un produit</h1>
+            </div>
+            <form class="create-article-form" method="POST" action="" enctype="multipart/form-data">
+                <label for="nom">Nom de l'article</label>
+                <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($produit['nom']); ?>" required>
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description" required><?php echo htmlspecialchars($produit['description']); ?></textarea>
+
+                <label for="prix">Prix</label>
+                <input type="number" step="0.01" id="prix" name="prix" value="<?php echo htmlspecialchars($produit['prix']); ?>" required>
+
+                <label for="quantitee">Quantité</label>
+                <input type="number" id="quantitee" name="quantitee" value="<?php echo htmlspecialchars($produit['quantitee']); ?>" required>
+
+                <label for="image">Image actuelle</label>
+                <?php if (!empty($produit['image'])): ?>
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="Image du produit" style="max-width: 200px; max-height: 200px; display: block; margin-bottom: 10px;">
+                <?php else: ?>
+                    <p>Aucune image disponible</p>
+                <?php endif; ?>
+
+                <label for="image">Nouvelle image (facultatif)</label>
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg">
+
+                <button type="submit" class="add-to-cart-button">Mettre à jour</button>
             </form>
         </section>
     </main>
