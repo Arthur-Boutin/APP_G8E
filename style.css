@@ -1675,3 +1675,140 @@ h2, h3 {
 .btn-delete:hover {
     background-color: #D32F2F;
 }
+
+
+
+
+
+/* Acceuil_Page---------------------------------
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutwork Interface</title>
+  <link rel="stylesheet" href="Acceuil.css">
+</head>
+
+<body>
+
+<!-- Acceuil -->
+
+<!-- Header -->
+<header>
+  <div class="logo">
+    <a href="#">NUTWORK</a>
+  </div>
+  <nav>
+    <a href="#">Contact</a>
+    <a href="#">Nos Articles</a>
+    <a href="#">Galerie</a>
+  </nav>
+  <div>
+    <input type="text" placeholder="Rechercher...">
+    <a href="#">📨</a>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Banner -->
+  <div class="banner" style="display: flex; align-items: center; gap: 40px;">
+    <img src="Logo_Nut.png" alt="Logo Nutwork" style="width: 100%; max-width: 240px; height: auto;">
+    <div class="banner-text" style="display: flex; flex-direction: column; align-items: flex-start; flex: 1; background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px; width: 100%;">
+      <h2>Qui sommes-nous</h2>
+      <h3>Une plateforme conçue pour les commerçants</h3>
+      <p>Notre plateforme est dédiée à la mise en valeur des commerçants en leur offrant une interface centralisée pour présenter, promouvoir et vendre efficacement leurs produits. En facilitant la gestion de leur vitrine en ligne, nous leur permettons de toucher un public plus large tout en simplifiant leurs opérations commerciales au quotidien.</p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Main: Fiche Produit -->
+  <div class="product-container">
+    <div class="product-top">
+      <div class="product-image">Image du produit</div>
+      <div class="product-info">
+        <h2>Titre du Produit</h2>
+        <div class="product-price">50 €</div>
+        <div class="filter-section">
+          <label>Trier et filtrer</label><br><br>
+          <select>
+            <option>Nouvelle Collection</option>
+            <option>Ancienne Collection</option>
+          </select>
+          <select>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+          </select>
+        </div>
+
+        <button class="btn">En savoir plus</button>
+
+        <div>
+          <label for="desc">Description</label>
+          <textarea id="desc" rows="3" placeholder="Décrire le produit ici"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Block -->
+  <div class="content-block">
+    <h2>Retour client</h2>
+  </div>
+
+
+  <!-- Reviews -->
+  <section class="reviews">
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Super !</p>
+      <p>☆☆☆☆☆</p>
+      <p>Zijie</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Interface simple et intuitive, merci 🤩</p>
+      <p>☆☆☆☆☆</p>
+      <p>Helton</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>👍🏼</p>
+      <p>☆☆☆☆☆</p>
+      <p>Guokuang</p>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div>
+    <h4>À propos de Nutwork</h4>
+    <p><a href="./contact.html">Contactez-nous</a></p>
+    <p>À propos de nous</p>
+    <p>Blog</p>
+    <p>FAQ</p>
+  </div>
+  <div>
+    <h4>CGU</h4>
+    <p><a href="./Mentions.html">Mentions</a></p>
+    <p><a href="./cgv.html">CGV</a></p>
+    <p>Développement</p>
+  </div>
+  <div>
+    <h4>Aide & Contacts</h4>
+    <p>contact@nutwork.com</p>
+    <p>28 Rue Notre Dame des Champs, Paris</p>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
