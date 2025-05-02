@@ -16,7 +16,7 @@ if ($pageActuelle < 1) {
 $offset = ($pageActuelle - 1) * $articlesParPage;
 
 // Récupérer les articles pour la page actuelle
-$query = "SELECT nProduit, nom, description, prix FROM produit LIMIT :offset, :limit";
+$query = "SELECT nProduit, nom, description, prix, image FROM produit LIMIT :offset, :limit";
 $stmt = $pdo->prepare($query);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->bindValue(':limit', $articlesParPage, PDO::PARAM_INT);
@@ -62,8 +62,15 @@ $totalPages = ceil($totalArticles / $articlesParPage);
         <section class="grid">
             <?php foreach ($articles as $article): ?>
                 <a href="./FicheProduit.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="card">
+                    <div class="image-container">
+                        <?php if (!empty($article['image'])): ?>
+                            <img src="data:image/jpeg;base64,<?php echo base64_encode($article['image']); ?>" alt="<?php echo htmlspecialchars($article['nom']); ?>">
+                        <?php else: ?>
+                            <img src="./assets/images/default.jpg" alt="Image par défaut">
+                        <?php endif; ?>
+                    </div>
                     <div class="text-content">
-                        <p><?php echo htmlspecialchars($article['nom']); ?></p>
+                        <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
                     </div>
