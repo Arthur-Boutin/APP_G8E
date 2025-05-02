@@ -1632,295 +1632,138 @@ h2, h3 {
 }
 
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f6e4d8;
-}
-
-header {
-    background-color: #a97a53;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-header input {
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-}
-
-.main-content {
-    padding: 20px;
-}
-
-.banner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.banner-text {
-    max-width: 1000px;
-}
-
-.banner img,
-.content-block img {
-    width: 50%;
-    height: auto;
-    border-radius: 10px;
-}
-.content-block h2{
-    text-align: center;
-}
-
-.filters {
-    background-color: #a97a53;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px 0;
-}
-
-.reviews {
-    padding: 20px;
-    background-color: #fff3eb;
-    display: flex;
-    gap: 20px;
-    border-radius: 10px;
-}
-/* ------------------- Main Content (Fiche Produit) ------------------- */
-.product-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-.product-top {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 30px;
-    background-color: #D7B084;
-    border-radius: 8px;
-    padding: 20px;
-}
-.product-image {
-    flex: 1;
-    min-width: 300px;
-    background-color: #eee;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    text-align: center;
-    font-size: 1.2rem;
-}
-.product-info {
-    flex: 1;
-    min-width: 300px;
-    color: #fff;
-}
-.product-info h2 {
-    margin-bottom: 10px;
-    font-size: 1.8rem;
-    color: #fff;
-}
-.product-info .product-price {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-.product-info .btn {
-    display: inline-block;
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-.filter-section {
-    margin-bottom: 20px;
-}
-.filter-section select {
-    padding: 6px;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-.product-info textarea {
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    resize: none;
-}
-.reviews{
-    padding-left: 300px;
-    padding-right: 300px;
-}
-.reviews-section {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre horizontalement tout le bloc */
-    text-align: center; /* Centre aussi le texte */
-}
-
-.reviews-section h3 {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-}
-
-.review-cards {
-    margin-left: 200px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center; /* Centre les cartes à l'intérieur */
-}
-
-.review-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    min-width: 200px;
-    max-width: 250px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    align-content: center;
-}
-
-.review-card h4 {
-    margin-bottom: 10px;
-}
-
-.review-card p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 5px;
-}
 
 
 
-footer {
-    background-color: #a97a53;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
+/* Acceuil_Page---------------------------------
 
-footer div {
-    margin: 10px;
-}
 
-footer a {
-    color: white;
-    text-decoration: none;
-}
+<!DOCTYPE html>
+<html lang="fr">
 
-nav {
-    background-color: #8B5A2B;
-    padding: 15px 50px;
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutwork Interface</title>
+  <link rel="stylesheet" href="Acceuil.css">
+</head>
 
-.site-header {
-    background-color: #8C5A2B;
-    color: #fff;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+<body>
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+<!-- Acceuil -->
 
-.logo a {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-}
+<!-- Header -->
+<header>
+  <div class="logo">
+    <a href="#">NUTWORK</a>
+  </div>
+  <nav>
+    <a href="#">Contact</a>
+    <a href="#">Nos Articles</a>
+    <a href="#">Galerie</a>
+  </nav>
+  <div>
+    <input type="text" placeholder="Rechercher...">
+    <a href="#">📨</a>
+  </div>
+</header>
 
-.nav-menu ul {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.nav-menu ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Banner -->
+  <div class="banner" style="display: flex; align-items: center; gap: 40px;">
+    <img src="Logo_Nut.png" alt="Logo Nutwork" style="width: 100%; max-width: 240px; height: auto;">
+    <div class="banner-text" style="display: flex; flex-direction: column; align-items: flex-start; flex: 1; background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px; width: 100%;">
+      <h2>Qui sommes-nous</h2>
+      <h3>Une plateforme conçue pour les commerçants</h3>
+      <p>Notre plateforme est dédiée à la mise en valeur des commerçants en leur offrant une interface centralisée pour présenter, promouvoir et vendre efficacement leurs produits. En facilitant la gestion de leur vitrine en ligne, nous leur permettons de toucher un public plus large tout en simplifiant leurs opérations commerciales au quotidien.</p>
+    </div>
+  </div>
+</div>
 
-.nav-menu ul li a:hover {
-    color: #F0D2A1;
-}
 
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+  <!-- Main: Fiche Produit -->
+  <div class="product-container">
+    <div class="product-top">
+      <div class="product-image">Image du produit</div>
+      <div class="product-info">
+        <h2>Titre du Produit</h2>
+        <div class="product-price">50 €</div>
+        <div class="filter-section">
+          <label>Trier et filtrer</label><br><br>
+          <select>
+            <option>Nouvelle Collection</option>
+            <option>Ancienne Collection</option>
+          </select>
+          <select>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+          </select>
+        </div>
 
-.search-form {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 20px;
-    padding: 5px 10px;
-}
+        <button class="btn">En savoir plus</button>
 
-.search-bar {
-    border: none;
-    outline: none;
-    padding: 5px;
-    font-size: 0.9rem;
-    border-radius: 20px;
-}
-.search-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    color: #8C5A2B;
-}
+        <div>
+          <label for="desc">Description</label>
+          <textarea id="desc" rows="3" placeholder="Décrire le produit ici"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
 
-.icon-link {
-    display: flex;
-    align-items: center;
-}
+  <!-- Content Block -->
+  <div class="content-block">
+    <h2>Retour client</h2>
+  </div>
 
-.icon {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease;
-}
 
-.icon-link:hover .icon {
-    transform: scale(1.1);
-}
+  <!-- Reviews -->
+  <section class="reviews">
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Super !</p>
+      <p>☆☆☆☆☆</p>
+      <p>Zijie</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Interface simple et intuitive, merci 🤩</p>
+      <p>☆☆☆☆☆</p>
+      <p>Helton</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>👍🏼</p>
+      <p>☆☆☆☆☆</p>
+      <p>Guokuang</p>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div>
+    <h4>À propos de Nutwork</h4>
+    <p><a href="./contact.html">Contactez-nous</a></p>
+    <p>À propos de nous</p>
+    <p>Blog</p>
+    <p>FAQ</p>
+  </div>
+  <div>
+    <h4>CGU</h4>
+    <p><a href="./Mentions.html">Mentions</a></p>
+    <p><a href="./cgv.html">CGV</a></p>
+    <p>Développement</p>
+  </div>
+  <div>
+    <h4>Aide & Contacts</h4>
+    <p>contact@nutwork.com</p>
+    <p>28 Rue Notre Dame des Champs, Paris</p>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
