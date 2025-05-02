@@ -1,9 +1,32 @@
+<!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\FicheProduit.php -->
+<?php
+// Inclure la connexion à la base de données
+include 'db_connection.php';
+
+// Vérifier si un ID est passé dans l'URL
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("ID du produit manquant.");
+}
+
+$id = intval($_GET['id']);
+
+// Récupérer les données du produit depuis la base de données
+$query = "SELECT nom, description, prix, quantitee FROM produit WHERE nProduit = :id";
+$stmt = $pdo->prepare($query);
+$stmt->execute([':id' => $id]);
+$produit = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$produit) {
+    die("Produit introuvable.");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fiche Produit - Nutwork</title>
+  <title><?php echo htmlspecialchars($produit['nom']); ?> - Nutwork</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -18,28 +41,11 @@
       <nav class="nav-menu">
         <ul>
           <li><a href="./index.html">Accueil</a></li>
-          <li><a href="./articles.html">Articles</a></li>
+          <li><a href="./articles.php">Articles</a></li>
           <li><a href="./galerie.html">Galerie</a></li>
           <li><a href="./contact.html">Contact</a></li>
         </ul>
       </nav>
-
-      <!-- Actions -->
-      <div class="header-actions">
-        <form class="search-form">
-          <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
-          <button type="submit" class="search-button">🔍</button>
-        </form>
-        <a href="./messagerie.html" class="icon-link">
-          <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
-        </a>
-        <a href="./panier.html" class="icon-link">
-          <img src="./assets/images/truc.png" alt="Panier" class="icon">
-        </a>
-        <a href="./login.html" class="icon-link">
-          <img src="./assets/images/Profil.png" alt="Profil" class="icon">
-        </a>
-      </div>
     </div>
   </header>
 
@@ -47,27 +53,10 @@
     <div class="product-top">
       <div class="product-image">Image du produit</div>
       <div class="product-info">
-        <h2>Titre du Produit</h2>
-        <div class="product-price">50 €</div>
-
-        <div class="filter-section">
-          <label>Trier et filtrer</label><br><br>
-          <select>
-            <option>Collection</option>
-            <option>Option 2</option>
-          </select>
-          <select>
-            <option>Prix</option>
-            <option>Option 2</option>
-          </select>
-        </div>
-
-        <button class="btn">En savoir plus</button>
-
-        <div>
-          <label for="desc">Description</label>
-          <textarea id="desc" rows="3" placeholder="Décrire le produit ici"></textarea>
-        </div>
+        <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
+        <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
+        <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
+        <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
       </div>
     </div>
 
@@ -112,6 +101,6 @@
         <p>contact@nutwork.com</p>
         <p>28 Rue Notre Dame des Champs, Paris</p>
     </div>
-</footer>
+  </footer>
 </body>
 </html>

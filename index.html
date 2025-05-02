@@ -1,133 +1,143 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Accueil</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutwork - Accueil</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./Accueil.css">
 </head>
 <body>
-    <!-- Header intégré -->
-    <header class="site-header">
-      <div class="header-container">
-        <!-- Logo -->
-        <div class="logo">
-          <a href="./index.html">NUTWORK</a>
+<!-- Header intégré -->
+<header class="site-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="./index.html">NUTWORK</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="./index.html">Accueil</a></li>
+        <li><a href="./articles.php">Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <form class="search-form">
+        <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+        <button type="submit" class="search-button">🔍</button>
+      </form>
+      <a href="./messagerie.html" class="icon-link">
+        <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+      </a>
+      <a href="./panier.html" class="icon-link">
+        <img src="./assets/images/truc.png" alt="Panier" class="icon">
+      </a>
+      <a href="./login.html" class="icon-link">
+        <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Banner -->
+  <div class="banner" style="display: flex; align-items: center; gap: 40px;">
+    <img src="Logo_Nut.png" alt="Logo Nutwork" style="width: 100%; max-width: 240px; height: auto;">
+    <div class="banner-text" style="display: flex; flex-direction: column; align-items: flex-start; flex: 1; background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px; width: 100%;">
+      <h2>Qui sommes-nous</h2>
+      <h3>Une plateforme conçue pour les commerçants</h3>
+      <p>Notre plateforme est dédiée à la mise en valeur des commerçants en leur offrant une interface centralisée pour présenter, promouvoir et vendre efficacement leurs produits. En facilitant la gestion de leur vitrine en ligne, nous leur permettons de toucher un public plus large tout en simplifiant leurs opérations commerciales au quotidien.</p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Main: Fiche Produit -->
+  <div class="product-container">
+    <div class="product-top">
+      <div class="product-image">Image du produit</div>
+      <div class="product-info">
+        <h2>Titre du Produit</h2>
+        <div class="product-price">50 €</div>
+        <div class="filter-section">
+          <label>Trier et filtrer</label><br><br>
+          <select>
+            <option>Nouvelle Collection</option>
+            <option>Ancienne Collection</option>
+          </select>
+          <select>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+          </select>
         </div>
 
-        <!-- Navigation -->
-        <nav class="nav-menu">
-          <ul>
-            <li><a href="./index.html">Accueil</a></li>
-            <li><a href="./articles.html">Articles</a></li>
-            <li><a href="./galerie.html">Galerie</a></li>
-            <li><a href="./contact.html">Contact</a></li>
-          </ul>
-        </nav>
+        <button class="btn">En savoir plus</button>
 
-        <!-- Actions -->
-        <div class="header-actions">
-          <form class="search-form">
-            <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
-            <button type="submit" class="search-button">🔍</button>
-          </form>
-          <a href="./messagerie.html" class="icon-link">
-            <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
-          </a>
-          <a href="./panier.html" class="icon-link">
-            <img src="./assets/images/truc.png" alt="Panier" class="icon">
-          </a>
-          <a href="./login.html" class="icon-link">
-            <img src="./assets/images/Profil.png" alt="Profil" class="icon">
-          </a>
+        <div>
+          <label for="desc">Description</label>
+          <textarea id="desc" rows="3" placeholder="Décrire le produit ici"></textarea>
         </div>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <main>
-        <!-- Section principale -->
-        <section class="hero">
-            <div class="hero-image"></div>
-        </section>
+  <!-- Content Block -->
+  <div class="content-block">
+    <h2>Retour client</h2>
+  </div>
 
-        <!-- Section article -->
-        <section class="article">
-            <div class="article-image"></div>
-            <div class="article-content">
-                <h2>Heading</h2>
-                <h3>Subheading</h3>
-                <p>
-                    Body text for your whole article or post. We'll put in some lorem ipsum to show how a filled-out page might look:
-                </p>
-                <p>
-                    Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content.
-                </p>
-            </div>
-        </section>
 
-        <!-- Section filtre -->
-        <section class="filter">
-            <div class="filter-image"></div>
-            <div class="filter-options">
-                <h2>Text Heading</h2>
-                <form>
-                    <label for="collection">Trier et filtrer</label>
-                    <select id="collection" name="collection">
-                        <option>Value</option>
-                    </select>
-                    <select id="price" name="price">
-                        <option>Value</option>
-                    </select>
-                    <button type="submit">En savoir plus</button>
-                </form>
-            </div>
-        </section>
+  <!-- Reviews -->
+  <section class="reviews">
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Super !</p>
+      <p>☆☆☆☆☆</p>
+      <p>Zijie</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>Interface simple et intuitive, merci 🤩</p>
+      <p>☆☆☆☆☆</p>
+      <p>Helton</p>
+    </div>
+    <div class="review-card">
+      <h4>Avis</h4>
+      <p>👍🏼</p>
+      <p>☆☆☆☆☆</p>
+      <p>Guokuang</p>
+    </div>
+  </section>
+</div>
 
-        <!-- Section avis -->
-        <section class="reviews">
-            <h2>Avis</h2>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <h3>Review title</h3>
-                    <p>Review body</p>
-                    <p>Reviewer name</p>
-                    <p>Date</p>
-                </div>
-                <div class="review-card">
-                    <h3>Review title</h3>
-                    <p>Review body</p>
-                    <p>Reviewer name</p>
-                    <p>Date</p>
-                </div>
-                <div class="review-card">
-                    <h3>Review title</h3>
-                    <p>Review body</p>
-                    <p>Reviewer name</p>
-                    <p>Date</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div>
-            <h4>À propos de Nutwork</h4>
-            <p><a href="./contact.html">Contactez-nous</a></p>
-            <p>À propos de nous</p>
-            <p>Blog</p>
-            <p>FAQ</p>
-        </div>
-        <div>
-            <h4>CGU</h4>
-            <p><a href="./Mentions.html">Mentions</a></p>
-            <p><a href="./cgv.html">CGV</a></p>
-            <p>Développement</p>
-        </div>
-        <div>
-            <h4>Aide & Contacts</h4>
-            <p>contact@nutwork.com</p>
-            <p>28 Rue Notre Dame des Champs, Paris</p>
-        </div>
-    </footer>
+<!-- Footer -->
+<footer class="site-footer">
+  <div>
+    <h4>À propos de Nutwork</h4>
+    <p><a href="./contact.html">Contactez-nous</a></p>
+    <p>À propos de nous</p>
+    <p>Blog</p>
+    <p>FAQ</p>
+  </div>
+  <div>
+    <h4>CGU</h4>
+    <p><a href="./Mentions.html">Mentions</a></p>
+    <p><a href="./cgv.html">CGV</a></p>
+    <p>Développement</p>
+  </div>
+  <div>
+    <h4>Aide & Contacts</h4>
+    <p>contact@nutwork.com</p>
+    <p>28 Rue Notre Dame des Champs, Paris</p>
+  </div>
+</footer>
 </body>
 </html>

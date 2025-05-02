@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Panier - Nutwork</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutwork - Accueil</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-   <nav>
-        <!--Menu de navigation-->
-        <ul class="menu">
-            <li><a href="#"><NUTWORK>NUTWORK</a></li>
-            <li><a href="#"><Contact>Contact</a></li>
-            <li><a href="#"><NosArticles>Nos Articles</a></li>
-            <li><a href="#"><Galerie>Galerie</a></li>
-            <li>
-            <!--Barre de recherche-->
-            <form><input type="search" name="rechercher" class="barre" img src="icons8-loupe.svg"/>
-        </form>
-            <!--Partie des icones placés en haut de la page-->
-        </li>
-        <li><a href="#"><img alt="Nous contacter" src="Mail.png" class="mail"/></a></li>
-        <li><a href="#"><img src="truc.png" class="truc"></a></li>
-        <li><a href="#"><img src="Profil.png" class="profil"></a></li>
-        </ul>
-    </nav>
+    <!-- Header intégré -->
+    <header class="site-header">
+      <div class="header-container">
+        <!-- Logo -->
+        <div class="logo">
+          <a href="./index.html">NUTWORK</a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="./index.html">Accueil</a></li>
+            <li><a href="./articles.html">Articles</a></li>
+            <li><a href="./galerie.html">Galerie</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="header-actions">
+          <form class="search-form">
+            <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+            <button type="submit" class="search-button">🔍</button>
+          </form>
+          <a href="./messagerie.html" class="icon-link">
+            <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+          </a>
+          <a href="./panier.html" class="icon-link">
+            <img src="./assets/images/truc.png" alt="Panier" class="icon">
+          </a>
+          <a href="./login.html" class="icon-link">
+            <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+          </a>
+        </div>
+      </div>
+    </header>
+<body>
   <main>
     <div class="cart-container">
       <div class="cart-title-bar">Mon Panier</div>
