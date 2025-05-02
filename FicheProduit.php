@@ -11,13 +11,50 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = intval($_GET['id']);
 
 // Récupérer les données du produit depuis la base de données
-$query = "SELECT nom, description, prix, quantitee FROM produit WHERE nProduit = :id";
+$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':id' => $id]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$produit) {
     die("Produit introuvable.");
+}
+
+// Gestion de l'ajout au panier
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $quantite = intval($_POST['quantite']);
+    if ($quantite > 0) {
+        // Vérifier si le produit est déjà dans le panier
+        $query = "SELECT quantite FROM panierachat WHERE idProduit = :idProduit";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':idProduit' => $id]);
+        $panierItem = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($panierItem) {
+            // Si le produit est déjà dans le panier, mettre à jour la quantité
+            $nouvelleQuantite = $panierItem['quantite'] + $quantite;
+            $query = "UPDATE panierachat SET quantite = :quantite, dateAjoutee = :dateAjoutee WHERE idProduit = :idProduit";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                ':quantite' => $nouvelleQuantite,
+                ':dateAjoutee' => time(),
+                ':idProduit' => $id
+            ]);
+        } else {
+            // Si le produit n'est pas dans le panier, l'ajouter
+            $query = "INSERT INTO panierachat (idProduit, quantite, dateAjoutee) VALUES (:idProduit, :quantite, :dateAjoutee)";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                ':idProduit' => $id,
+                ':quantite' => $quantite,
+                ':dateAjoutee' => time()
+            ]);
+        }
+
+        echo "<p class='success-message'>Produit ajouté au panier avec succès !</p>";
+    } else {
+        echo "<p class='error-message'>Veuillez sélectionner une quantité valide.</p>";
+    }
 }
 ?>
 
@@ -32,12 +69,9 @@ if (!$produit) {
 <body>
   <header class="site-header">
     <div class="header-container">
-      <!-- Logo -->
       <div class="logo">
         <a href="./index.html">NUTWORK</a>
       </div>
-
-      <!-- Navigation -->
       <nav class="nav-menu">
         <ul>
           <li><a href="./index.html">Accueil</a></li>
@@ -51,33 +85,23 @@ if (!$produit) {
 
   <div class="product-container">
     <div class="product-top">
-      <div class="product-image">Image du produit</div>
+      <div class="product-image">
+        <?php if (!empty($produit['image'])): ?>
+          <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+        <?php else: ?>
+          <img src="./assets/images/default.jpg" alt="Image par défaut">
+        <?php endif; ?>
+      </div>
       <div class="product-info">
         <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
         <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
         <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
         <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
-      </div>
-    </div>
-
-    <div class="reviews-section">
-      <h3>Derniers avis</h3>
-      <div class="review-cards">
-        <div class="review-card">
-          <h4>Titre de l'avis</h4>
-          <p>Contenu de l'avis</p>
-          <p><strong>Nom de l'auteur</strong><br>Date</p>
-        </div>
-        <div class="review-card">
-          <h4>Titre de l'avis</h4>
-          <p>Contenu de l'avis</p>
-          <p><strong>Nom de l'auteur</strong><br>Date</p>
-        </div>
-        <div class="review-card">
-          <h4>Titre de l'avis</h4>
-          <p>Contenu de l'avis</p>
-          <p><strong>Nom de l'auteur</strong><br>Date</p>
-        </div>
+        <form action="" method="POST" class="add-to-cart-form">
+          <label for="quantite">Quantité :</label>
+          <input type="number" id="quantite" name="quantite" min="1" max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
+          <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
+        </form>
       </div>
     </div>
   </div>

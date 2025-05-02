@@ -70,7 +70,7 @@ $totalPages = ceil($totalArticles / $articlesParPage);
                         <?php endif; ?>
                     </div>
                     <div class="text-content">
-                        <p><?php echo htmlspecialchars($article['nom']); ?></p>
+                        <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
                     </div>
