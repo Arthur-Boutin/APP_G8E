@@ -67,44 +67,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-container">
-      <div class="logo">
-        <a href="./index.html">NUTWORK</a>
-      </div>
-      <nav class="nav-menu">
-        <ul>
-          <li><a href="./index.html">Accueil</a></li>
-          <li><a href="./articles.php">Articles</a></li>
-          <li><a href="./galerie.html">Galerie</a></li>
-          <li><a href="./contact.html">Contact</a></li>
-        </ul>
-      </nav>
+<header class="site-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="./index.html">NUTWORK</a>
     </div>
-  </header>
 
-  <div class="product-container">
-    <div class="product-top">
-      <div class="product-image">
-        <?php if (!empty($produit['image'])): ?>
-          <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
-        <?php else: ?>
-          <img src="./assets/images/default.jpg" alt="Image par défaut">
-        <?php endif; ?>
-      </div>
-      <div class="product-info">
-        <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
-        <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
-        <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
-        <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
-        <form action="" method="POST" class="add-to-cart-form">
-          <label for="quantite">Quantité :</label>
-          <input type="number" id="quantite" name="quantite" min="1" max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
-          <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
-        </form>
-      </div>
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="./index.html">Accueil</a></li>
+        <li><a href="./articles.php">Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <form class="search-form">
+        <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+        <button type="submit" class="search-button">🔍</button>
+      </form>
+      <a href="./messagerie.html" class="icon-link">
+        <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+      </a>
+      <a href="./panier.html" class="icon-link">
+        <img src="./assets/images/truc.png" alt="Panier" class="icon">
+      </a>
+      <a href="./login.html" class="icon-link">
+        <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+      </a>
     </div>
   </div>
+</header>
+
+  <main>
+    <div class="product-container">
+      <div class="product-top">
+        <div class="product-image">
+          <?php if (!empty($produit['image'])): ?>
+            <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+          <?php else: ?>
+            <img src="./assets/images/default.jpg" alt="Image par défaut">
+          <?php endif; ?>
+        </div>
+        <div class="product-info">
+          <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
+          <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
+          <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
+          <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
+          <form action="" method="POST" class="add-to-cart-form">
+            <label for="quantite">Quantité :</label>
+            <input type="number" id="quantite" name="quantite" min="1" max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
+            <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
 
   <footer class="site-footer">
     <div>

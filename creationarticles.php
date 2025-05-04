@@ -9,57 +9,47 @@
 <body>
     <!-- Header intégré -->
     <header class="site-header">
-    <div class="header-container">
-      <!-- Logo -->
-      <div class="logo">
-        <a href="./index.html">NUTWORK</a>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="nav-menu">
-        <ul>
-          <li><a href="./index.html">Accueil</a></li>
-          <li><a href="./articles.html">Articles</a></li>
-          <li><a href="./galerie.html">Galerie</a></li>
-          <li><a href="./contact.html">Contact</a></li>
-        </ul>
-      </nav>
-
-      <!-- Actions -->
-      <div class="header-actions">
-        <form class="search-form">
-          <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
-          <button type="submit" class="search-button">🔍</button>
-        </form>
-        <a href="./messagerie.html" class="icon-link">
-          <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
-        </a>
-        <a href="./panier.html" class="icon-link">
-          <img src="./assets/images/truc.png" alt="Panier" class="icon">
-        </a>
-        <a href="./login.html" class="icon-link">
-          <img src="./assets/images/Profil.png" alt="Profil" class="icon">
-        </a>
-      </div>
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="./index.html">NUTWORK</a>
     </div>
-  </header>
-  
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="./index.html">Accueil</a></li>
+        <li><a href="./articles.php">Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <form class="search-form">
+        <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
+        <button type="submit" class="search-button">🔍</button>
+      </form>
+      <a href="./messagerie.html" class="icon-link">
+        <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
+      </a>
+      <a href="./panier.html" class="icon-link">
+        <img src="./assets/images/truc.png" alt="Panier" class="icon">
+      </a>
+      <a href="./login.html" class="icon-link">
+        <img src="./assets/images/Profil.png" alt="Profil" class="icon">
+      </a>
+    </div>
+  </div>
+</header>
+
     <main>
         <section class="backoffice">
             <h1>Créer un nouveau produit</h1>
             <?php
-            // Connexion à la base de données
-            $host = 'localhost';
-            $dbname = 'app_g8e'; // Nom de votre base de données
-            $username = 'root'; // Nom d'utilisateur par défaut pour phpMyAdmin
-            $password = ''; // Mot de passe par défaut pour phpMyAdmin
-
-            try {
-                $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Erreur de connexion à la base de données : " . $e->getMessage());
-            }
+            // Inclure la connexion à la base de données
+            include 'db_connection.php';
 
             // Gestion du formulaire
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -68,6 +58,7 @@
                 $prix = htmlspecialchars($_POST['prix']);
                 $quantitee = htmlspecialchars($_POST['quantitee']);
                 $idArtisan = htmlspecialchars($_POST['idArtisan']);
+                $idCategorie = intval($_POST['idCategorie']);
                 $image = null;
 
                 // Vérifier si une image a été téléchargée
@@ -76,8 +67,8 @@
                 }
 
                 // Insertion dans la base de données
-                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image) 
-                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image)";
+                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image, idCategorie) 
+                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image, :idCategorie)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':nom' => $nom,
@@ -85,7 +76,8 @@
                     ':prix' => $prix,
                     ':quantitee' => $quantitee,
                     ':idArtisan' => $idArtisan,
-                    ':image' => $image
+                    ':image' => $image,
+                    ':idCategorie' => $idCategorie
                 ]);
 
                 echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
@@ -99,41 +91,59 @@
             } catch (PDOException $e) {
                 echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
             }
+
+            // Récupération des catégories pour le menu déroulant
+            $categories = [];
+            try {
+                $stmt = $pdo->query("SELECT idCategorie, nom FROM categorie");
+                $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                echo "<p class='error-message'>Erreur lors de la récupération des catégories : " . $e->getMessage() . "</p>";
+            }
             ?>
-            <form action="" method="POST" enctype="multipart/form-data" class="article-form">
-                <div class="form-group">
-                    <label for="nom">Nom du produit :</label>
-                    <input type="text" id="nom" name="nom" placeholder="Entrez le nom" required>
+            <div class="create-article-container">
+                <div class="create-article-header">
+                    <h1>Créer un Article</h1>
                 </div>
-                <div class="form-group">
-                    <label for="description">Description :</label>
-                    <textarea id="description" name="description" rows="5" placeholder="Entrez la description" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="prix">Prix :</label>
-                    <input type="number" id="prix" name="prix" step="0.01" placeholder="Entrez le prix" required>
-                </div>
-                <div class="form-group">
-                    <label for="quantitee">Quantité :</label>
-                    <input type="number" id="quantitee" name="quantitee" placeholder="Entrez la quantité" required>
-                </div>
-                <div class="form-group">
-                    <label for="idArtisan">Artisan :</label>
+                <form class="create-article-form" action="" method="POST" enctype="multipart/form-data">
+                    <label for="nom">Nom de l'article</label>
+                    <input type="text" id="nom" name="nom" required>
+
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+
+                    <label for="prix">Prix</label>
+                    <input type="number" id="prix" name="prix" step="0.01" required>
+
+                    <label for="quantitee">Quantité</label>
+                    <input type="number" id="quantitee" name="quantitee" required>
+
+                    <label for="idArtisan">Artisan</label>
                     <select id="idArtisan" name="idArtisan" required>
-                        <option value="" disabled selected>Choisissez un artisan</option>
+                        <option value="">Sélectionnez un artisan</option>
                         <?php foreach ($artisans as $artisan): ?>
                             <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>">
                                 <?php echo htmlspecialchars($artisan['nom']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="image">Image du produit :</label>
-                    <input type="file" id="image" name="image" accept="image/png, image/jpeg" required>
-                </div>
-                <button type="submit" class="submit-button">Créer le produit</button>
-            </form>
+
+                    <label for="idCategorie">Catégorie</label>
+                    <select id="idCategorie" name="idCategorie" required>
+                        <option value="">Sélectionnez une catégorie</option>
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?php echo htmlspecialchars($categorie['idCategorie']); ?>">
+                                <?php echo htmlspecialchars($categorie['nom']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <label for="image">Image</label>
+                    <input type="file" id="image" name="image">
+
+                    <button type="submit">Créer l'article</button>
+                </form>
+            </div>
         </section>
     </main>
 
