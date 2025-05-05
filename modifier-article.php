@@ -2,8 +2,18 @@
 <?php
 // Inclure la connexion à la base de données
 include 'db_connection.php';
+include 'session.php';
 
-// Vérifier si un ID est passé dans l'URL
+// Vérifie si l'utilisateur est un artisan
+if ($_SESSION['user']['role'] !== 'artisan') {
+    header('Location: index.html');
+    exit();
+}
+
+// Récupère l'ID de l'artisan connecté
+$idArtisan = $_SESSION['artisan']['idArtisan'];
+
+// Vérifie si un ID est passé dans l'URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("ID du produit manquant.");
 }
@@ -11,13 +21,13 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = intval($_GET['id']);
 
 // Récupérer les données du produit à modifier
-$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id";
+$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
 $stmt = $pdo->prepare($query);
-$stmt->execute([':id' => $id]);
+$stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$produit) {
-    die("Produit introuvable.");
+    die("Produit introuvable ou vous n'avez pas la permission de le modifier.");
 }
 
 // Vérifier si le formulaire a été soumis
@@ -26,14 +36,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $prix = $_POST['prix'];
     $quantitee = $_POST['quantitee'];
-    $image = $produit['image']; // Conserver l'image actuelle par défaut
+    $image = $produit['image'];
 
-    // Vérifier si une nouvelle image a été téléchargée
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $image = file_get_contents($_FILES['image']['tmp_name']);
     }
 
-    // Mettre à jour le produit dans la base de données
+    // Vérifier que l'article appartient bien à l'artisan connecté
+    $check_query = "SELECT nProduit FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
+    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
+    if (!$check_stmt->fetch()) {
+        die("Vous n'avez pas la permission de modifier cet article.");
+    }
+
+    // Mettre à jour le produit
     $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image WHERE nProduit = :id";
     $update_stmt = $pdo->prepare($update_query);
     $update_stmt->execute([
@@ -45,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':id' => $id
     ]);
 
-    header("Location: gestion-articles.php"); // Rediriger vers la page de gestion
+    header("Location: gestion-articles.php");
     exit();
 }
 ?>

@@ -48,6 +48,17 @@
         <section class="backoffice">
             <h1>Créer un nouveau produit</h1>
             <?php
+            include 'session.php';
+
+            // Vérifie si l'utilisateur est un artisan
+            if ($_SESSION['user']['role'] !== 'artisan') {
+                header('Location: index.html'); // Redirige vers la page d'accueil ou une autre page
+                exit();
+            }
+
+            // Récupère l'ID de l'artisan connecté
+            $idArtisan = $_SESSION['artisan']['idArtisan'];
+
             // Inclure la connexion à la base de données
             include 'db_connection.php';
 
@@ -57,7 +68,6 @@
                 $description = htmlspecialchars($_POST['description']);
                 $prix = htmlspecialchars($_POST['prix']);
                 $quantitee = htmlspecialchars($_POST['quantitee']);
-                $idArtisan = htmlspecialchars($_POST['idArtisan']);
                 $idCategorie = intval($_POST['idCategorie']);
                 $image = null;
 
@@ -119,14 +129,8 @@
                     <input type="number" id="quantitee" name="quantitee" required>
 
                     <label for="idArtisan">Artisan</label>
-                    <select id="idArtisan" name="idArtisan" required>
-                        <option value="">Sélectionnez un artisan</option>
-                        <?php foreach ($artisans as $artisan): ?>
-                            <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>">
-                                <?php echo htmlspecialchars($artisan['nom']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <input type="text" id="idArtisan" name="idArtisan" value="<?php echo htmlspecialchars($_SESSION['artisan']['nom']); ?>" readonly>
+                    <input type="hidden" name="idArtisan" value="<?php echo htmlspecialchars($idArtisan); ?>">
 
                     <label for="idCategorie">Catégorie</label>
                     <select id="idCategorie" name="idCategorie" required>

@@ -1,6 +1,12 @@
 <?php
-// Inclure la connexion à la base de données
 include 'db_connection.php';
+include 'session.php';
+
+// Vérifie si l'utilisateur est un artisan
+if ($_SESSION['user']['role'] !== 'artisan') {
+    header('Location: index.html');
+    exit();
+}
 
 // Vérifier si une action de suppression a été demandée
 if (isset($_GET['delete_id'])) {
@@ -16,16 +22,14 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// Récupérer les articles depuis la table produit
-$articles = [];
-try {
-    $query = "SELECT nProduit, nom, quantitee, prix FROM produit";
-    $stmt = $pdo->query($query);
-    $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "<p class='error-message'>Erreur lors de la récupération des articles : " . $e->getMessage() . "</p>";
-}
+// Récupère les articles de l'artisan connecté
+$idArtisan = $_SESSION['artisan']['idArtisan'];
+$query = "SELECT * FROM produit WHERE idArtisan = :idArtisan";
+$stmt = $pdo->prepare($query);
+$stmt->execute([':idArtisan' => $idArtisan]);
+$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -44,8 +48,7 @@ try {
             <nav class="nav-menu">
                 <ul>
                     <li><a href="./index.html">Accueil</a></li>
-                    <li><a href="./articles.php">Articles</a></li>
-                    <li><a href="./galerie.html">Galerie</a></li>
+                    <li><a href="./articles.html">Articles</a></li>
                     <li><a href="./contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -56,7 +59,7 @@ try {
         <section class="gestion-articles">
             <div class="articles-container">
                 <div class="articles-header">
-                    <h1>Gestion des Articles</h1>
+                    <h1>Gestion de mes articles</h1>
                     <a href="./creationarticles.php" class="add-article-button">Ajouter un Article</a>
                 </div>
                 <table class="articles-table">
@@ -64,7 +67,7 @@ try {
                         <tr>
                             <th>ID</th>
                             <th>Nom</th>
-                            <th>Quantité Disponible</th>
+                            <th>Description</th>
                             <th>Prix</th>
                             <th>Actions</th>
                         </tr>
@@ -75,10 +78,10 @@ try {
                                 <tr>
                                     <td><?php echo htmlspecialchars($article['nProduit']); ?></td>
                                     <td><?php echo htmlspecialchars($article['nom']); ?></td>
-                                    <td><?php echo htmlspecialchars($article['quantitee']); ?></td>
+                                    <td><?php echo htmlspecialchars($article['description']); ?></td>
                                     <td><?php echo htmlspecialchars($article['prix']); ?> €</td>
                                     <td>
-                                        <a href="./modifier-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="edit-button">Modifier</a>
+                                        <a href="modifier-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="edit-button">Modifier</a>
                                         <a href="?delete_id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
                                     </td>
                                 </tr>
