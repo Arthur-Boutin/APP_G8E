@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutwork - Accueil</title>
-    <link rel="stylesheet" href="./P_utilisateurs.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <!-- Header intégré -->
@@ -47,40 +47,44 @@
 
 <main>
     <section class="gestion-utilisateurs">
-        <h1>Gestion des utilisateurs</h1>
-        <table class="articles-table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Exemple d'article -->
-            <tr>
-                <td>1</td>
-                <td>Utilisateur 1</td>
-                <td>Etat de l'utilisateur 1</td>
-                <td>
-                    <button class="btn-modify">Modifier</button>
-                    <button class="btn-hide">Cacher</button>
-                    <button class="btn-delete">Supprimer</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Utilisateur 2</td>
-                <td>Etat de l'utilisateur 2</td>
-                <td>
-                    <button class="btn-modify">Modifier</button>
-                    <button class="btn-hide">Cacher</button>
-                    <button class="btn-delete">Supprimer</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="users-container">
+            <div class="users-header">
+                <h1>Gestion des utilisateurs</h1>
+            </div>
+            <table class="articles-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Exemple d'utilisateur -->
+                <tr>
+                    <td>1</td>
+                    <td>Utilisateur 1</td>
+                    <td>Artisan</td>
+                    <td>
+                        <button class="edit-button">Modifier</button>
+                        <button class="hide-button">Cacher</button>
+                        <button class="delete-button">Supprimer</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Utilisateur 2</td>
+                    <td>Client</td>
+                    <td>
+                        <button class="edit-button">Modifier</button>
+                        <button class="hide-button">Cacher</button>
+                        <button class="delete-button">Supprimer</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 </main>
 

@@ -1471,6 +1471,28 @@ h2, h3 {
     background-color: #D18A52;
 }
 
+/* Conteneur pour la gestion des utilisateurs */
+.users-container {
+    max-width: 900px; /* Limite la largeur du tableau */
+    margin: 30px auto; /* Centre le conteneur horizontalement */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.users-header h1 {
+    font-size: 1.8rem;
+    color: #8C5A2B;
+}
+
 /* Mentions légales Page */
 .main-container {
     max-width: 1200px;
