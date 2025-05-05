@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <ul>
         <li><a href="./index.html">Accueil</a></li>
         <li><a href="./articles.php">Articles</a></li>
-        <li><a href="./galerie.html">Galerie</a></li>
+        <li><a href="#">Galerie</a></li>
         <li><a href="./contact.html">Contact</a></li>
       </ul>
     </nav>
