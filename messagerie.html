@@ -2,97 +2,159 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Messagerie - Nutwork</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Messagerie – Nutwork</title>
   <link rel="stylesheet" href="./style.css">
+
+  <!-- correctifs & petite logique de messagerie ----------------------------->
+  <style>
+    /* --- mise en page générale --------------------------------------------- */
+    .chat-container{max-width:1100px;margin:40px auto;display:flex;gap:32px}
+    .chat-sidebar{width:240px;background:#f0d9b3;padding:18px 14px;border-radius:10px}
+    .search-input{width:100%;padding:6px 8px;margin-bottom:14px;border:1px solid #ccc;border-radius:6px}
+    .conversation-item{background:#fff;border-radius:6px;padding:12px 14px;margin-bottom:12px;
+      cursor:pointer;border:2px solid transparent;transition:.15s}
+    .conversation-item:hover{border-color:#8b5a2b}
+    .conversation-item.selected{border-color:#8b5a2b;background:#fdfbf7}
+    .conversation-name{font-weight:700;color:#3f2a14;margin:0}
+    .conversation-preview{margin:4px 0 0;font-size:14px;color:#757575}
+
+    .chat-main{flex:1;background:#fdfbf7;border-radius:10px;display:flex;flex-direction:column}
+    .chat-header{background:#f0d9b3;padding:14px 20px;border-top-left-radius:10px;border-top-right-radius:10px;
+      font-weight:700;color:#3f2a14;font-size:18px}
+    .chat-messages{flex:1;padding:26px 30px;overflow-y:auto}
+    .message{max-width:60%;padding:8px 12px;border-radius:8px;margin-bottom:16px;font-size:15px}
+    .message.left {background:#dceffc;color:#1d3a5f;border-top-left-radius:0}
+    .message.right{background:#c7f5c9;color:#1c3b1d;margin-left:auto;border-top-right-radius:0}
+
+    /* --- zone de saisie ----------------------------------------------------- */
+    .chat-input{display:flex;gap:12px;align-items:flex-end;background:#f0d9b3;
+      padding:18px 20px;border-bottom-left-radius:10px;border-bottom-right-radius:10px}
+    .chat-input textarea{flex:1;height:60px;resize:none;padding:10px 12px;font-size:15px;
+      border:1px solid #ccc;border-radius:6px}
+    .btn-send{background:#8b5a2b;color:#fff;border:none;border-radius:6px;
+      padding:10px 24px;cursor:pointer;font-size:15px}
+    .btn-send:hover{filter:brightness(1.1)}
+  </style>
 </head>
+
 <body>
-  <header class="site-header">
-    <div class="header-container">
-      <!-- Logo -->
-      <div class="logo">
-        <a href="./index.html">NUTWORK</a>
+<!-- ============================ HEADER =================================== -->
+<header class="site-header">
+  <div class="header-container">
+    <div class="logo"><a href="./index.html">NUTWORK</a></div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="./index.html">Accueil</a></li><li><a href="./articles.html">Articles</a></li>
+        <li><a href="./galerie.html">Galerie</a></li><li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <form class="search-form"><input class="search-bar" placeholder="Rechercher…">
+        <button class="search-button">🔍</button></form>
+      <a class="icon-link" href="./messagerie.html"><img class="icon" src="./assets/images/Mail.png"  alt=""></a>
+      <a class="icon-link" href="./panier.html">     <img class="icon" src="./assets/images/truc.png"  alt=""></a>
+      <a class="icon-link" href="./login.html">      <img class="icon" src="./assets/images/Profil.png" alt=""></a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ MAIN ===================================== -->
+<main>
+  <div class="chat-container">
+    <!-- barre latérale --------------------------------------------------- -->
+    <aside class="chat-sidebar">
+      <h2>Conversations</h2>
+      <input class="search-input" placeholder="Rechercher…">
+
+      <div class="conversation-item selected" data-name="Marie Curie">
+        <p class="conversation-name">Marie Curie</p>
+        <p class="conversation-preview">À demain !</p>
       </div>
 
-      <!-- Navigation -->
-      <nav class="nav-menu">
-        <ul>
-          <li><a href="./index.html">Accueil</a></li>
-          <li><a href="./articles.html">Articles</a></li>
-          <li><a href="./galerie.html">Galerie</a></li>
-          <li><a href="./contact.html">Contact</a></li>
-        </ul>
-      </nav>
-
-      <!-- Actions -->
-      <div class="header-actions">
-        <form class="search-form">
-          <input type="text" name="rechercher" class="search-bar" placeholder="Rechercher...">
-          <button type="submit" class="search-button">🔍</button>
-        </form>
-        <a href="./messagerie.html" class="icon-link">
-          <img src="./assets/images/Mail.png" alt="Messagerie" class="icon">
-        </a>
-        <a href="./panier.html" class="icon-link">
-          <img src="./assets/images/truc.png" alt="Panier" class="icon">
-        </a>
-        <a href="./login.html" class="icon-link">
-          <img src="./assets/images/Profil.png" alt="Profil" class="icon">
-        </a>
+      <div class="conversation-item" data-name="Jean Dupont">
+        <p class="conversation-name">Jean Dupont</p>
+        <p class="conversation-preview">Très bien, et toi?</p>
       </div>
-    </div>
-  </header>
+    </aside>
 
-  <main>
-    <div class="chat-container">
-      <div class="chat-sidebar">
-        <h2>Conversations</h2>
-        <input type="text" class="search-input" placeholder="Rechercher..."/>
-        <div class="conversation-item">
-          <p class="conversation-name">Jean Dupont</p>
-          <p class="conversation-preview">Salut, ça va ?</p>
-        </div>
-        <div class="conversation-item selected">
-          <p class="conversation-name">Marie Curie</p>
-          <p class="conversation-preview">À demain !</p>
-        </div>
-      </div>
-      <div class="chat-main">
-        <div class="chat-header">Marie Curie</div>
-        <div class="chat-messages">
-          <div class="message left">
-            <p>Salut Marie !</p>
-          </div>
-          <div class="message right">
-            <p>Salut Jean !</p>
-          </div>
-        </div>
-        <div class="chat-input">
-          <textarea rows="2" placeholder="Écrivez un message..."></textarea>
-        </div>
-      </div>
-    </div>
-  </main>
+    <!-- panneau principal -------------------------------------------------->
+    <section class="chat-main">
+      <div class="chat-header" id="chat-title">Marie Curie</div>
 
-  <footer class="site-footer">
-    <div>
-        <h4>À propos de Nutwork</h4>
-        <p><a href="./contact.html">Contactez-nous</a></p>
-        <p>À propos de nous</p>
-        <p>Blog</p>
-        <p><a href="./faq.html">FAQ</a></p>
-    </div>
-    <div>
-        <h4>CGU</h4>
-        <p><a href="./Mentions.html">Mentions</a></p>
-        <p><a href="./cgv.html">CGV</a></p>
-        <p>Développement</p>
-    </div>
-    <div>
-        <h4>Aide & Contacts</h4>
-        <p>contact@nutwork.com</p>
-        <p>28 Rue Notre Dame des Champs, Paris</p>
-    </div>
+      <div class="chat-messages" id="chat-messages"></div>
+
+      <div class="chat-input">
+        <textarea id="message-input" placeholder="Écrivez un message…"></textarea>
+        <button id="send-btn" class="btn-send" type="button">Envoyer</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ============================ FOOTER =================================== -->
+<footer class="site-footer">
+  <div><h4>À propos de Nutwork</h4><p><a href="./contact.html">Contactez-nous</a></p><p>À propos de nous</p><p>Blog</p><p><a href="./faq.html">FAQ</a></p></div>
+  <div><h4>CGU</h4><p><a href="./Mentions.html">Mentions</a></p><p><a href="./cgv.html">CGV</a></p><p>Développement</p></div>
+  <div><h4>Aide & Contacts</h4><p>contact@nutwork.com</p><p>28 Rue Notre Dame des Champs, Paris</p></div>
 </footer>
+
+<!-- ============================ SCRIPT =================================== -->
+<script>
+  /* messages fictifs ---------------------------------------------------------*/
+  const data = {
+    "Marie Curie":[
+      {side:"left" ,text:"Salut Marie !"},
+      {side:"right",text:"Salut Jean !"}
+    ],
+    "Jean Dupont":[
+      {side:"right",text:"Salut, ça va ?"},
+      {side:"left" ,text:"Très bien, et toi ?"}
+    ]
+  };
+
+  const chatTitle    = document.getElementById('chat-title');
+  const chatMessages = document.getElementById('chat-messages');
+  const convoItems   = document.querySelectorAll('.conversation-item');
+  const textarea     = document.getElementById('message-input');
+  const sendBtn      = document.getElementById('send-btn');
+
+  /* --- fonctions ----------------------------------------------------------- */
+  function displayConversation(name){
+    chatTitle.textContent = name;
+    chatMessages.innerHTML = '';                    // purge
+    (data[name]||[]).forEach(m=>{
+      const div=document.createElement('div');
+      div.className='message '+m.side;
+      div.innerHTML='<p>'+m.text+'</p>';
+      chatMessages.appendChild(div);
+    });
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  /* sélection dans la barre latérale --------------------------------------- */
+  convoItems.forEach(item=>{
+    item.addEventListener('click',()=>{
+      document.querySelector('.conversation-item.selected')?.classList.remove('selected');
+      item.classList.add('selected');
+      displayConversation(item.dataset.name);
+    });
+  });
+
+  /* envoyer un message ------------------------------------------------------ */
+  sendBtn.addEventListener('click',()=>{
+    const txt = textarea.value.trim();
+    if(!txt) return;
+    const name = chatTitle.textContent;
+    data[name] = data[name] || [];
+    data[name].push({side:'right',text:txt});
+    textarea.value='';
+    displayConversation(name);
+  });
+
+  /* initialisation ---------------------------------------------------------- */
+  displayConversation('Marie Curie');
+</script>
 </body>
 </html>
