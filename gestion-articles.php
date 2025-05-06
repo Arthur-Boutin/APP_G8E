@@ -4,7 +4,7 @@ include 'session.php';
 
 // Vérifie si l'utilisateur est un artisan
 if ($_SESSION['user']['role'] !== 'artisan') {
-    header('Location: index.html');
+    header('Location: gestion-articles.php');
     exit();
 }
 

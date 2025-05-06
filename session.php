@@ -18,7 +18,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 // Si l'utilisateur n'existe pas, déconnecte-le
 if (!$user) {
     session_destroy();
-    header('Location: inscription.html');
+    header('Location: login.php');
     exit();
 }
 
