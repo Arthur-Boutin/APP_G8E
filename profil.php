@@ -32,30 +32,7 @@
 
 <body>
 <!-- ===========================  HEADER  ================================== -->
-<header class="site-header">
-  <div class="header-container">
-    <div class="logo"><a href="./index.html">NUTWORK</a></div>
-
-    <nav class="nav-menu">
-      <ul>
-        <li><a href="./index.html">Accueil</a></li>
-        <li><a href="./articles.html">Articles</a></li>
-        <li><a href="./galerie.html">Galerie</a></li>
-        <li><a href="./contact.html">Contact</a></li>
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      <form class="search-form">
-        <input class="search-bar" name="rechercher" placeholder="Rechercher…">
-        <button class="search-button">🔍</button>
-      </form>
-      <a class="icon-link" href="./messagerie.html"><img class="icon" src="./assets/images/Mail.png"  alt=""></a>
-      <a class="icon-link" href="./panier.html">     <img class="icon" src="./assets/images/truc.png"  alt=""></a>
-      <a class="icon-link" href="./login.html">      <img class="icon" src="./assets/images/Profil.png" alt=""></a>
-    </div>
-  </div>
-</header>
+<?php include 'header.php'; ?>
 
 <!-- ===========================  MAIN  ==================================== -->
 <main>

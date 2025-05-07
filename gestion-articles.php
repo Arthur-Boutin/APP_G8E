@@ -2,9 +2,13 @@
 include 'db_connection.php';
 include 'session.php';
 
+// Debugging session data
+var_dump($_SESSION['user']);
+exit();
+
 // Vérifie si l'utilisateur est un artisan
 if ($_SESSION['user']['role'] !== 'artisan') {
-    header('Location: gestion-articles.php');
+    header('Location: index.html'); // Redirige vers la page d'accueil
     exit();
 }
 
@@ -40,20 +44,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <!-- Header intégré -->
-    <header class="site-header">
-        <div class="header-container">
-            <div class="logo">
-                <a href="./index.html">NUTWORK</a>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="./index.html">Accueil</a></li>
-                    <li><a href="./articles.html">Articles</a></li>
-                    <li><a href="./contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <?php include 'header.php'; ?>
 
     <main>
         <section class="gestion-articles">
