@@ -1,16 +1,15 @@
 <?php
+session_start();
 include 'db_connection.php';
-include 'session.php';
 
-// Debugging session data
-var_dump($_SESSION['user']);
-exit();
-
-// Vérifie si l'utilisateur est un artisan
-if ($_SESSION['user']['role'] !== 'artisan') {
-    header('Location: index.html'); // Redirige vers la page d'accueil
+// Vérifie si l'utilisateur est connecté et est un artisan
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'artisan') {
+    header('Location: index.php'); // Redirige vers la page d'accueil si non autorisé
     exit();
 }
+
+// Récupère l'ID de l'artisan connecté
+$idArtisan = $_SESSION['user']['idUtilisateur'];
 
 // Vérifier si une action de suppression a été demandée
 if (isset($_GET['delete_id'])) {
@@ -27,7 +26,6 @@ if (isset($_GET['delete_id'])) {
 }
 
 // Récupère les articles de l'artisan connecté
-$idArtisan = $_SESSION['artisan']['idArtisan'];
 $query = "SELECT * FROM produit WHERE idArtisan = :idArtisan";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':idArtisan' => $idArtisan]);

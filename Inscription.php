@@ -36,12 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
                 // Insérer dans la table utilisateur
-                $sqlUtilisateur = "INSERT INTO utilisateur (idUtilisateur, mdp, statutConnexion, dateInscription) 
-                                    VALUES (:idUtilisateur, :mdp, 'actif', UNIX_TIMESTAMP())";
+                $sqlUtilisateur = "INSERT INTO utilisateur (idUtilisateur, mdp, statutConnexion, dateInscription, role) 
+                                    VALUES (:idUtilisateur, :mdp, 'actif', UNIX_TIMESTAMP(), :role)";
                 $stmtUtilisateur = $pdo->prepare($sqlUtilisateur);
                 $stmtUtilisateur->execute([
                     ':idUtilisateur' => $idUtilisateur,
-                    ':mdp' => $password_hash
+                    ':mdp' => $password_hash,
+                    ':role' => $role
                 ]);
 
                 // Insérer dans la table artisan ou client

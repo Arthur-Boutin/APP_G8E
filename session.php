@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Vérifie si une session est déjà active avant de démarrer une nouvelle session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include 'db_connection.php';
 
 // Vérifie si l'utilisateur est connecté

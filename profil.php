@@ -1,3 +1,73 @@
+<?php
+session_start();
+require 'db_connection.php';
+
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php'); // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
+    exit();
+}
+
+$idUtilisateur = $_SESSION['user']['idUtilisateur'];
+$role = $_SESSION['user']['role'];
+$error = '';
+$success = '';
+$userData = [];
+
+// Récupérer les informations de l'utilisateur connecté
+try {
+    if ($role === 'artisan') {
+        $query = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
+                         artisan.nom, artisan.adresse, artisan.email 
+                  FROM utilisateur 
+                  INNER JOIN artisan ON utilisateur.idUtilisateur = artisan.idArtisan 
+                  WHERE utilisateur.idUtilisateur = :idUtilisateur";
+    } else {
+        $query = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
+                         client.adresse, client.email 
+                  FROM utilisateur 
+                  INNER JOIN client ON utilisateur.idUtilisateur = client.idClient 
+                  WHERE utilisateur.idUtilisateur = :idUtilisateur";
+    }
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([':idUtilisateur' => $idUtilisateur]);
+    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $error = "Erreur lors de la récupération des informations : " . $e->getMessage();
+}
+
+// Mettre à jour les informations de l'utilisateur
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom = $_POST['nom'] ?? null;
+    $adresse = $_POST['adresse'] ?? null;
+    $email = $_POST['email'] ?? null;
+
+    try {
+        if ($role === 'artisan') {
+            $updateQuery = "UPDATE artisan 
+                            SET nom = :nom, adresse = :adresse, email = :email 
+                            WHERE idArtisan = :idUtilisateur";
+        } else {
+            $updateQuery = "UPDATE client 
+                            SET adresse = :adresse, email = :email 
+                            WHERE idClient = :idUtilisateur";
+        }
+
+        $stmt = $pdo->prepare($updateQuery);
+        $stmt->execute([
+            ':nom' => $nom,
+            ':adresse' => $adresse,
+            ':email' => $email,
+            ':idUtilisateur' => $idUtilisateur
+        ]);
+
+        $success = "Vos informations ont été mises à jour avec succès.";
+    } catch (PDOException $e) {
+        $error = "Erreur lors de la mise à jour des informations : " . $e->getMessage();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,7 +76,7 @@
   <title>Profil – Nutwork</title>
   <link rel="stylesheet" href="./style.css">
 
-  <!-- correctifs locaux ----------------------------------------------------->
+  <!-- correctifs locaux ----------------------------------------------------->  
   <style>
     /* === SECTION PARAMÈTRE =============================================== */
     .param-form{display:flex;flex-direction:column;gap:18px}
@@ -38,6 +108,13 @@
 <main>
   <h1 class="page-title">Espace Personnel</h1>
 
+  <!-- Affichage des messages d'erreur ou de succès -->
+  <?php if (!empty($error)): ?>
+    <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
+  <?php elseif (!empty($success)): ?>
+    <p class="success-message"><?php echo htmlspecialchars($success); ?></p>
+  <?php endif; ?>
+
   <!-- PROFIL + INFORMATION -------------------------------------------------->
   <section class="profile-section">
     <div class="profile-block">
@@ -51,17 +128,21 @@
 
     <div class="info-block">
       <h2 class="block-title">INFORMATION</h2>
-      <form class="info-form">
-        <label>NOM :</label>        <input placeholder="Entrez votre nom">
-        <label>PRENOM :</label>     <input placeholder="Entrez votre prénom">
-        <label>EMAIL :</label>      <input type="email" placeholder="Entrez votre email">
-        <label>ADRESSE :</label>    <input placeholder="Entrez votre adresse">
-        <button class="btn btn-save">Enregistrer</button>
+      <form class="info-form" action="" method="POST">
+        <?php if ($role === 'artisan'): ?>
+          <label>NOM :</label>
+          <input name="nom" value="<?php echo htmlspecialchars($userData['nom'] ?? ''); ?>" placeholder="Entrez votre nom">
+        <?php endif; ?>
+        <label>EMAIL :</label>
+        <input name="email" type="email" value="<?php echo htmlspecialchars($userData['email'] ?? ''); ?>" placeholder="Entrez votre email">
+        <label>ADRESSE :</label>
+        <input name="adresse" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>" placeholder="Entrez votre adresse">
+        <button class="btn btn-save" type="submit">Enregistrer</button>
       </form>
     </div>
   </section>
 
-  <!-- PARAMÈTRE ------------------------------------------------------------->
+  <!-- PARAMÈTRE ------------------------------------------------------------->  
   <section class="param-section">
     <h2 class="param-title">PARAMÈTRE</h2>
 

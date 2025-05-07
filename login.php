@@ -15,13 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Vérifier si l'utilisateur est un artisan ou un client
             if ($role === 'artisan') {
                 // Requête pour récupérer les informations de l'artisan
-                $query = "SELECT utilisateur.mdp, utilisateur.idUtilisateur, artisan.nom 
+                $query = "SELECT utilisateur.mdp, utilisateur.idUtilisateur, utilisateur.role, artisan.nom 
                           FROM utilisateur 
                           INNER JOIN artisan ON utilisateur.idUtilisateur = artisan.idArtisan 
                           WHERE artisan.email = :email";
             } else {
                 // Requête pour récupérer les informations du client
-                $query = "SELECT utilisateur.mdp, utilisateur.idUtilisateur, client.adresse 
+                $query = "SELECT utilisateur.mdp, utilisateur.idUtilisateur, utilisateur.role, client.adresse 
                           FROM utilisateur 
                           INNER JOIN client ON utilisateur.idUtilisateur = client.idClient 
                           WHERE client.email = :email";
@@ -35,10 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Démarrer la session et stocker les informations utilisateur
                 session_start();
                 $_SESSION['idUtilisateur'] = $user['idUtilisateur'];
-                $_SESSION['user']['role'] = $role; // Définit le rôle (artisan ou client)
+                $_SESSION['user'] = [
+                    'idUtilisateur' => $user['idUtilisateur'],
+                    'role' => $user['role'], // Ajout du rôle
+                ];
 
-                // Rediriger vers la page de gestion des articles
-                header('Location: gestion-articles.php');
+                // Rediriger vers la page de gestion des articles ou autre
+                header('Location: profil.php');
                 exit();
             } else {
                 $error = 'Adresse email ou mot de passe incorrect.';
@@ -87,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="login-buttons">
           <button type="submit" class="btn">Confirmer</button>
-          <a href="./Inscription.html" class="btn">Inscription</a>
-          <a href="./mdpoublie.html" class="btn">Mot de passe oublié ?</a>
+          <a href="./Inscription.php" class="btn">Inscription</a>
+          <a href="./mdpoublie.php" class="btn">Mot de passe oublié ?</a>
         </div>
       </div>
     </form>
