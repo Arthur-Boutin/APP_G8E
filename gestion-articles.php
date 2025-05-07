@@ -2,34 +2,35 @@
 session_start();
 include 'db_connection.php';
 
-// Vérifie si l'utilisateur est connecté et est un artisan
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'artisan') {
-    header('Location: index.php'); // Redirige vers la page d'accueil si non autorisé
+// Vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
     exit();
 }
 
-// Récupère l'ID de l'artisan connecté
-$idArtisan = $_SESSION['user']['idUtilisateur'];
+$user = $_SESSION['user'];
+$isAdmin = $_SESSION['isAdmin'] ?? false;
 
-// Vérifier si une action de suppression a été demandée
-if (isset($_GET['delete_id'])) {
-    $delete_id = intval($_GET['delete_id']);
-    try {
-        $delete_query = "DELETE FROM produit WHERE nProduit = :id"; // Supprimer l'article de la table produit
-        $stmt = $pdo->prepare($delete_query);
-        $stmt->execute([':id' => $delete_id]);
-        header("Location: gestion-articles.php"); // Rediriger après suppression
-        exit();
-    } catch (PDOException $e) {
-        echo "<p class='error-message'>Erreur lors de la suppression : " . $e->getMessage() . "</p>";
+try {
+    if ($isAdmin) {
+        // Si l'utilisateur est un administrateur, récupère tous les articles
+        $query = "SELECT produit.*, artisan.nom AS nomArtisan 
+                  FROM produit 
+                  INNER JOIN artisan ON produit.idArtisan = artisan.idArtisan";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+    } else {
+        // Sinon, récupère uniquement les articles de l'artisan connecté
+        $idArtisan = $user['idUtilisateur'];
+        $query = "SELECT * FROM produit WHERE idArtisan = :idArtisan";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([':idArtisan' => $idArtisan]);
     }
-}
 
-// Récupère les articles de l'artisan connecté
-$query = "SELECT * FROM produit WHERE idArtisan = :idArtisan";
-$stmt = $pdo->prepare($query);
-$stmt->execute([':idArtisan' => $idArtisan]);
-$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erreur lors de la récupération des articles : " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +49,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <section class="gestion-articles">
             <div class="articles-container">
                 <div class="articles-header">
-                    <h1>Gestion de mes articles</h1>
+                    <h1>Gestion des articles</h1>
                     <a href="./creationarticles.php" class="add-article-button">Ajouter un Article</a>
                 </div>
                 <table class="articles-table">
@@ -58,6 +59,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Nom</th>
                             <th>Description</th>
                             <th>Prix</th>
+                            <th>Artisan</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -70,14 +72,17 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?php echo htmlspecialchars($article['description']); ?></td>
                                     <td><?php echo htmlspecialchars($article['prix']); ?> €</td>
                                     <td>
+                                        <?php echo $isAdmin ? htmlspecialchars($article['nomArtisan']) : 'Vous'; ?>
+                                    </td>
+                                    <td>
                                         <a href="modifier-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="edit-button">Modifier</a>
-                                        <a href="?delete_id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
+                                        <a href="supprimer-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5">Aucun article trouvé.</td>
+                                <td colspan="6">Aucun article trouvé.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

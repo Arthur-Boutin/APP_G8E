@@ -19,7 +19,7 @@
                 <div class="backoffice-menu">
                     <a href="./gestion-articles.php">Gestion des Articles</a>
                     <a href="./creationarticles.php">Créer un Article</a>
-                    <a href="./gestion-utilisateurs.php">Gestion des Utilisateurs</a>
+                    <a href="./Gestion_Utilisateurs.php">Gestion des Utilisateurs</a>
                     <a href="./statistiques.php">Statistiques</a>
                     <a href="./parametres.php">Paramètres</a>
                     <a href="./support.php">Support</a>

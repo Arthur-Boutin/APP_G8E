@@ -38,4 +38,9 @@ if ($user['role'] === 'artisan') {
         $_SESSION['artisan'] = $artisan;
     }
 }
+
+// Si l'utilisateur est un administrateur, ajoute une clé spécifique dans la session
+if ($user['role'] === 'administrateur') {
+    $_SESSION['isAdmin'] = true;
+}
 ?>

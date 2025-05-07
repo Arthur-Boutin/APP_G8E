@@ -17,13 +17,13 @@ $userData = [];
 try {
     if ($role === 'artisan') {
         $query = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
-                         artisan.nom, artisan.adresse, artisan.email 
+                         artisan.nom, artisan.adresse, artisan.photoProfil 
                   FROM utilisateur 
                   INNER JOIN artisan ON utilisateur.idUtilisateur = artisan.idArtisan 
                   WHERE utilisateur.idUtilisateur = :idUtilisateur";
     } else {
         $query = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
-                         client.adresse, client.email 
+                         client.adresse, client.photoProfil 
                   FROM utilisateur 
                   INNER JOIN client ON utilisateur.idUtilisateur = client.idClient 
                   WHERE utilisateur.idUtilisateur = :idUtilisateur";
@@ -36,34 +36,139 @@ try {
     $error = "Erreur lors de la récupération des informations : " . $e->getMessage();
 }
 
-// Mettre à jour les informations de l'utilisateur
+// Vérifier quelle action est demandée
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = $_POST['nom'] ?? null;
-    $adresse = $_POST['adresse'] ?? null;
-    $email = $_POST['email'] ?? null;
+    $action = $_POST['action'] ?? '';
 
-    try {
-        if ($role === 'artisan') {
-            $updateQuery = "UPDATE artisan 
-                            SET nom = :nom, adresse = :adresse, email = :email 
-                            WHERE idArtisan = :idUtilisateur";
-        } else {
-            $updateQuery = "UPDATE client 
-                            SET adresse = :adresse, email = :email 
-                            WHERE idClient = :idUtilisateur";
+    // Déconnexion
+    if ($action === 'logout') {
+        session_unset();
+        session_destroy();
+        header('Location: login.php');
+        exit();
+    }
+
+    // Mise à jour des informations utilisateur
+    if ($action === 'update_info') {
+        $nom = $_POST['nom'] ?? null;
+        $adresse = $_POST['adresse'] ?? null;
+
+        try {
+            if ($role === 'artisan') {
+                $updateQuery = "UPDATE artisan 
+                                SET nom = :nom, adresse = :adresse 
+                                WHERE idArtisan = :idUtilisateur";
+            } else {
+                $updateQuery = "UPDATE client 
+                                SET adresse = :adresse 
+                                WHERE idClient = :idUtilisateur";
+            }
+
+            $stmt = $pdo->prepare($updateQuery);
+            $stmt->execute([
+                ':nom' => $nom,
+                ':adresse' => $adresse,
+                ':idUtilisateur' => $idUtilisateur
+            ]);
+
+            // Recharge les données de l'utilisateur après la mise à jour
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([':idUtilisateur' => $idUtilisateur]);
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $success = "Vos informations ont été mises à jour avec succès.";
+        } catch (PDOException $e) {
+            $error = "Erreur lors de la mise à jour des informations : " . $e->getMessage();
         }
+    }
 
-        $stmt = $pdo->prepare($updateQuery);
-        $stmt->execute([
-            ':nom' => $nom,
-            ':adresse' => $adresse,
-            ':email' => $email,
-            ':idUtilisateur' => $idUtilisateur
-        ]);
+    // Mise à jour du mot de passe
+    if ($action === 'update_password') {
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
 
-        $success = "Vos informations ont été mises à jour avec succès.";
-    } catch (PDOException $e) {
-        $error = "Erreur lors de la mise à jour des informations : " . $e->getMessage();
+        if ($newPassword !== $confirmPassword) {
+            $error = "Les nouveaux mots de passe ne correspondent pas.";
+        } else {
+            try {
+                // Vérifier le mot de passe actuel
+                $query = "SELECT mdp FROM utilisateur WHERE idUtilisateur = :idUtilisateur";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute([':idUtilisateur' => $idUtilisateur]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($user && password_verify($currentPassword, $user['mdp'])) {
+                    // Mettre à jour le mot de passe
+                    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                    $updateQuery = "UPDATE utilisateur SET mdp = :mdp WHERE idUtilisateur = :idUtilisateur";
+                    $stmt = $pdo->prepare($updateQuery);
+                    $stmt->execute([
+                        ':mdp' => $hashedPassword,
+                        ':idUtilisateur' => $idUtilisateur
+                    ]);
+
+                    $success = "Votre mot de passe a été mis à jour avec succès.";
+                } else {
+                    $error = "Le mot de passe actuel est incorrect.";
+                }
+            } catch (PDOException $e) {
+                $error = "Erreur lors de la mise à jour du mot de passe : " . $e->getMessage();
+            }
+        }
+    }
+
+    // Mise à jour de la photo de profil
+    if ($action === 'update_photo' && isset($_FILES['photoProfil'])) {
+        if ($_FILES['photoProfil']['error'] === UPLOAD_ERR_OK) {
+            $imageData = file_get_contents($_FILES['photoProfil']['tmp_name']); // Lire le contenu binaire de l'image
+            $imageType = mime_content_type($_FILES['photoProfil']['tmp_name']); // Obtenir le type MIME de l'image
+
+            // Vérifier si le fichier est une image valide
+            if (!in_array($imageType, ['image/jpeg', 'image/png', 'image/jpg'])) {
+                $error = "Seuls les fichiers JPG, JPEG et PNG sont autorisés.";
+            } else {
+                try {
+                    // Requête pour mettre à jour la photo de profil
+                    if ($role === 'artisan') {
+                        $updatePhotoQuery = "UPDATE artisan SET photoProfil = :photoProfil WHERE idArtisan = :idUtilisateur";
+                    } else {
+                        $updatePhotoQuery = "UPDATE client SET photoProfil = :photoProfil WHERE idClient = :idUtilisateur";
+                    }
+
+                    $stmt = $pdo->prepare($updatePhotoQuery);
+                    $stmt->execute([
+                        ':photoProfil' => $imageData,
+                        ':idUtilisateur' => $idUtilisateur
+                    ]);
+
+                    // Requête pour recharger les données de l'utilisateur
+                    if ($role === 'artisan') {
+                        $reloadQuery = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
+                                           artisan.nom, artisan.adresse, artisan.photoProfil 
+                                    FROM utilisateur 
+                                    INNER JOIN artisan ON utilisateur.idUtilisateur = artisan.idArtisan 
+                                    WHERE utilisateur.idUtilisateur = :idUtilisateur";
+                    } else {
+                        $reloadQuery = "SELECT utilisateur.mdp, utilisateur.statutConnexion, utilisateur.dateInscription, 
+                                           client.adresse, client.photoProfil 
+                                    FROM utilisateur 
+                                    INNER JOIN client ON utilisateur.idUtilisateur = client.idClient 
+                                    WHERE utilisateur.idUtilisateur = :idUtilisateur";
+                    }
+
+                    $stmt = $pdo->prepare($reloadQuery);
+                    $stmt->execute([':idUtilisateur' => $idUtilisateur]);
+                    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    $success = "Votre photo de profil a été mise à jour avec succès.";
+                } catch (PDOException $e) {
+                    $error = "Erreur lors de la mise à jour de la photo de profil : " . $e->getMessage();
+                }
+            }
+        } else {
+            $error = "Erreur lors du téléchargement de la photo.";
+        }
     }
 }
 ?>
@@ -75,31 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil – Nutwork</title>
   <link rel="stylesheet" href="./style.css">
-
-  <!-- correctifs locaux ----------------------------------------------------->  
-  <style>
-    /* === SECTION PARAMÈTRE =============================================== */
-    .param-form{display:flex;flex-direction:column;gap:18px}
-    .param-row{display:flex;align-items:center;gap:14px}
-    .param-row label{min-width:220px;font-weight:600;color:#5d3e1b}
-
-    /* tous les champs ont la même largeur car un “emplacement-bouton” est
-       présent sur chaque ligne : réel ou invisible                         */
-    .param-row input{
-      flex:1 1 auto;padding:8px 10px;border:1px solid #ccc;border-radius:4px}
-    .btn-inline,
-    .btn-placeholder{
-      flex:0 0 120px;border-radius:4px;padding:8px 20px;text-align:center}
-    .btn-inline{
-      background:#8b5a2b;color:#fff;border:none;cursor:pointer;white-space:nowrap}
-    .btn-inline:hover{filter:brightness(1.08)}
-    .btn-placeholder{visibility:hidden}      /* occupe la place du bouton */
-
-    /* on masque l’ancien bouton global                                      */
-    .btn-update{display:none}
-  </style>
 </head>
-
 <body>
 <!-- ===========================  HEADER  ================================== -->
 <?php include 'header.php'; ?>
@@ -120,21 +201,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="profile-block">
       <h2 class="block-title">PROFIL</h2>
       <div class="profile-photo">
-        <img src="./assets/images/LOGO.png" alt="Photo de profil">
+        <?php if (!empty($userData['photoProfil'])): ?>
+            <!-- Affiche l'image de profil depuis la base de données -->
+            <img src="data:image/jpeg;base64,<?php echo base64_encode($userData['photoProfil']); ?>" alt="Photo de profil">
+        <?php else: ?>
+            <!-- Affiche une image par défaut si aucune photo de profil n'est disponible -->
+            <img src="./assets/images/LOGO.png" alt="Photo de profil par défaut">
+        <?php endif; ?>
         <p class="photo-label">Photo actuelle</p>
-        <button class="btn btn-upload">Changer la photo</button>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="update_photo">
+            <input type="file" name="photoProfil" accept="image/*">
+            <button class="btn btn-upload" type="submit">Changer la photo</button>
+        </form>
       </div>
     </div>
 
     <div class="info-block">
       <h2 class="block-title">INFORMATION</h2>
       <form class="info-form" action="" method="POST">
-        <?php if ($role === 'artisan'): ?>
-          <label>NOM :</label>
-          <input name="nom" value="<?php echo htmlspecialchars($userData['nom'] ?? ''); ?>" placeholder="Entrez votre nom">
-        <?php endif; ?>
-        <label>EMAIL :</label>
-        <input name="email" type="email" value="<?php echo htmlspecialchars($userData['email'] ?? ''); ?>" placeholder="Entrez votre email">
+        <input type="hidden" name="action" value="update_info">
+        <label>NOM :</label>
+        <input name="nom" value="<?php echo htmlspecialchars($userData['nom'] ?? ''); ?>" placeholder="Entrez votre nom">
         <label>ADRESSE :</label>
         <input name="adresse" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>" placeholder="Entrez votre adresse">
         <button class="btn btn-save" type="submit">Enregistrer</button>
@@ -142,38 +230,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </section>
 
-  <!-- PARAMÈTRE ------------------------------------------------------------->  
-  <section class="param-section">
-    <h2 class="param-title">PARAMÈTRE</h2>
-
-    <form class="param-form">
-      <!-- définir mot de passe -->
-      <div class="param-row">
-        <label for="new-pwd">Définir un mot de passe :</label>
-        <input id="new-pwd" type="password">
-        <span class="btn-placeholder"></span>
-      </div>
-
-      <div class="param-row">
-        <label for="new-pwd-confirm">Confirmer le mot de passe :</label>
-        <input id="new-pwd-confirm" type="password">
-        <button class="btn-inline" type="button">Mettre à jour</button>
-      </div>
-
-      <!-- changer mot de passe -->
-      <div class="param-row">
-        <label for="change-pwd">Changer le mot de passe :</label>
-        <input id="change-pwd" type="password">
-        <span class="btn-placeholder"></span>
-      </div>
-
-      <div class="param-row">
-        <label for="change-pwd-confirm">Confirmer le mot de passe :</label>
-        <input id="change-pwd-confirm" type="password">
-        <button class="btn-inline" type="button">Mettre à jour</button>
-      </div>
+  <!-- MODIFIER MOT DE PASSE -------------------------------------------------->
+  <section class="password-section">
+    <h2 class="block-title">Modifier le mot de passe</h2>
+    <form class="password-form" action="" method="POST">
+      <input type="hidden" name="action" value="update_password">
+      <label>Mot de passe actuel :</label>
+      <input type="password" name="current_password" required>
+      <label>Nouveau mot de passe :</label>
+      <input type="password" name="new_password" required>
+      <label>Confirmer le nouveau mot de passe :</label>
+      <input type="password" name="confirm_password" required>
+      <button class="btn btn-save" type="submit">Mettre à jour</button>
     </form>
   </section>
+
+  <!-- Bouton de déconnexion -->
+  <div class="logout-section">
+    <form action="" method="POST">
+        <input type="hidden" name="action" value="logout">
+        <button class="btn btn-logout" type="submit">Déconnexion</button>
+    </form>
+  </div>
 </main>
 
 <!-- ===========================  FOOTER  ================================== -->
