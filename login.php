@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
   </div>
 
-  <?php include 'footer.php'; ?>
+ 
 
   <script>
     function selectRole(role) {
@@ -119,5 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       document.getElementById('admin-btn').classList.toggle('active', role === 'administrateur');
     }
   </script>
+   <?php include 'footer.php'; ?>
 </body>
 </html>

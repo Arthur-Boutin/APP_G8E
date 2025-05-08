@@ -52,7 +52,7 @@
 <section class="hero-section" id="hero">
     <h1>Exposez votre savoir-faire</h1>
     <p>CraftySquirrel est la vitrine digitale idéale pour les artisans passionnés. Rejoignez une communauté qui valorise l'authenticité, la qualité et l'artisanat local.</p>
-    <button class="cta-button" onclick="location.href='contact.html'">Rejoindre CraftySquirrel</button>
+    <button class="cta-button" onclick="location.href='contact.php'">Rejoindre CraftySquirrel</button>
 </section>
 
 <!-- À PROPOS -->
@@ -95,10 +95,10 @@
 <section class="quick-links" id="services">
     <h2>Nos services</h2>
     <div class="quick-links-grid">
-        <a href="./services.html" class="quick-link-card">Création de boutique</a>
-        <a href="./support.html" class="quick-link-card">Assistance personnalisée</a>
-        <a href="./faq.html" class="quick-link-card">Questions fréquentes</a>
-        <a href="./inscription.html" class="quick-link-card">Inscription rapide</a>
+        <a href="./Inscription.php" class="quick-link-card">Création de boutique</a>
+        <a href="./contact.php" class="quick-link-card">Assistance personnalisée</a>
+        <a href="./faq.php" class="quick-link-card">Questions fréquentes</a>
+        <a href="./Inscription.php" class="quick-link-card">Inscription rapide</a>
     </div>
 </section>
 
