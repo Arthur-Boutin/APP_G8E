@@ -1,12 +1,14 @@
 <?php
 session_start();
 
-// Connexion directe à la base de données
+// Connexion à la base de données
 $host = 'localhost';
-$db = 'nom_de_ta_base';           // 🔁 À remplacer
-$user = 'ton_utilisateur';        // 🔁 À remplacer
-$pass = 'ton_mot_de_passe';       // 🔁 À remplacer
+$db = 'nom_de_ta_base';           // ← Remplace avec ta base
+$user = 'ton_utilisateur';        // ← Remplace avec ton utilisateur MySQL
+$pass = 'ton_mot_de_passe';       // ← Remplace avec ton mot de passe
 
+// Connexion sécurisée
+$pdo = null;
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -25,15 +27,13 @@ $isAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
 
 try {
     if ($isAdmin) {
-        // Récupère tous les utilisateurs pour l’admin
         $query = "SELECT idUtilisateur, nom, prenom, email, statut FROM utilisateur";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
+        $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         die("Accès refusé.");
     }
-
-    $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Erreur lors de la récupération des utilisateurs : " . $e->getMessage());
 }
@@ -55,33 +55,33 @@ try {
         <h1>Gestion des utilisateurs</h1>
         <table class="utilisateurs-table">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Statut</th>
-                <th>Actions</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
-            <?php if (!empty($utilisateurs)): ?>
-                <?php foreach ($utilisateurs as $u): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($u['idUtilisateur']); ?></td>
-                        <td><?php echo htmlspecialchars($u['nom']); ?></td>
-                        <td><?php echo htmlspecialchars($u['prenom']); ?></td>
-                        <td><?php echo htmlspecialchars($u['email']); ?></td>
-                        <td><?php echo htmlspecialchars($u['statut']); ?></td>
-                        <td>
-                            <a href="modifier-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
-                            <a href="supprimer-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
-            <?php endif; ?>
+                <?php if (!empty($utilisateurs)): ?>
+                    <?php foreach ($utilisateurs as $u): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($u['idUtilisateur']); ?></td>
+                            <td><?php echo htmlspecialchars($u['nom']); ?></td>
+                            <td><?php echo htmlspecialchars($u['prenom']); ?></td>
+                            <td><?php echo htmlspecialchars($u['email']); ?></td>
+                            <td><?php echo htmlspecialchars($u['statut']); ?></td>
+                            <td>
+                                <a href="modifier-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
+                                <a href="supprimer-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </section>
