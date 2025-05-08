@@ -145,7 +145,7 @@
             <p>Designer</p>
         </div>
         <div class="member">
-            <img src="https://github.com/Arthur-Boutin/APP_G8E/blob/main/assets/images/Deng.JPG" alt="Guokuang">
+            <img src="Deng.JPG" alt="Guokuang">
             <h4>DENG</h4>
             <h4>Guokuang</h4>
             <p>Manager</p>
