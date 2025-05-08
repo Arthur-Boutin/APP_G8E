@@ -43,38 +43,66 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nom = htmlspecialchars($_POST['nom']);
                 $description = htmlspecialchars($_POST['description']);
-                $prix = htmlspecialchars($_POST['prix']);
-                $quantitee = htmlspecialchars($_POST['quantitee']);
+                $prix = floatval($_POST['prix']);
+                $quantitee = intval($_POST['quantitee']);
                 $idCategorie = intval($_POST['idCategorie']);
-                $image = null;
+                $tempsFabrication = intval($_POST['tempsFabrication']);
+                $tailles = htmlspecialchars($_POST['tailles']);
+                $materiaux = htmlspecialchars($_POST['materiaux']);
+                $couleur = htmlspecialchars($_POST['couleur']);
 
                 // Vérifier si une image a été téléchargée
+                $imageData = null; // Initialize $imageData
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                    $image = file_get_contents($_FILES['image']['tmp_name']);
+                    $imageData = file_get_contents($_FILES['image']['tmp_name']);
                 }
 
                 // Récupérer l'ID de l'artisan
                 if ($_SESSION['user']['role'] === 'administrateur') {
-                    $idArtisan = intval($_POST['idArtisan']);
+                    $idArtisan = $_POST['idArtisan'];
                 } else {
                     $idArtisan = $_SESSION['artisan']['idArtisan'];
                 }
 
-                // Insertion dans la base de données
-                $sql = "INSERT INTO produit (nom, description, prix, quantitee, idArtisan, image, idCategorie) 
-                        VALUES (:nom, :description, :prix, :quantitee, :idArtisan, :image, :idCategorie)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([
-                    ':nom' => $nom,
-                    ':description' => $description,
-                    ':prix' => $prix,
-                    ':quantitee' => $quantitee,
-                    ':idArtisan' => $idArtisan,
-                    ':image' => $image,
-                    ':idCategorie' => $idCategorie
-                ]);
+                // Vérifier si l'idArtisan existe dans la table artisan
+                try {
+                    $query = "SELECT IdArtisan FROM artisan WHERE IdArtisan = :idArtisan";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->execute([':idArtisan' => $idArtisan]);
+                    $artisan = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
+                    if (!$artisan) {
+                        echo "<p class='error-message'>L'artisan sélectionné n'existe pas.</p>";
+                        exit; // Arrêter l'exécution du script
+                    }
+                } catch (PDOException $e) {
+                    echo "<p class='error-message'>Erreur lors de la vérification de l'artisan : " . $e->getMessage() . "</p>";
+                    exit;
+                }
+
+                // Insertion dans la base de données
+                try {
+                    $query = "INSERT INTO produit (nom, description, prix, quantitee, image, tempsFabrication, idArtisan, idCategorie, tailles, materiaux, couleur) 
+                              VALUES (:nom, :description, :prix, :quantitee, :image, :tempsFabrication, :idArtisan, :idCategorie, :tailles, :materiaux, :couleur)";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->execute([
+                        ':nom' => $nom,
+                        ':description' => $description,
+                        ':prix' => $prix,
+                        ':quantitee' => $quantitee,
+                        ':image' => $imageData,
+                        ':tempsFabrication' => $tempsFabrication,
+                        ':idArtisan' => $idArtisan,
+                        ':idCategorie' => $idCategorie,
+                        ':tailles' => $tailles,
+                        ':materiaux' => $materiaux,
+                        ':couleur' => $couleur
+                    ]);
+
+                    echo "<p class='success-message'>Le produit a été ajouté avec succès !</p>";
+                } catch (PDOException $e) {
+                    echo "<p class='error-message'>Erreur lors de l'ajout du produit : " . $e->getMessage() . "</p>";
+                }
             }
 
             // Récupération des artisans pour le menu déroulant
@@ -112,6 +140,9 @@
                     <label for="quantitee">Quantité</label>
                     <input type="number" id="quantitee" name="quantitee" required>
 
+                    <label for="tempsFabrication">Temps de Fabrication (jours) :</label>
+                    <input type="number" id="tempsFabrication" name="tempsFabrication" min="1" required>
+
                     <?php if ($_SESSION['user']['role'] === 'administrateur'): ?>
                         <label for="idArtisan">Artisan</label>
                         <select id="idArtisan" name="idArtisan" required>
@@ -137,6 +168,15 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
+
+                    <label for="tailles">Tailles possibles (séparées par des virgules)</label>
+                    <input type="text" id="tailles" name="tailles">
+
+                    <label for="materiaux">Matériaux possibles (séparés par des virgules)</label>
+                    <input type="text" id="materiaux" name="materiaux">
+
+                    <label for="couleur">Couleurs possibles (séparées par des virgules)</label>
+                    <input type="text" id="couleur" name="couleur">
 
                     <label for="image">Image</label>
                     <input type="file" id="image" name="image">

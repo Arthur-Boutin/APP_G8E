@@ -663,6 +663,7 @@ h2, h3 {
 
 .filter-form input[type="number"] {
     -moz-appearance: textfield; /* Supprime les flèches sur Firefox */
+    appearance: textfield; /* Standard property for compatibility */
 }
 
 .filter-form input[type="number"]::-webkit-inner-spin-button,
@@ -1530,12 +1531,14 @@ h2, h3 {
 }
 
 .add-to-cart-form {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* Stack labels and inputs vertically */
+    gap: 10px; /* Add some spacing between elements */
 }
 
 .add-to-cart-form label {
     font-weight: bold;
-    margin-right: 10px;
+    margin-bottom: 5px;
 }
 
 .add-to-cart-form input[type="number"] {
@@ -2225,7 +2228,44 @@ h2, h3 {
     line-height: 1.5;
 }
 
+/* Style for custom select elements */
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    margin: 5px 0;
+    width: 100%;
+    font-size: 16px;
+    color: #555;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    /* Remove the background image to remove the arrow */
+    /* background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>'); */
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 50%;
+    padding-right: 10px; /* Adjust padding to accommodate the removed arrow */
+}
 
+.custom-select:hover {
+    border-color: #999;
+}
+
+.custom-select:focus {
+    border-color: #555;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Style for the container to prevent overflow */
+.select-wrapper {
+    position: relative;
+    overflow: hidden;
+}
 
 /* Import de Google Font moderne */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');

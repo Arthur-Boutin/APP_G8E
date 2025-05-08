@@ -18,7 +18,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id";
+$query = "SELECT nom, description, prix, quantitee, image, tempsFabrication, tailles, materiaux, couleur FROM produit WHERE nProduit = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':id' => $id]);
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,33 +28,43 @@ if (!$produit) {
 }
 
 // Gestion de l'ajout au panier
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantite'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantite']) && isset($_POST['couleur']) && isset($_POST['taille']) && isset($_POST['materiau'])) {
     $quantite = intval($_POST['quantite']);
+    $couleur = htmlspecialchars($_POST['couleur']);
+    $taille = htmlspecialchars($_POST['taille']);
+    $materiau = htmlspecialchars($_POST['materiau']);
+
     if ($quantite > 0) {
         // Vérifier si le produit est déjà dans le panier
-        $query = "SELECT quantite FROM panierachat WHERE idProduit = :idProduit";
+        $query = "SELECT quantite FROM panierachat WHERE idProduit = :idProduit AND couleur = :couleur AND taille = :taille AND materiau = :materiau";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([':idProduit' => $id]);
+        $stmt->execute([':idProduit' => $id, ':couleur' => $couleur, ':taille' => $taille, ':materiau' => $materiau]);
         $panierItem = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($panierItem) {
             // Si le produit est déjà dans le panier, mettre à jour la quantité
             $nouvelleQuantite = $panierItem['quantite'] + $quantite;
-            $query = "UPDATE panierachat SET quantite = :quantite, dateAjoutee = :dateAjoutee WHERE idProduit = :idProduit";
+            $query = "UPDATE panierachat SET quantite = :quantite, dateAjoutee = :dateAjoutee WHERE idProduit = :idProduit AND couleur = :couleur AND taille = :taille AND materiau = :materiau";
             $stmt = $pdo->prepare($query);
             $stmt->execute([
                 ':quantite' => $nouvelleQuantite,
                 ':dateAjoutee' => time(),
-                ':idProduit' => $id
+                ':idProduit' => $id,
+                ':couleur' => $couleur,
+                ':taille' => $taille,
+                ':materiau' => $materiau
             ]);
         } else {
             // Si le produit n'est pas dans le panier, l'ajouter
-            $query = "INSERT INTO panierachat (idProduit, quantite, dateAjoutee) VALUES (:idProduit, :quantite, :dateAjoutee)";
+            $query = "INSERT INTO panierachat (idProduit, quantite, dateAjoutee, couleur, taille, materiau) VALUES (:idProduit, :quantite, :dateAjoutee, :couleur, :taille, :materiau)";
             $stmt = $pdo->prepare($query);
             $stmt->execute([
                 ':idProduit' => $id,
                 ':quantite' => $quantite,
-                ':dateAjoutee' => time()
+                ':dateAjoutee' => time(),
+                ':couleur' => $couleur,
+                ':taille' => $taille,
+                ':materiau' => $materiau
             ]);
         }
 
@@ -124,12 +134,53 @@ $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="product-info">
                 <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
                 <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
-                <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
                 <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
+                <p class="product-fabrication-time">Délai de fabrication : <?php echo htmlspecialchars($produit['tempsFabrication']); ?> jours</p>
+
                 <form action="" method="POST" class="add-to-cart-form">
                     <label for="quantite">Quantité :</label>
                     <input type="number" id="quantite" name="quantite" min="1"
                            max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
+
+                    <label for="couleur">Couleur :</label>
+                    <?php
+                    $couleurs = explode(',', $produit['couleur']);
+                    if (!empty($couleurs)): ?>
+                        <select id="couleur" name="couleur" required class="custom-select">
+                            <?php foreach ($couleurs as $couleur): ?>
+                                <option value="<?php echo htmlspecialchars($couleur); ?>"><?php echo htmlspecialchars($couleur); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <p>Aucune couleur disponible</p>
+                    <?php endif; ?>
+
+                    <label for="taille">Taille :</label>
+                    <?php
+                    $tailles = explode(',', $produit['tailles']);
+                    if (!empty($tailles)): ?>
+                        <select id="taille" name="taille" required class="custom-select">
+                            <?php foreach ($tailles as $taille): ?>
+                                <option value="<?php echo htmlspecialchars($taille); ?>"><?php echo htmlspecialchars($taille); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <p>Aucune taille disponible</p>
+                    <?php endif; ?>
+
+                    <label for="materiau">Matériau :</label>
+                    <?php
+                    $materiaux = explode(',', $produit['materiaux']);
+                    if (!empty($materiaux)): ?>
+                        <select id="materiau" name="materiau" required class="custom-select">
+                            <?php foreach ($materiaux as $materiau): ?>
+                                <option value="<?php echo htmlspecialchars($materiau); ?>"><?php echo htmlspecialchars($materiau); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <p>Aucun matériau disponible</p>
+                    <?php endif; ?>
+
                     <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
                 </form>
             </div>
