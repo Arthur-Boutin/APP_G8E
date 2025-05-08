@@ -1,16 +1,23 @@
 <!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\FicheProduit.php -->
 <?php
+session_start();
+
 // Inclure la connexion à la base de données
 include 'db_connection.php';
 
-// Vérifier si un ID est passé dans l'URL
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Récupérer les données du produit depuis la base de données
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("ID du produit manquant.");
 }
 
 $id = intval($_GET['id']);
 
-// Récupérer les données du produit depuis la base de données
 $query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':id' => $id]);
@@ -83,7 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contenu']) && isset($
 }
 
 // Récupérer les avis existants
-$query = "SELECT idClient, contenu, note FROM commentaire WHERE nProduit = :nProduit";
+$query = "SELECT c.contenu, c.note, cl.nom AS nom_utilisateur
+          FROM commentaire c
+          JOIN client cl ON c.idClient = cl.idClient
+          WHERE c.nProduit = :nProduit";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':nProduit' => $id]);
 $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -92,88 +102,73 @@ $avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo htmlspecialchars($produit['nom']); ?> - Nutwork</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($produit['nom']); ?> - Nutwork</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <?php include 'header.php'; ?>
 
-  <main>
+<main>
     <div class="product-container">
-      <div class="product-top">
-        <div class="product-image">
-          <?php if (!empty($produit['image'])): ?>
-            <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
-          <?php else: ?>
-            <img src="./assets/images/default.jpg" alt="Image par défaut">
-          <?php endif; ?>
-        </div>
-        <div class="product-info">
-          <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
-          <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
-          <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
-          <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
-          <form action="" method="POST" class="add-to-cart-form">
-            <label for="quantite">Quantité :</label>
-            <input type="number" id="quantite" name="quantite" min="1" max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
-            <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
-          </form>
-        </div>
-      </div>
-
-      <!-- Formulaire pour ajouter un avis -->
-      <div class="add-review-container">
-        <h3>Ajouter un avis</h3>
-        <form action="" method="POST" class="add-review-form">
-          <label for="contenu">Commentaire :</label>
-          <textarea id="contenu" name="contenu" required></textarea>
-
-          <label for="note">Note (sur 5) :</label>
-          <input type="number" id="note" name="note" min="1" max="5" required>
-
-          <button type="submit" class="add-review-button">Envoyer</button>
-        </form>
-      </div>
-
-      <!-- Afficher les avis existants -->
-      <div class="existing-reviews-container">
-        <h3>Avis des utilisateurs</h3>
-        <?php if (empty($avis)): ?>
-          <p>Aucun avis pour le moment.</p>
-        <?php else: ?>
-          <?php foreach ($avis as $commentaire): ?>
-            <div class="review">
-              <p><strong>Utilisateur :</strong> <?php echo htmlspecialchars($commentaire['idClient']); ?></p>
-              <p><strong>Note :</strong> <?php echo htmlspecialchars($commentaire['note']); ?> / 5</p>
-              <p><?php echo htmlspecialchars($commentaire['contenu']); ?></p>
+        <div class="product-top">
+            <div class="product-image">
+                <?php if (!empty($produit['image'])): ?>
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($produit['image']); ?>"
+                         alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+                <?php else: ?>
+                    <img src="./assets/images/default.jpg" alt="Image par défaut">
+                <?php endif; ?>
             </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
-      </div>
-    </div>
-  </main>
+            <div class="product-info">
+                <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
+                <div class="product-price"><?php echo htmlspecialchars($produit['prix']); ?> €</div>
+                <div class="product-quantity">Quantité disponible : <?php echo htmlspecialchars($produit['quantitee']); ?></div>
+                <p class="product-description"><?php echo htmlspecialchars($produit['description']); ?></p>
+                <form action="" method="POST" class="add-to-cart-form">
+                    <label for="quantite">Quantité :</label>
+                    <input type="number" id="quantite" name="quantite" min="1"
+                           max="<?php echo htmlspecialchars($produit['quantitee']); ?>" value="1" required>
+                    <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
+                </form>
+            </div>
+        </div>
 
-  <footer class="site-footer">
-    <div>
-        <h4>À propos de Nutwork</h4>
-        <p><a href="./contact.html">Contactez-nous</a></p>
-        <p>À propos de nous</p>
-        <p>Blog</p>
-        <p>FAQ</p>
+        <!-- Afficher les avis existants -->
+        <div class="existing-reviews-container">
+            <h3>Avis des utilisateurs</h3>
+            <?php if (empty($avis)): ?>
+                <p>Aucun avis pour le moment.</p>
+            <?php else: ?>
+                <?php foreach ($avis as $commentaire): ?>
+                    <div class="review">
+                        <p><strong>Utilisateur :</strong> <?php echo htmlspecialchars($commentaire['nom_utilisateur']); ?></p>
+                        <p><strong>Note :</strong> <?php echo htmlspecialchars($commentaire['note']); ?> / 5</p>
+                        <p><?php echo htmlspecialchars($commentaire['contenu']); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <!-- Formulaire pour ajouter un avis -->
+        <div class="add-review-container">
+            <h3>Ajouter un avis</h3>
+            <form action="" method="POST" class="add-review-form">
+                <label for="contenu">Commentaire :</label>
+                <textarea id="contenu" name="contenu" required></textarea>
+
+                <label for="note">Note (sur 5) :</label>
+                <input type="number" id="note" name="note" min="1" max="5" required>
+
+                <button type="submit" class="add-review-button">Envoyer</button>
+            </form>
+        </div>
+
+
     </div>
-    <div>
-        <h4>CGU</h4>
-        <p><a href="./Mentions.html">Mentions</a></p>
-        <p><a href="./cgv.html">CGV</a></p>
-        <p>Développement</p>
-    </div>
-    <div>
-        <h4>Aide & Contacts</h4>
-        <p>contact@nutwork.com</p>
-        <p>28 Rue Notre Dame des Champs, Paris</p>
-    </div>
-  </footer>
+</main>
+
+<?php include 'footer.php'; ?>
 </body>
 </html>
