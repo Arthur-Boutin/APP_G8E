@@ -2224,3 +2224,205 @@ h2, h3 {
     font-size: 1rem;
     line-height: 1.5;
 }
+
+
+
+/* Import de Google Font moderne */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+    --primary: #8C5A2B;
+    --secondary: #A97A53;
+    --light: #fff3eb;
+    --text: #333;
+    --background: #fdfaf6;
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.DD {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* HEADER Nabil */
+.site-header-DD {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    padding: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.header-container-DD {
+    width: 90%;
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-DD a {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu-DD ul {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+}
+
+.nav-menu-DD a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu-DD a:hover {
+    color: #f0d2a1;
+}
+
+.header-actions-DD {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-form-DD {
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.search-bar-DD {
+    border: none;
+    outline: none;
+    padding: 6px 12px;
+    border-radius: 30px;
+}
+
+.search-button-DD {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.icon-DD {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.icon-link-DD:hover .icon {
+    transform: scale(1.1);
+}
+
+/* PAGE NAV */
+.page-nav-DD {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #fdf5ed;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #ddd;
+}
+
+.page-nav-DD a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.page-nav-DD a:hover {
+    text-decoration: underline;
+}
+
+/* HERO */
+.hero-section-DD {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.hero-section-DD h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.hero-section-DD p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cta-button-DD {
+    padding: 12px 28px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button-DD:hover {
+    background-color: var(--secondary);
+}
+
+/* ABOUT */
+.about-DD {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: var(--light);
+}
+
+.about-DD h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.about-DD p {
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.about-grid-DD {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.about-grid-DD div {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: left;
+}
