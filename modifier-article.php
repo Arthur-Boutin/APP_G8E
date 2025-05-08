@@ -4,14 +4,24 @@
 include 'db_connection.php';
 include 'session.php';
 
-// Vérifie si l'utilisateur est un artisan
-if ($_SESSION['user']['role'] !== 'artisan') {
+// Vérifie si l'utilisateur est un artisan ou un administrateur
+if ($_SESSION['user']['role'] !== 'artisan' && $_SESSION['user']['role'] !== 'administrateur') {
     header('Location: index.html');
     exit();
 }
 
 // Récupère l'ID de l'artisan connecté
-$idArtisan = $_SESSION['artisan']['idArtisan'];
+$idArtisan = null; // Initialiser $idArtisan à null
+
+if ($_SESSION['user']['role'] === 'artisan') {
+    if (isset($_SESSION['artisan']['idArtisan'])) {
+        $idArtisan = $_SESSION['artisan']['idArtisan'];
+    } else {
+        // Si l'utilisateur est un artisan mais que les informations ne sont pas disponibles,
+        // vous pouvez rediriger l'utilisateur ou afficher un message d'erreur.
+        die("Informations de l'artisan manquantes.");
+    }
+}
 
 // Vérifie si un ID est passé dans l'URL
 if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -21,9 +31,16 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = intval($_GET['id']);
 
 // Récupérer les données du produit à modifier
-$query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
-$stmt = $pdo->prepare($query);
-$stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
+if ($_SESSION['user']['role'] === 'administrateur') {
+    $query = "SELECT nom, description, prix, quantitee, image, idArtisan FROM produit WHERE nProduit = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([':id' => $id]);
+} else {
+    $query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
+}
+
 $produit = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$produit) {
@@ -42,25 +59,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image = file_get_contents($_FILES['image']['tmp_name']);
     }
 
-    // Vérifier que l'article appartient bien à l'artisan connecté
-    $check_query = "SELECT nProduit FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
-    $check_stmt = $pdo->prepare($check_query);
-    $check_stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
-    if (!$check_stmt->fetch()) {
-        die("Vous n'avez pas la permission de modifier cet article.");
+    // Récupérer l'ID de l'artisan
+    if ($_SESSION['user']['role'] === 'administrateur') {
+        $idArtisan = $_POST['idArtisan'];
+    } else {
+        $idArtisan = $_SESSION['artisan']['idArtisan'];
     }
 
     // Mettre à jour le produit
-    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image WHERE nProduit = :id";
-    $update_stmt = $pdo->prepare($update_query);
-    $update_stmt->execute([
+    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image";
+    $params = [
         ':nom' => $nom,
         ':description' => $description,
         ':prix' => $prix,
         ':quantitee' => $quantitee,
-        ':image' => $image,
-        ':id' => $id
-    ]);
+        ':image' => $image
+    ];
+
+    // Si l'utilisateur est un administrateur, mettre à jour l'ID de l'artisan
+    if ($_SESSION['user']['role'] === 'administrateur') {
+        $update_query .= ", idArtisan = :idArtisan";
+        $params[':idArtisan'] = $idArtisan;
+    }
+
+    $update_query .= " WHERE nProduit = :id";
+    $params[':id'] = $id;
+
+    $update_stmt = $pdo->prepare($update_query);
+    $update_stmt->execute($params);
 
     header("Location: gestion-articles.php");
     exit();
@@ -96,6 +122,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <label for="quantitee">Quantité</label>
                 <input type="number" id="quantitee" name="quantitee" value="<?php echo htmlspecialchars($produit['quantitee']); ?>" required>
+
+                <?php if ($_SESSION['user']['role'] === 'administrateur'): ?>
+                    <label for="idArtisan">Artisan</label>
+                    <select id="idArtisan" name="idArtisan" required>
+                        <?php
+                        $queryArtisans = "SELECT IdArtisan, nom FROM artisan";
+                        $stmtArtisans = $pdo->query($queryArtisans);
+                        $artisans = $stmtArtisans->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($artisans as $artisan): ?>
+                            <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>" <?php if ($produit['idArtisan'] == $artisan['IdArtisan']) echo 'selected'; ?>>
+                                <?php echo htmlspecialchars($artisan['nom']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
 
                 <label for="image">Image actuelle</label>
                 <?php if (!empty($produit['image'])): ?>

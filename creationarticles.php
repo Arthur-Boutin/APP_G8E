@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Header intégré -->
-    <<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main>
         <section class="backoffice">
@@ -16,14 +16,25 @@
             <?php
             include 'session.php';
 
-            // Vérifie si l'utilisateur est un artisan
-            if ($_SESSION['user']['role'] !== 'artisan') {
+            // Vérifie si l'utilisateur est un artisan ou un administrateur
+            if ($_SESSION['user']['role'] !== 'artisan' && $_SESSION['user']['role'] !== 'administrateur') {
                 header('Location: index.html'); // Redirige vers la page d'accueil ou une autre page
                 exit();
             }
 
             // Récupère l'ID de l'artisan connecté
-            $idArtisan = $_SESSION['artisan']['idArtisan'];
+            $idArtisan = null; // Initialise $idArtisan à null
+
+            if ($_SESSION['user']['role'] === 'artisan') {
+                if (isset($_SESSION['artisan']['idArtisan'])) {
+                    $idArtisan = $_SESSION['artisan']['idArtisan'];
+                } else {
+                    // Si l'utilisateur est un artisan mais que les informations ne sont pas disponibles,
+                    // vous pouvez rediriger l'utilisateur ou afficher un message d'erreur.
+                    echo "<p class='error-message'>Les informations de l'artisan ne sont pas disponibles.</p>";
+                    exit();
+                }
+            }
 
             // Inclure la connexion à la base de données
             include 'db_connection.php';
@@ -40,6 +51,13 @@
                 // Vérifier si une image a été téléchargée
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                     $image = file_get_contents($_FILES['image']['tmp_name']);
+                }
+
+                // Récupérer l'ID de l'artisan
+                if ($_SESSION['user']['role'] === 'administrateur') {
+                    $idArtisan = intval($_POST['idArtisan']);
+                } else {
+                    $idArtisan = $_SESSION['artisan']['idArtisan'];
                 }
 
                 // Insertion dans la base de données
@@ -94,9 +112,21 @@
                     <label for="quantitee">Quantité</label>
                     <input type="number" id="quantitee" name="quantitee" required>
 
-                    <label for="idArtisan">Artisan</label>
-                    <input type="text" id="idArtisan" name="idArtisan" value="<?php echo htmlspecialchars($_SESSION['artisan']['nom']); ?>" readonly>
-                    <input type="hidden" name="idArtisan" value="<?php echo htmlspecialchars($idArtisan); ?>">
+                    <?php if ($_SESSION['user']['role'] === 'administrateur'): ?>
+                        <label for="idArtisan">Artisan</label>
+                        <select id="idArtisan" name="idArtisan" required>
+                            <option value="">Sélectionnez un artisan</option>
+                            <?php foreach ($artisans as $artisan): ?>
+                                <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>">
+                                    <?php echo htmlspecialchars($artisan['nom']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <label for="idArtisan">Artisan</label>
+                        <input type="text" id="idArtisan" name="artisan_nom" value="<?php echo htmlspecialchars($_SESSION['artisan']['nom']); ?>" readonly>
+                        <input type="hidden" name="idArtisan" value="<?php echo htmlspecialchars($idArtisan); ?>">
+                    <?php endif; ?>
 
                     <label for="idCategorie">Catégorie</label>
                     <select id="idCategorie" name="idCategorie" required>

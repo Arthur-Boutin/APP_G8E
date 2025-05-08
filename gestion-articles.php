@@ -22,7 +22,7 @@ try {
     } else {
         // Sinon, récupère uniquement les articles de l'artisan connecté
         $idArtisan = $user['idUtilisateur'];
-        $query = "SELECT * FROM produit WHERE idArtisan = :idArtisan";
+        $query = "SELECT produit.* FROM produit WHERE idArtisan = :idArtisan";
         $stmt = $pdo->prepare($query);
         $stmt->execute([':idArtisan' => $idArtisan]);
     }

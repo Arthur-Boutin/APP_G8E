@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+// Vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Récupère le rôle de l'utilisateur
+$role = $_SESSION['user']['role'];
+
+// Si l'utilisateur est un client, redirige vers une autre page
+if ($role === 'client') {
+    header('Location: profil.php'); // Redirige vers la page de profil
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,12 +36,18 @@
                     <h1>Bienvenue dans le Backoffice</h1>
                 </div>
                 <div class="backoffice-menu">
-                    <a href="./gestion-articles.php">Gestion des Articles</a>
-                    <a href="./creationarticles.php">Créer un Article</a>
-                    <a href="./Gestion_Utilisateurs.php">Gestion des Utilisateurs</a>
-                    <a href="./statistiques.php">Statistiques</a>
-                    <a href="./parametres.php">Paramètres</a>
-                    <a href="./support.php">Support</a>
+                    <?php if ($role === 'administrateur'): ?>
+                        <!-- Liens pour l'administrateur -->
+                        <a href="./gestion-articles.php">Gestion des Articles</a>
+                        <a href="./creationarticles.php">Créer un Article</a>
+                        <a href="./Gestion_Utilisateurs.php">Gestion des Utilisateurs</a>
+                        <a href="./contact.php">Support</a>
+                    <?php elseif ($role === 'artisan'): ?>
+                        <!-- Liens pour l'artisan -->
+                        <a href="./gestion-articles.php">Gestion des Articles</a>
+                        <a href="./creationarticles.php">Créer un Article</a>
+                        <a href="./support.php">Support</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>

@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <ul>
                 <li><a href="./index.php">Accueil</a></li>
                 <li><a href="./articles.php">Articles</a></li>
-                <?php if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'artisan'): ?>
+                <?php if (isset($_SESSION['user']['role']) && ($_SESSION['user']['role'] === 'artisan' || $_SESSION['user']['role'] === 'administrateur')): ?>
                     <li><a href="./backoffice-home.php">Backoffice</a></li>
                 <?php else: ?>
                     <li><a href="#">Galerie</a></li>
