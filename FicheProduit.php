@@ -21,7 +21,7 @@ if (!$produit) {
 }
 
 // Gestion de l'ajout au panier
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quantite'])) {
     $quantite = intval($_POST['quantite']);
     if ($quantite > 0) {
         // Vérifier si le produit est déjà dans le panier
@@ -56,6 +56,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<p class='error-message'>Veuillez sélectionner une quantité valide.</p>";
     }
 }
+
+// Gestion de l'ajout d'un avis
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contenu']) && isset($_POST['note'])) {
+    $contenu = htmlspecialchars($_POST['contenu']);
+    $note = floatval($_POST['note']);
+
+    // Vérifier si l'utilisateur est connecté
+    if (!isset($_SESSION['user'])) {
+        echo "<p class='error-message'>Vous devez être connecté pour laisser un avis.</p>";
+    } else {
+        $idClient = $_SESSION['user']['idUtilisateur'];
+
+        // Insérer le commentaire dans la base de données
+        $query = "INSERT INTO commentaire (idClient, nProduit, contenu, note) VALUES (:idClient, :nProduit, :contenu, :note)";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([
+            ':idClient' => $idClient,
+            ':nProduit' => $id,
+            ':contenu' => $contenu,
+            ':note' => $note
+        ]);
+
+        echo "<p class='success-message'>Votre avis a été ajouté avec succès !</p>";
+    }
+}
+
+// Récupérer les avis existants
+$query = "SELECT idClient, contenu, note FROM commentaire WHERE nProduit = :nProduit";
+$stmt = $pdo->prepare($query);
+$stmt->execute([':nProduit' => $id]);
+$avis = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +121,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="add-to-cart-button">Ajouter au panier</button>
           </form>
         </div>
+      </div>
+
+      <!-- Formulaire pour ajouter un avis -->
+      <div class="add-review-container">
+        <h3>Ajouter un avis</h3>
+        <form action="" method="POST" class="add-review-form">
+          <label for="contenu">Commentaire :</label>
+          <textarea id="contenu" name="contenu" required></textarea>
+
+          <label for="note">Note (sur 5) :</label>
+          <input type="number" id="note" name="note" min="1" max="5" required>
+
+          <button type="submit" class="add-review-button">Envoyer</button>
+        </form>
+      </div>
+
+      <!-- Afficher les avis existants -->
+      <div class="existing-reviews-container">
+        <h3>Avis des utilisateurs</h3>
+        <?php if (empty($avis)): ?>
+          <p>Aucun avis pour le moment.</p>
+        <?php else: ?>
+          <?php foreach ($avis as $commentaire): ?>
+            <div class="review">
+              <p><strong>Utilisateur :</strong> <?php echo htmlspecialchars($commentaire['idClient']); ?></p>
+              <p><strong>Note :</strong> <?php echo htmlspecialchars($commentaire['note']); ?> / 5</p>
+              <p><?php echo htmlspecialchars($commentaire['contenu']); ?></p>
+            </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </div>
   </main>
