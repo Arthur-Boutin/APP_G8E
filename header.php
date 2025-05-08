@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="header-container">
         <!-- Logo -->
         <div class="logo">
-            <a href="./index.php">CraftySquirelle</a>
+            <a href="./index.php">CraftySquirel</a>
         </div>
 
         <!-- Navigation -->
