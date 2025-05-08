@@ -13,7 +13,7 @@
     <h1>Merci pour votre achat !</h1>
     <p>Votre commande a été confirmée et sera traitée dans les plus brefs délais.</p>
     <p>Un email de confirmation vous a été envoyé.</p>
-    <a href="./index.html" class="btn">Retour à l'accueil</a>
+    <a href="./index.php" class="btn">Retour à l'accueil</a>
   </div>
 
   <footer class="site-footer">

@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+<?php
+include
+$host = 'localhost';
+$dbname = 'app_g8e'; // Nom de votre base de données
+$username = 'root'; // Nom d'utilisateur par défaut pour phpMyAdmin
+$password = ''; // Mot de passe par défaut pour phpMyAdmin
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erreur de connexion à la base de données : " . $e->getMessage());
+}
+?>
     <!-- Header intégré -->
     <?php include 'header.php'; ?>
   <main>
@@ -39,7 +53,7 @@
 
       <div class="cart-summary">
         <p>Résumé du panier: Total 150€</p>
-        <a href="./Paiement.html" class="btn-validate">Valider</a>
+        <a href="./Paiement.php" class="btn-validate">Valider</a>
       </div>
     </div>
   </main>

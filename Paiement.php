@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <a href="./ConfirmationPaiement.html" class="btn-pay">Payer maintenant</a>
+    <a href="./ConfirmationPaiement.php" class="btn-pay">Payer maintenant</a>
   </div>
 
   <footer class="site-footer">
