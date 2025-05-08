@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Accueil</title>
+    <title>CraftySquirrel - Accueil</title>
     <link rel="stylesheet" href="./style.css">
     <style>
         html { scroll-behavior: smooth; }
@@ -51,14 +51,14 @@
 <!-- Hero Section -->
 <section class="hero-section" id="hero">
     <h1>Exposez votre savoir-faire</h1>
-    <p>Nutwork est la vitrine digitale idéale pour les artisans passionnés. Rejoignez une communauté qui valorise l'authenticité, la qualité et l'artisanat local.</p>
-    <button class="cta-button" onclick="location.href='contact.html'">Rejoindre Nutwork</button>
+    <p>CraftySquirrel est la vitrine digitale idéale pour les artisans passionnés. Rejoignez une communauté qui valorise l'authenticité, la qualité et l'artisanat local.</p>
+    <button class="cta-button" onclick="location.href='contact.html'">Rejoindre CraftySquirrel</button>
 </section>
 
 <!-- À PROPOS -->
 <section class="about" id="about">
     <h2>Qui sommes-nous ?</h2>
-    <p>Nutwork est une plateforme digitale conçue pour les commerçants et artisans locaux. Nous vous accompagnons pour développer votre vitrine numérique en toute simplicité.</p>
+    <p>CraftySquirrel est une plateforme digitale conçue pour les commerçants et artisans locaux. Nous vous accompagnons pour développer votre vitrine numérique en toute simplicité.</p>
     <div class="about-grid">
         <div>
             <h3>💼 Pour les pros</h3>
@@ -180,7 +180,7 @@
 <!-- Footer -->
 <footer class="site-footer">
     <div>
-        <h4>À propos de Nutwork</h4>
+        <h4>À propos de CraftySquirrel</h4>
         <p><a href="./contact.html">Contactez-nous</a></p>
         <p>À propos de nous</p>
         <p>Blog</p>
@@ -194,7 +194,7 @@
     </div>
     <div>
         <h4>Aide & Contacts</h4>
-        <p>contact@nutwork.com</p>
+        <p>contact@craftysquirrel.com</p>
         <p>28 Rue Notre Dame des Champs, Paris</p>
     </div>
 </footer>
