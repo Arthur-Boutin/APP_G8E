@@ -145,31 +145,31 @@
             <p>Designer</p>
         </div>
         <div class="member">
-            <img src="Deng.JPG" alt="Guokuang">
+            <img src="assets/images/Deng.jpg" alt="Guokuang">
             <h4>DENG</h4>
             <h4>Guokuang</h4>
             <p>Manager</p>
         </div>
         <div class="member">
-            <img src="Huang.jpg" alt="Zijie">
+            <img src="assets/images/Huang.jpg" alt="Zijie">
             <h4>HUANG</h4>
             <h4>Zijie</h4>
             <p>CEO</p>
         </div>
         <div class="member">
-            <img src="Nascimento.JPG" alt="Helton">
+            <img src="assets/images/Nascimento.jpg" alt="Helton">
             <h4>NASCIMENTO</h4>
             <h4>Helton</h4>
             <p>Développeur Full-Stack</p>
         </div>
         <div class="member">
-            <img src="Arthur.jpg" alt="Arthur">
+            <img src="assets/images/Arthur.png" alt="Arthur">
             <h4>BOUTIN</h4>
             <h4>Arthur</h4>
             <p>Développeur Full-Stack</p>
         </div>
         <div class="member">
-            <img src="Mbono.jpg" alt="Gratien">
+            <img src="assets/images/Mbono.jpg" alt="Gratien">
             <h4>MBONO IKA</h4>
             <h4>Gratien</h4>
             <p>SAV</p>
