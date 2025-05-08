@@ -139,7 +139,7 @@
     <h2>Notre Équipe</h2>
     <div class="team-grid">
         <div class="member">
-            <img src="Na" alt="Djelloul">
+            <img src="assets/images/Djelloul.png" alt="Djelloul">
             <h4>DERNI</h4>
             <h4>Djelloul</h4>
             <p>Designer</p>
