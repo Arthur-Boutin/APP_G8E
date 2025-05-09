@@ -9,7 +9,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-$isAdmin = $_SESSION['isAdmin'] ?? false;
+
+// Vérifie si l'utilisateur est un administrateur
+$isAdmin = ($_SESSION['user']['role'] === 'administrateur');
 
 try {
     if ($isAdmin) {

@@ -1,18 +1,8 @@
 <?php
 session_start();
 
-// Connexion directe à la base de données
-$host = 'localhost';
-$db = 'nom_de_ta_base';           // 🔁 À remplacer
-$user = 'ton_utilisateur';        // 🔁 À remplacer
-$pass = 'ton_mot_de_passe';       // 🔁 À remplacer
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
+// Connexion à la base de données
+require 'db_connection.php';
 
 // Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
@@ -21,17 +11,17 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-$isAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
+
+// Vérifie si l'utilisateur est un administrateur
+if ($_SESSION['user']['role'] !== 'administrateur') {
+    die("Accès refusé.");
+}
 
 try {
-    if ($isAdmin) {
-        // Récupère tous les utilisateurs pour l’admin
-        $query = "SELECT idUtilisateur, nom, prenom, email, statut FROM utilisateur";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-    } else {
-        die("Accès refusé.");
-    }
+    // Récupère tous les utilisateurs pour l’admin
+    $query = "SELECT idUtilisateur, nom, prenom, email, statutConnexion FROM utilisateur";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
 
     $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -60,7 +50,7 @@ try {
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Email</th>
-                <th>Statut</th>
+                <th>Statut de Connexion</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -72,7 +62,7 @@ try {
                         <td><?php echo htmlspecialchars($u['nom']); ?></td>
                         <td><?php echo htmlspecialchars($u['prenom']); ?></td>
                         <td><?php echo htmlspecialchars($u['email']); ?></td>
-                        <td><?php echo htmlspecialchars($u['statut']); ?></td>
+                        <td><?php echo htmlspecialchars($u['statutConnexion']); ?></td>
                         <td>
                             <a href="modifier-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
                             <a href="supprimer-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>

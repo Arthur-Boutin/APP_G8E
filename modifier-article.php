@@ -11,14 +11,12 @@ if ($_SESSION['user']['role'] !== 'artisan' && $_SESSION['user']['role'] !== 'ad
 }
 
 // Récupère l'ID de l'artisan connecté
-$idArtisan = null; // Initialiser $idArtisan à null
+$idArtisan = null;
 
 if ($_SESSION['user']['role'] === 'artisan') {
     if (isset($_SESSION['artisan']['idArtisan'])) {
         $idArtisan = $_SESSION['artisan']['idArtisan'];
     } else {
-        // Si l'utilisateur est un artisan mais que les informations ne sont pas disponibles,
-        // vous pouvez rediriger l'utilisateur ou afficher un message d'erreur.
         die("Informations de l'artisan manquantes.");
     }
 }
@@ -32,11 +30,11 @@ $id = intval($_GET['id']);
 
 // Récupérer les données du produit à modifier
 if ($_SESSION['user']['role'] === 'administrateur') {
-    $query = "SELECT nom, description, prix, quantitee, image, idArtisan FROM produit WHERE nProduit = :id";
+    $query = "SELECT nom, description, prix, quantitee, image, idArtisan, idCategorie, tempsFabrication, tailles, materiaux, couleur FROM produit WHERE nProduit = :id";
     $stmt = $pdo->prepare($query);
     $stmt->execute([':id' => $id]);
 } else {
-    $query = "SELECT nom, description, prix, quantitee, image FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
+    $query = "SELECT nom, description, prix, quantitee, image, idCategorie, tempsFabrication, tailles, materiaux, couleur FROM produit WHERE nProduit = :id AND idArtisan = :idArtisan";
     $stmt = $pdo->prepare($query);
     $stmt->execute([':id' => $id, ':idArtisan' => $idArtisan]);
 }
@@ -49,14 +47,19 @@ if (!$produit) {
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = $_POST['nom'];
-    $description = $_POST['description'];
-    $prix = $_POST['prix'];
-    $quantitee = $_POST['quantitee'];
-    $image = $produit['image'];
+    $nom = htmlspecialchars($_POST['nom']);
+    $description = htmlspecialchars($_POST['description']);
+    $prix = floatval($_POST['prix']);
+    $quantitee = intval($_POST['quantitee']);
+    $idCategorie = intval($_POST['idCategorie']);
+    $tempsFabrication = intval($_POST['tempsFabrication']);
+    $tailles = htmlspecialchars($_POST['tailles']);
+    $materiaux = htmlspecialchars($_POST['materiaux']);
+    $couleur = htmlspecialchars($_POST['couleur']);
+    $imageData = $produit['image'];
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $image = file_get_contents($_FILES['image']['tmp_name']);
+        $imageData = file_get_contents($_FILES['image']['tmp_name']);
     }
 
     // Récupérer l'ID de l'artisan
@@ -67,13 +70,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Mettre à jour le produit
-    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image";
+    $update_query = "UPDATE produit SET nom = :nom, description = :description, prix = :prix, quantitee = :quantitee, image = :image, idCategorie = :idCategorie, tempsFabrication = :tempsFabrication, tailles = :tailles, materiaux = :materiaux, couleur = :couleur";
     $params = [
         ':nom' => $nom,
         ':description' => $description,
         ':prix' => $prix,
         ':quantitee' => $quantitee,
-        ':image' => $image
+        ':image' => $imageData,
+        ':idCategorie' => $idCategorie,
+        ':tempsFabrication' => $tempsFabrication,
+        ':tailles' => $tailles,
+        ':materiaux' => $materiaux,
+        ':couleur' => $couleur
     ];
 
     // Si l'utilisateur est un administrateur, mettre à jour l'ID de l'artisan
@@ -85,11 +93,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $update_query .= " WHERE nProduit = :id";
     $params[':id'] = $id;
 
-    $update_stmt = $pdo->prepare($update_query);
-    $update_stmt->execute($params);
+    try {
+        $update_stmt = $pdo->prepare($update_query);
+        $update_stmt->execute($params);
 
-    header("Location: gestion-articles.php");
-    exit();
+        header("Location: gestion-articles.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "<p class='error-message'>Erreur lors de la modification du produit : " . $e->getMessage() . "</p>";
+    }
+}
+
+// Récupération des artisans pour le menu déroulant
+$artisans = [];
+try {
+    $stmtArtisans = $pdo->query("SELECT IdArtisan, nom FROM artisan");
+    $artisans = $stmtArtisans->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "<p class='error-message'>Erreur lors de la récupération des artisans : " . $e->getMessage() . "</p>";
+}
+
+// Récupération des catégories pour le menu déroulant
+$categories = [];
+try {
+    $stmtCategories = $pdo->query("SELECT idCategorie, nom FROM categorie");
+    $categories = $stmtCategories->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "<p class='error-message'>Erreur lors de la récupération des catégories : " . $e->getMessage() . "</p>";
 }
 ?>
 
@@ -123,20 +153,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="quantitee">Quantité</label>
                 <input type="number" id="quantitee" name="quantitee" value="<?php echo htmlspecialchars($produit['quantitee']); ?>" required>
 
+                <label for="tempsFabrication">Temps de Fabrication (jours) :</label>
+                <input type="number" id="tempsFabrication" name="tempsFabrication" min="1" value="<?php echo htmlspecialchars($produit['tempsFabrication']); ?>" required>
+
                 <?php if ($_SESSION['user']['role'] === 'administrateur'): ?>
                     <label for="idArtisan">Artisan</label>
                     <select id="idArtisan" name="idArtisan" required>
-                        <?php
-                        $queryArtisans = "SELECT IdArtisan, nom FROM artisan";
-                        $stmtArtisans = $pdo->query($queryArtisans);
-                        $artisans = $stmtArtisans->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($artisans as $artisan): ?>
-                            <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>" <?php if ($produit['idArtisan'] == $artisan['IdArtisan']) echo 'selected'; ?>>
+                        <option value="">Sélectionnez un artisan</option>
+                        <?php foreach ($artisans as $artisan): ?>
+                            <option value="<?php echo htmlspecialchars($artisan['IdArtisan']); ?>" <?php if (isset($produit['idArtisan']) && $produit['idArtisan'] == $artisan['IdArtisan']) echo 'selected'; ?>>
                                 <?php echo htmlspecialchars($artisan['nom']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 <?php endif; ?>
+
+                <label for="idCategorie">Catégorie</label>
+                <select id="idCategorie" name="idCategorie" required>
+                    <option value="">Sélectionnez une catégorie</option>
+                    <?php foreach ($categories as $categorie): ?>
+                        <option value="<?php echo htmlspecialchars($categorie['idCategorie']); ?>" <?php if ($produit['idCategorie'] == $categorie['idCategorie']) echo 'selected'; ?>>
+                            <?php echo htmlspecialchars($categorie['nom']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <label for="tailles">Tailles possibles (séparées par des virgules)</label>
+                <input type="text" id="tailles" name="tailles" value="<?php echo htmlspecialchars($produit['tailles']); ?>">
+
+                <label for="materiaux">Matériaux possibles (séparés par des virgules)</label>
+                <input type="text" id="materiaux" name="materiaux" value="<?php echo htmlspecialchars($produit['materiaux']); ?>">
+
+                <label for="couleur">Couleurs possibles (séparées par des virgules)</label>
+                <input type="text" id="couleur" name="couleur" value="<?php echo htmlspecialchars($produit['couleur']); ?>">
 
                 <label for="image">Image actuelle</label>
                 <?php if (!empty($produit['image'])): ?>
