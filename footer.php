@@ -1,7 +1,7 @@
 <footer class="site-footer">
     <div>
         <h4>À propos de Nutwork</h4>
-        <p><a href="./contact.html">Contactez-nous</a></p>
+        <p><a href="./contact.php">Contactez-nous</a></p>
         <p><a href="./contact.php">Blog</a></p>
         <p><a href="./faq.php">FAQ</a></p>
     </div>
