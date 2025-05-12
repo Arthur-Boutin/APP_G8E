@@ -1,5 +1,6 @@
 <!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\header.php -->
 <?php
+ob_start();
 // Vérifie si une session est déjà active avant de démarrer une nouvelle session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -42,3 +43,6 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </header>
+<?php
+ob_end_flush();
+?>
