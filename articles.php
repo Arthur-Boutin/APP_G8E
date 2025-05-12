@@ -12,7 +12,7 @@ if ($pageActuelle < 1) {
     $pageActuelle = 1;
 }
 
-// Calculer l'offset pour la requête SQL
+// Calculer l'offset pour la requête SQ
 $offset = ($pageActuelle - 1) * $articlesParPage;
 
 // Récupérer les catégories pour le filtre et les sections
