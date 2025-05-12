@@ -22,7 +22,7 @@ if ($role === 'client') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Backoffice</title>
+    <title>Nutwork - Espace Artisan</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -33,7 +33,7 @@ if ($role === 'client') {
         <section class="backoffice-home">
             <div class="backoffice-container">
                 <div class="backoffice-header">
-                    <h1>Bienvenue dans le Backoffice</h1>
+                    <h1>Bienvenue dans votre espace artisan</h1>
                 </div>
                 <div class="backoffice-menu">
                     <?php if ($role === 'administrateur'): ?>
