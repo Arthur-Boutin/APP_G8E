@@ -9,26 +9,49 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
-
-// Vérifie si l'utilisateur est un administrateur
 $isAdmin = ($_SESSION['user']['role'] === 'administrateur');
 
+// Suppression d'article
+if (isset($_GET['delete_id']) && !empty($_GET['delete_id'])) {
+    $deleteId = intval($_GET['delete_id']);
+
+    try {
+        // Si non admin, vérifier que l'article appartient à l'utilisateur
+        if (!$isAdmin) {
+            $stmt = $pdo->prepare("SELECT idArtisan FROM produit WHERE nProduit = :id");
+            $stmt->execute([':id' => $deleteId]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row || $row['idArtisan'] != $user['idUtilisateur']) {
+                echo "<script>alert('Suppression non autorisée.');window.location='gestion-articles.php';</script>";
+                exit();
+            }
+        }
+
+        // Suppression
+        $stmt = $pdo->prepare("DELETE FROM produit WHERE nProduit = :id");
+        $stmt->execute([':id' => $deleteId]);
+        echo "<script>alert('Article supprimé avec succès.');window.location='gestion-articles.php';</script>";
+        exit();
+    } catch (PDOException $e) {
+        echo "<script>alert('Erreur lors de la suppression : " . addslashes($e->getMessage()) . "');window.location='gestion-articles.php';</script>";
+        exit();
+    }
+}
+
+// Récupération des articles
 try {
     if ($isAdmin) {
-        // Si l'utilisateur est un administrateur, récupère tous les articles
         $query = "SELECT produit.*, artisan.nom AS nomArtisan 
                   FROM produit 
                   INNER JOIN artisan ON produit.idArtisan = artisan.idArtisan";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
     } else {
-        // Sinon, récupère uniquement les articles de l'artisan connecté
         $idArtisan = $user['idUtilisateur'];
         $query = "SELECT produit.* FROM produit WHERE idArtisan = :idArtisan";
         $stmt = $pdo->prepare($query);
         $stmt->execute([':idArtisan' => $idArtisan]);
     }
-
     $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Erreur lors de la récupération des articles : " . $e->getMessage());
@@ -42,11 +65,15 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutwork - Gestion des produits</title>
     <link rel="stylesheet" href="./style.css">
+    <style>
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header intégré -->
     <?php include 'header.php'; ?>
-
     <main>
         <section class="gestion-articles">
             <div class="articles-container">
@@ -76,9 +103,9 @@ try {
                                     <td>
                                         <?php echo $isAdmin ? htmlspecialchars($article['nomArtisan']) : 'Vous'; ?>
                                     </td>
-                                    <td>
+                                    <td class="actions">
                                         <a href="modifier-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="edit-button">Modifier</a>
-                                        <a href="supprimer-article.php?id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
+                                        <a href="gestion-articles.php?delete_id=<?php echo htmlspecialchars($article['nProduit']); ?>" class="delete-button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -92,7 +119,6 @@ try {
             </div>
         </section>
     </main>
-
     <?php include 'footer.php'; ?>
 </body>
 </html>

@@ -1,5 +1,8 @@
-<!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\articles.php -->
 <?php
+ob_start(); // Start output buffering
+include 'header.php'; ?><!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\articles.php -->
+<?php
+
 // Inclure la connexion à la base de données
 include 'db_connection.php';
 
@@ -12,7 +15,7 @@ if ($pageActuelle < 1) {
     $pageActuelle = 1;
 }
 
-// Calculer l'offset pour la requête SQ
+// Calculer l'offset pour la requête SQL
 $offset = ($pageActuelle - 1) * $articlesParPage;
 
 // Récupérer les catégories pour le filtre et les sections
@@ -26,11 +29,28 @@ try {
 }
 
 // Fonction pour récupérer les articles avec des filtres et une limite
-function getArticles($pdo, $whereClauses = [], $params = [], $limit = null, $offset = null) {
+function getArticles($pdo, $whereClauses = [], $params = [], $limit = null, $offset = null, $categorie = null) {
     $whereSQL = !empty($whereClauses) ? "WHERE " . implode(" AND ", $whereClauses) : "";
     $limitSQL = ($limit !== null && $offset !== null) ? "LIMIT :offset, :limit" : "";
 
-    $query = "SELECT nProduit, nom, description, prix, image FROM produit $whereSQL $limitSQL";
+    // Add category filter
+    if ($categorie === 'populaires') {
+        $whereSQL .= (!empty($whereSQL) ? " AND " : " WHERE ") . " prix > 100"; // Example: articles with price > 100 are "populaires"
+    } elseif ($categorie === 'recents') {
+        $whereSQL .= (!empty($whereSQL) ? " AND " : " WHERE ") . " dateAjout > DATE_SUB(CURDATE(), INTERVAL 30 DAY)"; // Example: articles added in the last 30 days are "recents"
+    } elseif ($categorie === 'mieuxnotes') {
+        // Add your logic for "mieuxnotes" here
+        $whereSQL .= (!empty($whereSQL) ? " AND " : " WHERE ") . " prix < 50"; // Example: articles with price < 50 are "mieuxnotes"
+    }
+
+    // Modify the query to calculate the average rating
+    $query = "SELECT p.nProduit, p.nom, p.description, p.prix, p.image, AVG(c.note) AS note_moyenne
+              FROM produit p
+              LEFT JOIN commentaire c ON p.nProduit = c.nProduit
+              $whereSQL
+              GROUP BY p.nProduit
+              $limitSQL";
+
     $stmt = $pdo->prepare($query);
 
     foreach ($params as $key => $value) {
@@ -108,41 +128,45 @@ $totalPages = ceil($totalArticles / $articlesParPage);
             margin-bottom: 30px;
         }
 
+        /* Amélioration des titres de section */
         .article-section h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 28px;
+            margin-bottom: 25px;
             color: #333;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            border-bottom: 3px solid #a87940; /* Couleur marron du header */
+            padding-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Styles pour le conteneur défilable */
         .scrollable-container {
             overflow-x: auto;
             white-space: nowrap;
-            padding-bottom: 10px; /* Espace pour l'ombre */
+            padding-bottom: 10px;
         }
 
         /* Masquer la barre de défilement par défaut */
         .scrollable-container::-webkit-scrollbar {
-            height: 5px; /* Hauteur de la barre de défilement */
+            height: 5px;
         }
 
         /* Style de la barre de défilement */
         .scrollable-container::-webkit-scrollbar-track {
-            background: #f1f1f1; /* Couleur de fond de la barre */
+            background: #f1f1f1;
             border-radius: 5px;
         }
 
         /* Style du curseur de la barre de défilement */
         .scrollable-container::-webkit-scrollbar-thumb {
-            background: #888; /* Couleur du curseur */
+            background: #888;
             border-radius: 5px;
         }
 
         /* Style du curseur au survol */
         .scrollable-container::-webkit-scrollbar-thumb:hover {
-            background: #555; /* Couleur du curseur au survol */
+            background: #555;
         }
 
         .card {
@@ -156,7 +180,7 @@ $totalPages = ceil($totalArticles / $articlesParPage);
             transition: transform 0.2s ease-in-out;
             text-decoration: none;
             color: #333;
-            margin-right: 20px; /* Espacement entre les cartes */
+            margin-right: 20px;
         }
 
         .card:hover {
@@ -226,72 +250,102 @@ $totalPages = ceil($totalArticles / $articlesParPage);
             background-color: #0056b3;
         }
 
-        /* Styles pour le filtre */
+        /* Amélioration de la section des filtres */
         .filter {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
         }
 
         .filter-form {
             display: flex;
+            flex-direction: column; /* Organiser en colonnes */
+            gap: 15px;
+            align-items: center; /* Centrer horizontalement */
+        }
+
+        .filter-row {
+            display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
+            justify-content: center; /* Centrer les éléments sur chaque ligne */
+            gap: 15px;
+            width: 100%; /* Utiliser toute la largeur disponible */
         }
 
         .filter-form label {
-            margin-right: 5px;
-            font-weight: bold;
+            margin-right: 8px;
+            font-weight: 500;
+            color: #555;
         }
 
         .filter-form input[type="number"],
         .filter-form select {
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ced4da;
-            border-radius: 4px;
-            width: 150px;
+            border-radius: 6px;
+            width: 180px;
+            font-size: 14px;
         }
 
         .filter-form .filter-button {
-            padding: 8px 15px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             background-color: #007bff;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 14px;
         }
 
         .filter-form .filter-button:hover {
             background-color: #0056b3;
         }
+
+        /* Style pour les liens de catégorie */
+        .category-link {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-link:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
-<?php include 'header.php'; ?>
-
 <main>
     <!-- Section des filtres -->
     <section class="filter">
         <form method="GET" action="articles.php" class="filter-form">
-            <label for="categorie">Catégorie :</label>
-            <select name="categorie" id="categorie">
-                <option value="">Toutes les catégories</option>
-                <?php foreach ($categories as $categorie): ?>
-                    <option value="<?php echo htmlspecialchars($categorie['idCategorie']); ?>" <?php echo (isset($_GET['categorie']) && $_GET['categorie'] == $categorie['idCategorie']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($categorie['nom']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <div class="filter-row">
+                <label for="categorie">Catégorie :</label>
+                <select name="categorie" id="categorie">
+                    <option value="">Toutes les catégories</option>
+                    <?php foreach ($categories as $categorie): ?>
+                        <option value="<?php echo htmlspecialchars($categorie['idCategorie']); ?>" <?php echo (isset($_GET['categorie']) && $_GET['categorie'] == $categorie['idCategorie']) ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($categorie['nom']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-            <label for="prix_min">Prix minimum :</label>
-            <input type="number" name="prix_min" id="prix_min" step="0.01" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
+            <div class="filter-row">
+                <label for="prix_min">Prix minimum :</label>
+                <input type="number" name="prix_min" id="prix_min" step="0.01" value="<?php echo isset($_GET['prix_min']) ? htmlspecialchars($_GET['prix_min']) : ''; ?>">
 
-            <label for="prix_max">Prix maximum :</label>
-            <input type="number" name="prix_max" id="prix_max" step="0.01" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+                <label for="prix_max">Prix maximum :</label>
+                <input type="number" name="prix_max" id="prix_max" step="0.01" value="<?php echo isset($_GET['prix_max']) ? htmlspecialchars($_GET['prix_max']) : ''; ?>">
+            </div>
 
             <button type="submit" class="filter-button">Filtrer</button>
         </form>
@@ -314,6 +368,20 @@ $totalPages = ceil($totalArticles / $articlesParPage);
                         <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
+                        <?php if ($article['note_moyenne'] !== null): ?>
+                            <p>
+                                <?php
+                                $note = round($article['note_moyenne']);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $note) {
+                                        echo '<span style="color: gold;">★</span>'; // Yellow star
+                                    } else {
+                                        echo '<span style="color: lightgray;">☆</span>'; // White star
+                                    }
+                                }
+                                ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </a>
             <?php endforeach; ?>
@@ -337,6 +405,20 @@ $totalPages = ceil($totalArticles / $articlesParPage);
                         <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
+                        <?php if ($article['note_moyenne'] !== null): ?>
+                            <p>
+                                <?php
+                                $note = round($article['note_moyenne']);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $note) {
+                                        echo '<span style="color: gold;">★</span>'; // Yellow star
+                                    } else {
+                                        echo '<span style="color: lightgray;">☆</span>'; // White star
+                                    }
+                                }
+                                ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </a>
             <?php endforeach; ?>
@@ -360,6 +442,20 @@ $totalPages = ceil($totalArticles / $articlesParPage);
                         <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
+                        <?php if ($article['note_moyenne'] !== null): ?>
+                            <p>
+                                <?php
+                                $note = round($article['note_moyenne']);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $note) {
+                                        echo '<span style="color: gold;">★</span>'; // Yellow star
+                                    } else {
+                                        echo '<span style="color: lightgray;">☆</span>'; // White star
+                                    }
+                                }
+                                ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </a>
             <?php endforeach; ?>
@@ -383,6 +479,20 @@ $totalPages = ceil($totalArticles / $articlesParPage);
                         <p><strong><?php echo htmlspecialchars($article['nom']); ?></strong></p>
                         <p><?php echo htmlspecialchars($article['description']); ?></p>
                         <p><strong><?php echo htmlspecialchars($article['prix']); ?> €</strong></p>
+                        <?php if ($article['note_moyenne'] !== null): ?>
+                            <p>
+                                <?php
+                                $note = round($article['note_moyenne']);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $note) {
+                                        echo '<span style="color: gold;">★</span>'; // Yellow star
+                                    } else {
+                                        echo '<span style="color: lightgray;">☆</span>'; // White star
+                                    }
+                                }
+                                ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                 </a>
             <?php endforeach; ?>
@@ -408,5 +518,6 @@ $totalPages = ceil($totalArticles / $articlesParPage);
 </main>
 
 <?php include 'footer.php'; ?>
+<?php ob_end_flush(); ?>
 </body>
 </html>
