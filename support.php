@@ -3,6 +3,14 @@
 include 'db_connection.php';
 include 'header.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 // Marquer comme traité
 if (isset($_GET['traite'])) {
     $stmt = $pdo->prepare("UPDATE support_ticket SET traite=1 WHERE id=?");
@@ -15,9 +23,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $prenom = $_POST['prenom'];
     $sujet = "Réponse à votre ticket : " . $_POST['sujet'];
     $message = "Bonjour $prenom,\n\nVous avez envoyé le message suivant :\n" . $_POST['message'] . "\n\nNotre réponse :\n" . $_POST['reponse'];
-    $headers = "From: support@votre-site.com\r\nReply-To: support@votre-site.com";
-    mail($to, $sujet, $message, $headers);
-    echo "<div class='success-message' style='color:green;text-align:center;'>Réponse envoyée à $to</div>";
+
+    $mail = new PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output (change to DEBUG_SERVER for more info)
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'your_smtp_host';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'your_smtp_username';                     //SMTP username
+        $mail->Password   = 'your_smtp_password';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+        $mail->Port       = 578;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('support@votre-site.com', 'Your Support Team');
+        $mail->addAddress($to, $prenom);     //Add a recipient
+
+        //Content
+        $mail->isHTML(false);                                  //Set email format to plain text
+        $mail->Subject = $sujet;
+        $mail->Body    = $message;
+
+        $mail->send();
+        echo "<div class='success-message' style='color:green;text-align:center;'>Réponse envoyée à $to</div>";
+    } catch (Exception $e) {
+        echo "<div class='error-message' style='color:red;text-align:center;'>Message could not be sent. Mailer Error: {$mail->ErrorInfo}</div>";
+    }
 }
 
 // Récupérer tous les tickets
