@@ -2013,6 +2013,37 @@ h2, h3 {
     color: white;
 }
 
+/* Scrollable Container Styles */
+.scrollable-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 15px;
+}
+
+.scrollable-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.scrollable-container .card {
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .profile-section {
@@ -2465,4 +2496,9 @@ h2, h3 {
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     text-align: left;
+}
+
+/* Category Option Styles */
+.categorie-option {
+    font-size: 12px; /* Adjust the font size as needed */
 }
