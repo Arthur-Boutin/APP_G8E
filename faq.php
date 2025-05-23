@@ -66,6 +66,51 @@ if (!empty($searchTerm)) {
         .faq-result p {
             color: #555;
         }
+
+        /* Modal style */
+        .modal {
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff7e6;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-width: 400px;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-buttons button:first-child {
+            background-color: #6c4f3d;
+            color: white;
+        }
+
+        .modal-buttons button:last-child {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +127,15 @@ if (!empty($searchTerm)) {
 
     <?php if (!empty($searchTerm)): ?>
         <?php if (count($faqs) === 0): ?>
-            <p>Aucun résultat trouvé pour "<?= htmlspecialchars($searchTerm) ?>"</p>
+            <div id="faq-modal" class="modal">
+                <div class="modal-content">
+                    <p>Nous n'avons pas encore de réponse pour cette question.<br>Voulez-vous nous contacter ?</p>
+                    <div class="modal-buttons">
+                        <button onclick="window.location.href='contact.php'">Oui</button>
+                        <button onclick="closeModal()">Non</button>
+                    </div>
+                </div>
+            </div>
         <?php else: ?>
             <?php foreach ($faqs as $faq): ?>
                 <div class="faq-result">
@@ -95,5 +148,12 @@ if (!empty($searchTerm)) {
 </div>
 
 <?php include 'footer.php'; ?>
+
+<!-- Modal script -->
+<script>
+    function closeModal() {
+        document.getElementById('faq-modal').style.display = 'none';
+    }
+</script>
 </body>
 </html>
