@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       document.getElementById('admin-btn').classList.toggle('active', role === 'administrateur');
     }
   </script>
+  <div style="flex-grow: 1;"></div> <!-- La div vide nouvellement ajoutée repousse automatiquement le pied de page au bas de l'écran. -->
    <?php include 'footer.php'; ?>
 </body>
 </html>
