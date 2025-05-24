@@ -14,24 +14,94 @@ $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="./style.css">
     <style>
         .faq-admin {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: auto;
             padding: 20px;
+            font-family: Arial, sans-serif;
         }
+
+        .faq-admin h1 {
+            text-align: center;
+            color: #6c4f3d;
+            margin-bottom: 20px;
+        }
+
         .faq-entry {
+            width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
             border: 1px solid #ccc;
-            margin: 10px 0;
-            padding: 15px;
             background-color: #fff9f2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .faq-entry input, .faq-entry textarea {
+
+
+
+
+        .faq-entry:hover {
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-entry label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #333;
+        }
+
+        .faq-entry input,
+        .faq-entry textarea {
             width: 100%;
             margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
         }
+
+        .faq-entry textarea {
+            resize: vertical;
+        }
+
         .faq-entry .actions {
-            margin-top: 10px;
+            margin-top: 20px;
+            text-align: center;
         }
+        .faq-entry .actions button {
+            margin: 0 10px;
+        }
+
+
+        .faq-entry button {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .faq-entry button[name="action"][value="update"] {
+            background-color: #6c4f3d;
+            color: white;
+        }
+
+        .faq-entry button[name="action"][value="update"]:hover {
+            background-color: #5a3f2e;
+        }
+
+        .faq-entry button[name="action"][value="delete"] {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .faq-entry button[name="action"][value="delete"]:hover {
+            background-color: #c9302c;
+        }
+
     </style>
+
 </head>
 <body>
 <?php include 'header.php'; ?>
