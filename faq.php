@@ -10,7 +10,18 @@ if (!empty($searchTerm)) {
     $stmt = $pdo->prepare("SELECT * FROM faq WHERE question LIKE ? OR answer LIKE ?");
     $stmt->execute([$term, $term]);
     $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // S'il n'y a pas de résultats, on insère la question dans la base si elle n'existe pas déjà
+    if (count($faqs) === 0) {
+        $check = $pdo->prepare("SELECT COUNT(*) FROM faq WHERE question = ?");
+        $check->execute([$searchTerm]);
+        if ($check->fetchColumn() == 0) {
+            $insert = $pdo->prepare("INSERT INTO faq (question, answer, is_answered) VALUES (?, '', FALSE)");
+            $insert->execute([$searchTerm]);
+        }
+    }
 }
+
 ?>
 
 <!DOCTYPE html>

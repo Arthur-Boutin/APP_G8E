@@ -43,7 +43,7 @@ if ($role === 'client') {
                         <a href="./Gestion_Utilisateurs.php">Gestion des Utilisateurs</a>
                         <a href="./support.php">Support</a>
                         <a href="./gestionavis.php">Avis</a>
-                        <a href="#">Gestion des FAQ</a>
+                        <a href="./gestion-faq.php">Gestion des FAQ</a>
                     <?php elseif ($role === 'artisan'): ?>
                         <!-- Liens pour l'artisan -->
                         <a href="./gestion-articles.php">Gestion des Articles</a>
