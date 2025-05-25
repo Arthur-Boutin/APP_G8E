@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutwork - Accueil</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
 <?php
 session_start();
 // Connexion à la base de données
@@ -56,18 +47,16 @@ try {
         echo "<th class='valeurs'>".$row['nom']."</th>" ;
         echo "<th class='valeurs'>".$row['quantite']." pcs</th>";
         echo "<th class='valeurs'>".$row['total']." €</th>";
-        echo "<th class='supprimer'><a href='panier.php?id=$row[‘nom‘]'>Supprimer</th>";
+        echo "<th class='supprimer'><a href='panier.php?id='>Supprimer</th>";
         echo "</tr>";
       }
       /*TOTAL*/
-
       $totalpayer="SELECT SUM(panierachat.quantite*produit.prix) AS total2 FROM panierachat,produit WHERE produit.nProduit=panierachat.idProduit "; 
       $stmt2 = $pdo->prepare("$totalpayer");
       $stmt2->execute();
       $row3 = $stmt2->fetch(PDO::FETCH_ASSOC);
       echo "<tr><th scope='col' class='basdepage'> Total à payer: ".$row3['total2']." €</th></tr>";
       echo "<tr><th scope='col' class='payer'><a href='paiement.php'>Payer</th></tr>";
-
       /*SUPPRIMER PRODUIT*/
       ?>
       </tbody>
