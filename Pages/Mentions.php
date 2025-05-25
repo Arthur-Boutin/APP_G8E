@@ -20,9 +20,9 @@
     <div class="legal-list">
       <div class="legal-item">
         <div class="legal-question">
-          <img class="left-icon" src="./assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
+          <img class="left-icon" src="../assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
           <h3>L’identification des responsables du site</h3>
-          <img class="right-icon" src="./assets/images/icons8-chevron-down-50.png" alt="Toggle">
+          <img class="right-icon" src="../assets/images/icons8-chevron-down-50.png" alt="Toggle">
         </div>
 
         <div class="legal-answer">
@@ -33,9 +33,9 @@
 
       <div class="legal-item">
         <div class="legal-question">
-          <img class="left-icon" src="./assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
+          <img class="left-icon" src="../assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
           <h3>L’activité du professionnel</h3>
-          <img class="right-icon" src="./assets/images/icons8-chevron-down-50.png" alt="Toggle">
+          <img class="right-icon" src="../assets/images/icons8-chevron-down-50.png" alt="Toggle">
         </div>
 
         <div class="legal-answer">
@@ -47,9 +47,9 @@
 
       <div class="legal-item">
         <div class="legal-question">
-          <img class="left-icon" src="./assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
+          <img class="left-icon" src="../assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
           <h3>L’utilisation des cookies</h3>
-          <img class="right-icon" src="./assets/images/icons8-chevron-down-50.png" alt="Toggle">
+          <img class="right-icon" src="../assets/images/icons8-chevron-down-50.png" alt="Toggle">
         </div>
         <div class="legal-answer">
           <p>Vous devez informer clairement l’utilisateur de la présence de cookies, de leur finalité<p>
@@ -59,9 +59,9 @@
 
       <div class="legal-item">
         <div class="legal-question">
-          <img class="left-icon" src="./assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
+          <img class="left-icon" src="../assets/images/icons8-right-arrow-30.png" alt="Right Arrow">
           <h3>L’utilisation des données personnelles</h3>
-          <img class="right-icon" src="./assets/images/icons8-chevron-down-50.png" alt="Toggle">
+          <img class="right-icon" src="../assets/images/icons8-chevron-down-50.png" alt="Toggle">
         </div>
         <div class="legal-answer">
           <p>Les obligations RGPD imposent de mentionner le responsable du traitement,<p>
@@ -75,6 +75,6 @@
   <div style="flex-grow: 1;"></div> <!-- La div vide nouvellement ajoutée repousse automatiquement le pied de page au bas de l'écran. -->
 
   <?php include 'footer.php'; ?>
-  <script src="./script.js"></script>
+  <script src="../scripts/script.js"></script>
 </body>
 </html>

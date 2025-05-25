@@ -24,10 +24,10 @@ faqQuestions.forEach(question => {
 
         if (answer.style.display === 'block') {
             answer.style.display = 'none';
-            toggleIcon.src = './assets/images/icons8-chevron-down-50.png';
+            toggleIcon.src = '../assets/images/icons8-chevron-down-50.png';
         } else {
             answer.style.display = 'block';
-            toggleIcon.src = './assets/images/icons8-chevron-up-50.png';
+            toggleIcon.src = '../assets/images/icons8-chevron-up-50.png';
         }
     });
 });
