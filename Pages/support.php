@@ -29,7 +29,7 @@ $tickets = $pdo->query("SELECT * FROM support_ticket ORDER BY date_envoi DESC")-
 <head>
     <meta charset="UTF-8">
     <title>Support - Tickets</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         .support-container {
             max-width: 900px;
