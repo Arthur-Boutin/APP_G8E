@@ -16,7 +16,7 @@ try {
     // Suppression dans les tables enfants d'abord
     $pdo->prepare("DELETE FROM administrateur WHERE idAdmin = :id")->execute([':id' => $id]);
     $pdo->prepare("DELETE FROM client WHERE idClient = :id")->execute([':id' => $id]);
-    $pdo->prepare("DELETE FROM artisant WHERE idArtisant = :id")->execute([':id' => $id]);
+    $pdo->prepare("DELETE FROM artisant WHERE idArtisan = :id")->execute([':id' => $id]);
 
     // Puis dans utilisateur
     $pdo->prepare("DELETE FROM utilisateur WHERE idUtilisateur = :id")->execute([':id' => $id]);
