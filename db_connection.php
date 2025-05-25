@@ -1,9 +1,9 @@
-<!-- filepath: c:\xampp\htdocs\APPG8E\APP_G8E\db_connection.php -->
+
 <?php
 $host = 'localhost';
 $dbname = 'app_g8e'; // Nom de votre base de données
-$username = 'root'; // Nom d'utilisateur par défaut pour phpMyAdmin
-$password = ''; // Mot de passe par défaut pour phpMyAdmin
+$username = 'root'; // Nom d'utilisateur 
+$password = ''; // Mot de passe 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
