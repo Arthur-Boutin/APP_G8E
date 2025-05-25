@@ -55,6 +55,17 @@
     <button class="cta-button" onclick="location.href='contact.php'">Rejoindre CraftySquirrel</button>
 </section>
 
+<!-- Nos Services -->
+<section class="quick-links" id="services">
+    <h2>Nos services</h2>
+    <div class="quick-links-grid">
+        <a href="./Inscription.php" class="quick-link-card">Création de boutique</a>
+        <a href="./contact.php" class="quick-link-card">Assistance personnalisée</a>
+        <a href="./faq.php" class="quick-link-card">Questions fréquentes</a>
+        <a href="./Inscription.php" class="quick-link-card">Inscription rapide</a>
+    </div>
+</section>
+
 <!-- À PROPOS -->
 <section class="about" id="about">
     <h2>Qui sommes-nous ?</h2>
@@ -88,17 +99,6 @@
     <div class="feature">
         <h3>Communauté engagée</h3>
         <p>Rejoignez un réseau d'artisans partageant les mêmes valeurs de passion et d'excellence.</p>
-    </div>
-</section>
-
-<!-- Nos Services -->
-<section class="quick-links" id="services">
-    <h2>Nos services</h2>
-    <div class="quick-links-grid">
-        <a href="./Inscription.php" class="quick-link-card">Création de boutique</a>
-        <a href="./contact.php" class="quick-link-card">Assistance personnalisée</a>
-        <a href="./faq.php" class="quick-link-card">Questions fréquentes</a>
-        <a href="./Inscription.php" class="quick-link-card">Inscription rapide</a>
     </div>
 </section>
 
