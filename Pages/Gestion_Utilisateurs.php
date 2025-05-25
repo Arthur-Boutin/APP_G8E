@@ -63,7 +63,7 @@ try {
                 <th>Rôle</th>
                 <th>Statut de Connexion</th>
                 <th>Actions</th>
-            <td><a href='supprimer-utilisateur.php?id=<?= $utilisateur['idUtilisateur'] ?>' onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a></td></tr>
+            </tr>
             </thead>
             <tbody>
             <?php if (!empty($utilisateurs)): ?>
@@ -98,10 +98,10 @@ try {
                             <a href="modifier-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
                             <a href="supprimer-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
                         </td>
-                    <td><a href='supprimer-utilisateur.php?id=<?= $utilisateur['idUtilisateur'] ?>' onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a></td></tr>
+                    </tr>
                 <?php endforeach; ?>
             <?php else: ?>
-                <tr><td colspan="6">Aucun utilisateur trouvé.</td><td><a href='supprimer-utilisateur.php?id=<?= $utilisateur['idUtilisateur'] ?>' onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a></td></tr>
+                <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
             <?php endif; ?>
             </tbody>
         </table>
