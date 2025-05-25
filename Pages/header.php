@@ -52,7 +52,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         echo '<img src="' . $src . '" alt="Profil" class="icon" style="border-radius:50%;width:40px;height:40px;object-fit:cover;">';
                     } else {
                         // Image par défaut
-                        echo '<img src="../assets/images/Profil.png" alt="Profil" class="icon"style="border-radius:50%;width:40px;height:40px;object-fit:cover;">';
+                        echo '<img src="../assets/images/Profil.png" alt="Profil" class="icon" style="">';
                     }
                     ?>
                     <?php if (!empty($_SESSION['user']['prenom'])): ?>
