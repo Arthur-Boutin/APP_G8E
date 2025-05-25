@@ -96,7 +96,8 @@ try {
                         <td><?php echo htmlspecialchars($u['statutConnexion']); ?></td>
                         <td>
                             <a href="modifier-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
-                            <a href="supprimer-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
+                            <a href="/APP_G8E/supprimer-utilisateur.php?id=<?php echo $u['idUtilisateur']; ?>">
+
                         </td>
                     </tr>
                 <?php endforeach; ?>
