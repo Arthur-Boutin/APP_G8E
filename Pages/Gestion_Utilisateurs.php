@@ -2,7 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-include __DIR__ . '/../setup/db_connection.php';
+include __DIR__ . '/../pages/db_connection.php';
 
 // Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
@@ -95,7 +95,6 @@ try {
                         <td><?php echo htmlspecialchars($u['role']); ?></td>
                         <td><?php echo htmlspecialchars($u['statutConnexion']); ?></td>
                         <td>
-                            <a href="modifier-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
                             <a href="supprimer-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
                         </td>
                     </tr>
