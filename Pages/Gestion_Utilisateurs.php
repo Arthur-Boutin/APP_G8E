@@ -2,7 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-include __DIR__ . '/../pages/db_connection.php';
+include __DIR__ . '/../setup/db_connection.php';
 
 // Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
