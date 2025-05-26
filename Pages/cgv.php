@@ -96,6 +96,6 @@
   <div style="flex-grow: 1;"></div> <!-- La div vide nouvellement ajoutée repousse automatiquement le pied de page au bas de l'écran. -->
 
   <?php include 'footer.php'; ?>
-  <script src="../script.js"></script>
+  <script src="../scripts/script.js"></script>
 </body>
 </html>
