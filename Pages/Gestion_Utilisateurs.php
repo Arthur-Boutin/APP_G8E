@@ -2,7 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-include __DIR__ . '/../setup/db_connection.php';
+require 'db_connection.php';
 
 // Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
@@ -10,26 +10,16 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+$user = $_SESSION['user'];
+
 // Vérifie si l'utilisateur est un administrateur
 if ($_SESSION['user']['role'] !== 'administrateur') {
     die("Accès refusé.");
 }
 
 try {
-    // On récupère tous les utilisateurs avec leur rôle
-    $query = "
-        SELECT 
-            u.idUtilisateur, 
-            u.role, 
-            u.statutConnexion,
-            -- Pour les clients
-            c.nom AS nom_client, c.email AS email_client, c.adresse AS adresse_client, c.photoProfil AS photo_client,
-            -- Pour les artisans
-            a.nom AS nom_artisan, a.email AS email_artisan, a.adresse AS adresse_artisan, a.photoProfil AS photo_artisan
-        FROM utilisateur u
-        LEFT JOIN client c ON u.idUtilisateur = c.idClient
-        LEFT JOIN artisan a ON u.idUtilisateur = a.idArtisan
-    ";
+    // Récupère tous les utilisateurs pour l’admin
+    $query = "SELECT idUtilisateur, nom, prenom, email, statutConnexion FROM utilisateur";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 
@@ -44,8 +34,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Nutwork - Gestion des utilisateurs</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="P_utilisateurs.css">
+    <link rel="stylesheet" href="./P_utilisateurs.css">
 </head>
 <body>
 
@@ -59,8 +48,8 @@ try {
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
+                <th>Prénom</th>
                 <th>Email</th>
-                <th>Rôle</th>
                 <th>Statut de Connexion</th>
                 <th>Actions</th>
             </tr>
@@ -70,33 +59,13 @@ try {
                 <?php foreach ($utilisateurs as $u): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($u['idUtilisateur']); ?></td>
-                        <td>
-                            <?php
-                            if ($u['role'] === 'client') {
-                                echo htmlspecialchars($u['nom_client']);
-                            } elseif ($u['role'] === 'artisan') {
-                                echo htmlspecialchars($u['nom_artisan']);
-                            } else {
-                                echo 'Administrateur';
-                            }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            if ($u['role'] === 'client') {
-                                echo htmlspecialchars($u['email_client']);
-                            } elseif ($u['role'] === 'artisan') {
-                                echo htmlspecialchars($u['email_artisan']);
-                            } else {
-                                echo '';
-                            }
-                            ?>
-                        </td>
-                        <td><?php echo htmlspecialchars($u['role']); ?></td>
+                        <td><?php echo htmlspecialchars($u['nom']); ?></td>
+                        <td><?php echo htmlspecialchars($u['prenom']); ?></td>
+                        <td><?php echo htmlspecialchars($u['email']); ?></td>
                         <td><?php echo htmlspecialchars($u['statutConnexion']); ?></td>
                         <td>
-                            <a href="modifier-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
-                            <a href="supprimer-utilisateur.php?id=<?php echo urlencode($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
+                            <a href="modifier-utilisateur.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-modify">Modifier</a>
+                            <a href="Gestion_Utilisateurs.php?id=<?php echo htmlspecialchars($u['idUtilisateur']); ?>" class="btn-delete" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
